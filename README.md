@@ -29,6 +29,17 @@ MQClient#draft(
 ): Promise<string>
 ```
 
+#### set
+
+```ts
+MQClient#set(
+  queueId: string
+, messageId: string
+, payload: string
+, options?: { token?: string }
+): Promise<void>
+```
+
 #### setJSON
 
 ```ts
@@ -40,33 +51,22 @@ MQClient#setJSON(
 ): Promise<void>
 ```
 
-#### setText
-
-```ts
-MQClient#setText(
-  queueId: string
-, messageId: string
-, payload: string
-, options?: { token?: string }
-): Promise<void>
-```
-
 #### active
 
 ```ts
 MQClient#active(queueId: string, options?: { token?: string }): Promise<string>
 ```
 
+#### get
+
+```ts
+MQClient#get(queueId: string, messageId: string, options?: { token?: string }): Promise<string>
+```
+
 #### getJSON
 
 ```ts
 MQClient#getJSON(queueId: string, messageId: string, options?: { token?: string }): Promise<Json>
-```
-
-#### getText
-
-```ts
-MQClient#getText(queueId: string, messageId: string, options?: { token?: string }): Promise<string>
 ```
 
 #### consume

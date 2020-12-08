@@ -37,6 +37,18 @@ export class MQClient {
       .then(toText)
   }
 
+  async set(queueId: string, messageId: string, payload: string, options: { token?: string } = {}): Promise<void> {
+    const token = options.token ?? this.options.token
+    const req = put(
+      url(this.options.server)
+    , pathname(`/mq/${queueId}/messages/${messageId}`)
+    , token && searchParam('token', token)
+    , text(payload)
+    )
+
+    await fetch(req).then(ok)
+  }
+
   async setJSON(queueId: string, messageId: string, payload: Json, options: { token?: string } = {}): Promise<void> {
     const token = options.token ?? this.options.token
     const req = put(
@@ -44,18 +56,6 @@ export class MQClient {
     , pathname(`/mq/${queueId}/messages/${messageId}`)
     , token && searchParam('token', token)
     , json(payload)
-    )
-
-    await fetch(req).then(ok)
-  }
-
-  async setText(queueId: string, messageId: string, payload: string, options: { token?: string } = {}): Promise<void> {
-    const token = options.token ?? this.options.token
-    const req = put(
-      url(this.options.server)
-    , pathname(`/mq/${queueId}/messages/${messageId}`)
-    , token && searchParam('token', token)
-    , text(payload)
     )
 
     await fetch(req).then(ok)
@@ -74,12 +74,12 @@ export class MQClient {
       .then(toText)
   }
 
-  async getText(queueId: string, messageId: string, options?: { token?: string }): Promise<string> {
-    return this.get(queueId, messageId, options).then(toText)
+  async get(queueId: string, messageId: string, options?: { token?: string }): Promise<string> {
+    return this._get(queueId, messageId, options).then(toText)
   }
 
   async getJSON(queueId: string, messageId: string, options?: { token?: string }): Promise<Json> {
-    return this.get(queueId, messageId, options).then(toJSON)
+    return this._get(queueId, messageId, options).then(toJSON)
   }
 
   async consume(queueId: string, messageId: string, options: { token?: string } = {}): Promise<void> {
@@ -108,7 +108,7 @@ export class MQClient {
       .then(toJSON) as Stats
   }
 
-  private async get(queueId: string, messageId: string, options: { token?: string } = {}): Promise<Response> {
+  private async _get(queueId: string, messageId: string, options: { token?: string } = {}): Promise<Response> {
     const token =  options.token ?? this.options.token
     const req = get(
       url(this.options.server)
