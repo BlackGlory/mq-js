@@ -5,7 +5,7 @@ import { url, pathname, json } from 'extra-request/lib/es2018/transformers'
 import { ok, toJSON } from 'extra-response'
 
 interface TokenPolicy {
-  publishTokenRequired: boolean | null
+  produceTokenRequired: boolean | null
   consumeTokenRequired: boolean | null
   clearTokenRequired: boolean | null
 }
@@ -42,10 +42,10 @@ export class TokenPolicyClient {
       .then(toJSON) as TokenPolicy
   }
 
-  async setPublishTokenRequired(id: string, val: boolean): Promise<void> {
+  async setProduceTokenRequired(id: string, val: boolean): Promise<void> {
     const req = put(
       url(this.options.server)
-    , pathname(`/api/mq/${id}/token-policies/publish-token-required`)
+    , pathname(`/api/mq/${id}/token-policies/produce-token-required`)
     , password(this.options.adminPassword)
     , json(val)
     )
@@ -53,10 +53,10 @@ export class TokenPolicyClient {
     await fetch(req).then(ok)
   }
 
-  async removePublishTokenRequired(id: string): Promise<void> {
+  async removeProduceTokenRequired(id: string): Promise<void> {
     const req = del(
       url(this.options.server)
-    , pathname(`/api/mq/${id}/token-policies/publish-token-required`)
+    , pathname(`/api/mq/${id}/token-policies/produce-token-required`)
     , password(this.options.adminPassword)
     )
 

@@ -18,21 +18,21 @@ export const server = setupServer(
     return res(
       ctx.status(200)
     , ctx.json({
-        publishTokenRequired: true
+        produceTokenRequired: true
       , consumeTokenRequired: false
       , clearTokenRequired: null
       })
     )
   })
 
-, rest.put('/api/mq/:id/token-policies/publish-token-required', (req, res, ctx) => {
+, rest.put('/api/mq/:id/token-policies/produce-token-required', (req, res, ctx) => {
     if (badAuth(req)) return res(ctx.status(401))
     if (badJson(req)) return res(ctx.status(400))
 
     return res(ctx.status(204))
   })
 
-, rest.delete('/api/mq/:id/token-policies/publish-token-required', (req, res, ctx) => {
+, rest.delete('/api/mq/:id/token-policies/produce-token-required', (req, res, ctx) => {
     if (badAuth(req)) return res(ctx.status(401))
 
     return res(ctx.status(204))

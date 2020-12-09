@@ -287,22 +287,22 @@ MQManager#TokenPolicy.getIds(): Promise<string[]>
 
 ```ts
 MQManager#TokenPolicy.get(id: string): Promise<{
-  publishTokenRequired: boolean | null
+  produceTokenRequired: boolean | null
   consumeTokenRequired: boolean | null
   clearTokenRequired: boolean | null
 }>
 ```
 
-##### setPublishTokenRequired
+##### setProduceTokenRequired
 
 ```ts
-MQManager#TokenPolicy.setPublishTokenRequired(id: string, val: boolean): Promise<void>
+MQManager#TokenPolicy.setProduceTokenRequired(id: string, val: boolean): Promise<void>
 ```
 
-##### removePublishTokenRequired
+##### removeProduceTokenRequired
 
 ```ts
-MQManager#TokenPolicy.removePublishTokenRequired(id: string): Promise<void>
+MQManager#TokenPolicy.removeProduceTokenRequired(id: string): Promise<void>
 ```
 
 ##### setConsumeTokenRequired
@@ -343,22 +343,22 @@ MQManager#Token.getIds(): Promise<string[]>
 ```ts
 MQManager#Token.getTokens(id: string): Promise<Array<{
   token: string
-  publish: boolean
+  produce: boolean
   consume: boolean
   clear: boolean
 }>>
 ```
 
-##### addPublishToken
+##### addProduceToken
 
 ```ts
-MQManager#Token.addPublishToken(id: string, token: string): Promise<void>
+MQManager#Token.addProduceToken(id: string, token: string): Promise<void>
 ```
 
-##### removePublishToken
+##### removeProduceToken
 
 ```ts
-MQManager#Token.removePublishToken(id: string, token: string): Promise<void>
+MQManager#Token.removeProduceToken(id: string, token: string): Promise<void>
 ```
 
 ##### addConsumeToken

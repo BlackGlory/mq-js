@@ -18,7 +18,7 @@ describe('TokenPolicyClient', () => {
     expect(proResult).toStrictEqual(['id'])
   })
 
-  it('get(id: string): Promise<{ publishTokenRequired: boolean | null; consumeTokenRequired: boolean | null }>', async () => {
+  it('get(id: string): Promise<{ produceTokenRequired: boolean | null; consumeTokenRequired: boolean | null }>', async () => {
     const client = createClient()
     const id = 'id'
 
@@ -27,29 +27,29 @@ describe('TokenPolicyClient', () => {
 
     expect(result).toBePromise()
     expect(proResult).toStrictEqual({
-      publishTokenRequired: true
+      produceTokenRequired: true
     , consumeTokenRequired: false
     , clearTokenRequired: null
     })
   })
 
-  it('setPublishTokenRequired(id: string, val: boolean): Promise<void>', async () => {
+  it('setProduceTokenRequired(id: string, val: boolean): Promise<void>', async () => {
     const client = createClient()
     const id = 'id'
     const val = true
 
-    const result = client.setPublishTokenRequired(id, val)
+    const result = client.setProduceTokenRequired(id, val)
     const proResult = await result
 
     expect(result).toBePromise()
     expect(proResult).toBeUndefined()
   })
 
-  it('removePublishTokenRequired(id: string): Promise<void>', async () => {
+  it('removeProduceTokenRequired(id: string): Promise<void>', async () => {
     const client = createClient()
     const id = 'id'
 
-    const result = client.removePublishTokenRequired(id)
+    const result = client.removeProduceTokenRequired(id)
     const proResult = await result
 
     expect(result).toBePromise()

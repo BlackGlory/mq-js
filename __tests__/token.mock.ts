@@ -20,7 +20,7 @@ export const server = setupServer(
     , ctx.json([
         {
           token: 'token'
-        , publish: true
+        , produce: true
         , consume: false
         , clear: false
         }
@@ -28,13 +28,13 @@ export const server = setupServer(
     )
   })
 
-, rest.put('/api/mq/:id/tokens/:token/publish', (req, res, ctx) => {
+, rest.put('/api/mq/:id/tokens/:token/produce', (req, res, ctx) => {
     if (badAuth(req)) return res(ctx.status(401))
 
     return res(ctx.status(204))
   })
 
-, rest.delete('/api/mq/:id/tokens/:token/publish', (req, res, ctx) => {
+, rest.delete('/api/mq/:id/tokens/:token/produce', (req, res, ctx) => {
     if (badAuth(req)) return res(ctx.status(401))
 
     return res(ctx.status(204))

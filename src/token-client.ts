@@ -6,7 +6,7 @@ import { ok, toJSON } from 'extra-response'
 
 interface TokenInfo {
   token: string
-  publish: boolean
+  produce: boolean
   consume: boolean
   clear: boolean
 }
@@ -43,20 +43,20 @@ export class TokenClient {
       .then(toJSON) as TokenInfo[]
   }
 
-  async addPublishToken(id: string, token: string): Promise<void> {
+  async addProduceToken(id: string, token: string): Promise<void> {
     const req = put(
       url(this.options.server)
-    , pathname(`/api/mq/${id}/tokens/${token}/publish`)
+    , pathname(`/api/mq/${id}/tokens/${token}/produce`)
     , password(this.options.adminPassword)
     )
 
     await fetch(req).then(ok)
   }
 
-  async removePublishToken(id: string, token: string): Promise<void> {
+  async removeProduceToken(id: string, token: string): Promise<void> {
     const req = del(
       url(this.options.server)
-    , pathname(`/api/mq/${id}/tokens/${token}/publish`)
+    , pathname(`/api/mq/${id}/tokens/${token}/produce`)
     , password(this.options.adminPassword)
     )
 

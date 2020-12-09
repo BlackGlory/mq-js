@@ -28,30 +28,30 @@ describe('TokenClient', () => {
     expect(result).toBePromise()
     expect(proResult).toStrictEqual([{
       token: 'token'
-    , publish: true
+    , produce: true
     , consume: false
     , clear: false
     }])
   })
 
-  it('addPublishToken(id: string, token: string): Promise<void>', async () => {
+  it('addProduceToken(id: string, token: string): Promise<void>', async () => {
     const client = createClient()
     const id = 'id'
     const token = 'token'
 
-    const result = client.addPublishToken(id, token)
+    const result = client.addProduceToken(id, token)
     const proResult = await result
 
     expect(result).toBePromise()
     expect(proResult).toBeUndefined()
   })
 
-  it('removePublishToken(id: string, token: string): Promise<void>', async () => {
+  it('removeProduceToken(id: string, token: string): Promise<void>', async () => {
     const client = createClient()
     const id = 'id'
     const token = 'token'
 
-    const result = client.removePublishToken(id, token)
+    const result = client.removeProduceToken(id, token)
     const proResult = await result
 
     expect(result).toBePromise()
