@@ -47,6 +47,14 @@ export const server = setupServer(
     )
   })
 
+, rest.delete('/mq/:mqId', (req, res, ctx) => {
+    if (badToken(req)) return res(ctx.status(401))
+
+    return res(
+      ctx.status(200)
+    )
+  })
+
 , rest.get('/mq/:mqId/stats', (req, res, ctx) => {
     return res(
       ctx.status(200)

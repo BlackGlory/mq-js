@@ -78,6 +78,29 @@ describe('TokenPolicyClient', () => {
     expect(result).toBePromise()
     expect(proResult).toBeUndefined()
   })
+
+  it('setClearTokenRequired(id: string, val: boolean): Promise<void>', async () => {
+    const client = createClient()
+    const id = 'id'
+    const val = true
+
+    const result = client.setClearTokenRequired(id, val)
+    const proResult = await result
+
+    expect(result).toBePromise()
+    expect(proResult).toBeUndefined()
+  })
+
+  it('removeClearTokenRequired(id: string): Promise<void>', async () => {
+    const client = createClient()
+    const id = 'id'
+
+    const result = client.removeClearTokenRequired(id)
+    const proResult = await result
+
+    expect(result).toBePromise()
+    expect(proResult).toBeUndefined()
+  })
 })
 
 function createClient() {

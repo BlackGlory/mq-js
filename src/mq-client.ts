@@ -97,6 +97,17 @@ export class MQClient {
     return this.consume(queueId, messageId, options)
   }
 
+  async clear(queueId: string, options: { token?: string } = {}): Promise<void> {
+    const token = options.token ?? this.options.token
+    const req = del(
+      url(this.options.server)
+    , pathname(`/mq/${queueId}`)
+    , token && searchParam('token', token)
+    )
+
+    await fetch(req).then(ok)
+  }
+
   async stats(queueId: string): Promise<Stats> {
     const req = get(
       url(this.options.server)

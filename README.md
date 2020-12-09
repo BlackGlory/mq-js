@@ -81,6 +81,12 @@ MQClient#consume(queueId: string, messageId: string, options?: { token?: string 
 MQClient#del(queueId: string, messageId: string, options?: { token?: string }): Promise<void>
 ```
 
+#### clear
+
+```ts
+MQClient#clear(queueId: string, messageId: string, options?: { token?: string }): Promise<void>
+```
+
 #### stats
 
 ```ts

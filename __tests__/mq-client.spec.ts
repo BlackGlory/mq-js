@@ -106,6 +106,17 @@ describe('MQClient', () => {
     expect(proResult).toBeUndefined()
   })
 
+  it('clear(queueId: string, options?: { token?: string }): Promise<void>', async () => {
+    const client = createClient()
+    const queueId = 'queue-id'
+
+    const result = client.clear(queueId)
+    const proResult = await result
+
+    expect(result).toBePromise()
+    expect(proResult).toBeUndefined()
+  })
+
   it('stats(queueId: string): Promise<{ draft: number; waiting: number; active: number; completed: number }>', async () => {
     const client = createClient()
     const queueId = 'queue-id'
