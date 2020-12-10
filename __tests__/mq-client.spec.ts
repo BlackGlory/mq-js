@@ -47,11 +47,11 @@ describe('MQClient', () => {
     expect(proResult).toBeUndefined()
   })
 
-  it('active(queueId: string, options?: { token?: string }): Promise<string>', async () => {
+  it('order(queueId: string, options?: { token?: string }): Promise<string>', async () => {
     const client = createClient()
     const queueId = 'queue-id'
 
-    const result = client.active(queueId)
+    const result = client.order(queueId)
     const proResult = await result
 
     expect(result).toBePromise()
@@ -117,7 +117,7 @@ describe('MQClient', () => {
     expect(proResult).toBeUndefined()
   })
 
-  it('stats(queueId: string): Promise<{ draft: number; waiting: number; active: number; completed: number }>', async () => {
+  it('stats(queueId: string): Promise<Stats>', async () => {
     const client = createClient()
     const queueId = 'queue-id'
 
@@ -126,8 +126,9 @@ describe('MQClient', () => {
 
     expect(result).toBePromise()
     expect(proResult).toStrictEqual({
-      draft: 0
+      drafting: 0
     , waiting: 0
+    , ordered: 0
     , active: 0
     , completed: 0
     })

@@ -59,8 +59,9 @@ export const server = setupServer(
     return res(
       ctx.status(200)
     , ctx.json({
-        draft: 0
+        drafting: 0
       , waiting: 0
+      , ordered: 0
       , active: 0
       , completed: 0
       })

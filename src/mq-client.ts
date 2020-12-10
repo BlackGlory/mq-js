@@ -5,8 +5,9 @@ import { url, pathname, json, text, searchParam } from 'extra-request/lib/es2018
 import { ok, toText, toJSON } from 'extra-response'
 
 interface Stats {
-  draft: number
+  drafting: number
   waiting: number
+  ordered: number
   active: number
   completed: number
 }
@@ -61,7 +62,7 @@ export class MQClient {
     await fetch(req).then(ok)
   }
 
-  async active(queueId: string, options: { token?: string } = {}): Promise<string> {
+  async order(queueId: string, options: { token?: string } = {}): Promise<string> {
     const token = options.token ?? this.options.token
     const req = get(
       url(this.options.server)

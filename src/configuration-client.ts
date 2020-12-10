@@ -6,9 +6,9 @@ import { ok, toJSON } from 'extra-response'
 
 interface Configuration {
   unique: boolean | null
-  enqueueTimeout: number | null
-  dequeueTimeout: number | null
-  consumeTimeout: number | null
+  draftingTimeout: number | null
+  orderedTimeout: number | null
+  activeTimeout: number | null
   concurrency: number | null
   throttle: {
     duration: number
@@ -69,10 +69,10 @@ export class ConfigurationClient {
     await fetch(req).then(ok)
   }
 
-  async setEnqueueTimeout(id: string, val: number): Promise<void> {
+  async setDraftingTimeout(id: string, val: number): Promise<void> {
     const req = put(
       url(this.options.server)
-    , pathname(`/api/mq/${id}/configurations/enqueue-timeout`)
+    , pathname(`/api/mq/${id}/configurations/drafting-timeout`)
     , password(this.options.adminPassword)
     , json(val)
     )
@@ -80,20 +80,20 @@ export class ConfigurationClient {
     await fetch(req).then(ok)
   }
 
-  async removeEnqueueTimeout(id: string): Promise<void> {
+  async removeDraftingTimeout(id: string): Promise<void> {
     const req = del(
       url(this.options.server)
-    , pathname(`/api/mq/${id}/configurations/enqueue-timeout`)
+    , pathname(`/api/mq/${id}/configurations/drafting-timeout`)
     , password(this.options.adminPassword)
     )
 
     await fetch(req).then(ok)
   }
 
-  async setDequeueTimeout(id: string, val: number): Promise<void> {
+  async setOrderedTimeout(id: string, val: number): Promise<void> {
     const req = put(
       url(this.options.server)
-    , pathname(`/api/mq/${id}/configurations/dequeue-timeout`)
+    , pathname(`/api/mq/${id}/configurations/ordered-timeout`)
     , password(this.options.adminPassword)
     , json(val)
     )
@@ -101,20 +101,20 @@ export class ConfigurationClient {
     await fetch(req).then(ok)
   }
 
-  async removeDequeueTimeout(id: string): Promise<void> {
+  async removeOrderedTimeout(id: string): Promise<void> {
     const req = del(
       url(this.options.server)
-    , pathname(`/api/mq/${id}/configurations/dequeue-timeout`)
+    , pathname(`/api/mq/${id}/configurations/ordered-timeout`)
     , password(this.options.adminPassword)
     )
 
     await fetch(req).then(ok)
   }
 
-  async setConsumeTimeout(id: string, val: number): Promise<void> {
+  async setActiveTimeout(id: string, val: number): Promise<void> {
     const req = put(
       url(this.options.server)
-    , pathname(`/api/mq/${id}/configurations/consume-timeout`)
+    , pathname(`/api/mq/${id}/configurations/active-timeout`)
     , password(this.options.adminPassword)
     , json(val)
     )
@@ -122,10 +122,10 @@ export class ConfigurationClient {
     await fetch(req).then(ok)
   }
 
-  async removeConsumeTimeout(id: string): Promise<void> {
+  async removeActiveTimeout(id: string): Promise<void> {
     const req = del(
       url(this.options.server)
-    , pathname(`/api/mq/${id}/configurations/consume-timeout`)
+    , pathname(`/api/mq/${id}/configurations/active-timeout`)
     , password(this.options.adminPassword)
     )
 

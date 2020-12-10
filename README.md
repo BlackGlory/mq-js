@@ -51,10 +51,10 @@ MQClient#setJSON(
 ): Promise<void>
 ```
 
-#### active
+#### order
 
 ```ts
-MQClient#active(queueId: string, options?: { token?: string }): Promise<string>
+MQClient#order(queueId: string, options?: { token?: string }): Promise<string>
 ```
 
 #### get
@@ -91,8 +91,9 @@ MQClient#clear(queueId: string, messageId: string, options?: { token?: string })
 
 ```ts
 MQClient#stats(queueId: string): Promise<{
-  draft: number
+  drafting: number
   waiting: number
+  ordered: number
   active: number
   completed: number
 }>
@@ -146,9 +147,9 @@ MQManager#Configuration.getIds(): Promise<string[]>
 ```ts
 MQManager#Configuration.get(id: string): Promise<{
   unique: boolean | null
-  enqueueTimeout: number | null
-  dequeueTimeout: number | null
-  consumeTimeout: number | null
+  draftTimeout: number | null
+  orderedTimeout: number | null
+  activeTimeout: number | null
   concurrency: number | null
   throttle: {
     duration: number
@@ -169,40 +170,40 @@ MQManager#Configuration.setUnique(id: string, val: boolean): Promise<void>
 MQManager#Configuration.removeUnique(id: string): Promise<void>
 ```
 
-##### setEnqueueTimeout
+##### setDraftTimeout
 
 ```ts
-MQManager#Configuration.setEnqueueTimeout(id: string, val: number): Promise<void>
+MQManager#Configuration.setDraftTimeout(id: string, val: number): Promise<void>
 ```
 
-##### removeEnqueueTimeout
+##### removeDraftTimeout
 
 ```ts
-MQManager#Configuration.removeEnqueueTimeout(id: string): Promise<void>
+MQManager#Configuration.removeDraftTimeout(id: string): Promise<void>
 ```
 
-##### setDequeueTimeout
+##### setOrderedTimeout
 
 ```ts
-MQManager#Configuration.setDequeueTimeout(id: string, val : number): Promise<void>
+MQManager#Configuration.setOrderedTimeout(id: string, val : number): Promise<void>
 ```
 
-##### removeDequeueTimeout
+##### removeOrderedTimeout
 
 ```ts
-MQManager#Configuration.removeDequeueTimeout(id: string): Promise<void>
+MQManager#Configuration.removeOrderedTimeout(id: string): Promise<void>
 ```
 
-##### setConsumeTimeout
+##### setActiveTimeout
 
 ```ts
-MQManager#Configuration.setConsumeTimeout(id: string, val: number): Promise<void>
+MQManager#Configuration.setActiveTimeout(id: string, val: number): Promise<void>
 ```
 
-##### removeConsumeTimeout
+##### removeActiveTimeout
 
 ```ts
-MQManager#Configuration.removeConsumeTimeout(id: string): Promise<void>
+MQManager#Configuration.removeActiveTimeout(id: string): Promise<void>
 ```
 
 ##### setConcurrency

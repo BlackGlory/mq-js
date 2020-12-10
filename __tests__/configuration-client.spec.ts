@@ -28,9 +28,9 @@ describe('ConfigurationClient', () => {
     expect(result).toBePromise()
     expect(proResult).toStrictEqual({
       unique: null
-    , enqueueTimeout: null
-    , dequeueTimeout: null
-    , consumeTimeout: null
+    , draftingTimeout: null
+    , orderedTimeout: null
+    , activeTimeout: null
     , concurrency: null
     , throttle: null
     })
@@ -59,69 +59,69 @@ describe('ConfigurationClient', () => {
     expect(proResult).toBeUndefined()
   })
 
-  it('setEnqueueTimeout(id: string, val: number): Promise<void>', async () => {
+  it('setDraftingTimeout(id: string, val: number): Promise<void>', async () => {
     const client = createClient()
     const id = 'id'
     const val = 100
 
-    const result = client.setEnqueueTimeout(id, val)
+    const result = client.setDraftingTimeout(id, val)
     const proResult = await result
 
     expect(result).toBePromise()
     expect(proResult).toBeUndefined()
   })
 
-  it('removeEnqueueTimeout(id: string): Promise<void>', async () => {
+  it('removeDraftingTimeout(id: string): Promise<void>', async () => {
     const client = createClient()
     const id = 'id'
 
-    const result = client.removeEnqueueTimeout(id)
+    const result = client.removeDraftingTimeout(id)
     const proResult = await result
 
     expect(result).toBePromise()
     expect(proResult).toBeUndefined()
   })
 
-  it('setDequeueTimeout(id: string, val: number): Promise<void>', async () => {
-    const client = createClient()
-    const id = 'id'
-    const val = 100
-
-    const result = client.setDequeueTimeout(id, val)
-    const proResult = await result
-
-    expect(result).toBePromise()
-    expect(proResult).toBeUndefined()
-  })
-
-  it('removeDequeueTimeout(id: string): Promise<void>', async () => {
-    const client = createClient()
-    const id = 'id'
-
-    const result = client.removeDequeueTimeout(id)
-    const proResult = await result
-
-    expect(result).toBePromise()
-    expect(proResult).toBeUndefined()
-  })
-
-  it('setConsumeTimeout(id: string, val: number): Promise<void>', async () => {
+  it('setOrderedTimeout(id: string, val: number): Promise<void>', async () => {
     const client = createClient()
     const id = 'id'
     const val = 100
 
-    const result = client.setConsumeTimeout(id, val)
+    const result = client.setOrderedTimeout(id, val)
     const proResult = await result
 
     expect(result).toBePromise()
     expect(proResult).toBeUndefined()
   })
 
-  it('removeConsumeTimeout(id: string): Promise<void>', async () => {
+  it('removeOrderedTimeout(id: string): Promise<void>', async () => {
     const client = createClient()
     const id = 'id'
 
-    const result = client.removeConsumeTimeout(id)
+    const result = client.removeOrderedTimeout(id)
+    const proResult = await result
+
+    expect(result).toBePromise()
+    expect(proResult).toBeUndefined()
+  })
+
+  it('setActiveTimeout(id: string, val: number): Promise<void>', async () => {
+    const client = createClient()
+    const id = 'id'
+    const val = 100
+
+    const result = client.setActiveTimeout(id, val)
+    const proResult = await result
+
+    expect(result).toBePromise()
+    expect(proResult).toBeUndefined()
+  })
+
+  it('removeActiveTimeout(id: string): Promise<void>', async () => {
+    const client = createClient()
+    const id = 'id'
+
+    const result = client.removeActiveTimeout(id)
     const proResult = await result
 
     expect(result).toBePromise()
