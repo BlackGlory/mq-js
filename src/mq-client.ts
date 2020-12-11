@@ -83,9 +83,9 @@ export class MQClient {
     return this._get(queueId, messageId, options).then(toJSON)
   }
 
-  async consume(queueId: string, messageId: string, options: { token?: string } = {}): Promise<void> {
+  async complete(queueId: string, messageId: string, options: { token?: string } = {}): Promise<void> {
     const token = options.token ?? this.options.token
-    const req = del(
+    const req = post(
       url(this.options.server)
     , pathname(`/mq/${queueId}/messages/${messageId}`)
     , token && searchParam('token', token)
@@ -94,8 +94,15 @@ export class MQClient {
     await fetch(req).then(ok)
   }
 
-  async del(queueId: string, messageId: string, options?: { token?: string }): Promise<void> {
-    return this.consume(queueId, messageId, options)
+  async abandon(queueId: string, messageId: string, options: { token?: string } = {}): Promise<void> {
+    const token = options.token ?? this.options.token
+    const req = del(
+      url(this.options.server)
+    , pathname(`/mq/${queueId}/messages/${messageId}`)
+    , token && searchParam('token', token)
+    )
+
+    await fetch(req).then(ok)
   }
 
   async clear(queueId: string, options: { token?: string } = {}): Promise<void> {

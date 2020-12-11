@@ -82,24 +82,24 @@ describe('MQClient', () => {
     expect(proResult).toBe(null)
   })
 
-  it('consume(queueId: string, messageId: string, options?: { token?: string }): Promise<void>', async () => {
+  it('complete(queueId: string, messageId: string, options?: { token?: string }): Promise<void>', async () => {
     const client = createClient()
     const queueId = 'queue-id'
     const messageId = 'message-id'
 
-    const result = client.consume(queueId, messageId)
+    const result = client.complete(queueId, messageId)
     const proResult = await result
 
     expect(result).toBePromise()
     expect(proResult).toBeUndefined()
   })
 
-  it('del(queueId: string, messageId: string, options?: { token?: string }): Promise<void>', async () => {
+  it('abandon(queueId: string, messageId: string, options?: { token?: string }): Promise<void>', async () => {
     const client = createClient()
     const queueId = 'queue-id'
     const messageId = 'message-id'
 
-    const result = client.del(queueId, messageId)
+    const result = client.abandon(queueId, messageId)
     const proResult = await result
 
     expect(result).toBePromise()

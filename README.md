@@ -69,16 +69,16 @@ MQClient#get(queueId: string, messageId: string, options?: { token?: string }): 
 MQClient#getJSON(queueId: string, messageId: string, options?: { token?: string }): Promise<Json>
 ```
 
-#### consume
+#### complete
 
 ```ts
-MQClient#consume(queueId: string, messageId: string, options?: { token?: string }): Promise<void>
+MQClient#complete(queueId: string, messageId: string, options?: { token?: string }): Promise<void>
 ```
 
-#### del
+#### abandon
 
 ```ts
-MQClient#del(queueId: string, messageId: string, options?: { token?: string }): Promise<void>
+MQClient#abandon(queueId: string, messageId: string, options?: { token?: string }): Promise<void>
 ```
 
 #### clear

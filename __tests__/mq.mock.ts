@@ -39,6 +39,14 @@ export const server = setupServer(
     )
   })
 
+, rest.post('/mq/:mqId/messages/:messageId', (req, res, ctx) => {
+    if (badToken(req)) return res(ctx.status(401))
+
+    return res(
+      ctx.status(200)
+    )
+  })
+
 , rest.delete('/mq/:mqId/messages/:messageId', (req, res, ctx) => {
     if (badToken(req)) return res(ctx.status(401))
 
