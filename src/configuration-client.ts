@@ -1,8 +1,10 @@
 import { fetch } from 'cross-fetch'
 import { password } from './utils'
 import { get, put, del } from 'extra-request'
-import { url, pathname, json } from 'extra-request/lib/es2018/transformers'
+import { url, pathname, json, signal } from 'extra-request/lib/es2018/transformers'
 import { ok, toJSON } from 'extra-response'
+import type { MQManagerOptions } from './mq-manager'
+import { MQManagerRequestOptions } from './types'
 
 interface Configuration {
   unique: boolean | null
@@ -16,19 +18,15 @@ interface Configuration {
   } | null
 }
 
-export interface ConfigurationClientOptions {
-  server: string
-  adminPassword: string
-}
-
 export class ConfigurationClient {
-  constructor(private options: ConfigurationClientOptions) {}
+  constructor(private options: MQManagerOptions) {}
 
-  async getIds(): Promise<string[]> {
+  async getIds(options: MQManagerRequestOptions = {}): Promise<string[]> {
     const req = get(
       url(this.options.server)
     , pathname('/api/mq-with-configurations')
     , password(this.options.adminPassword)
+    , options.signal && signal(options.signal)
     )
 
     return await fetch(req)
@@ -36,11 +34,12 @@ export class ConfigurationClient {
       .then(toJSON) as string[]
   }
 
-  async get(id: string): Promise<Configuration> {
+  async get(id: string, options: MQManagerRequestOptions = {}): Promise<Configuration> {
     const req = get(
       url(this.options.server)
     , pathname(`/api/mq/${id}/configurations`)
     , password(this.options.adminPassword)
+    , options.signal && signal(options.signal)
     )
 
     return await fetch(req)
@@ -48,106 +47,116 @@ export class ConfigurationClient {
       .then(toJSON) as Configuration
   }
 
-  async setUnique(id: string, val: boolean): Promise<void> {
+  async setUnique(id: string, val: boolean, options: MQManagerRequestOptions = {}): Promise<void> {
     const req = put(
       url(this.options.server)
     , pathname(`/api/mq/${id}/configurations/unique`)
     , password(this.options.adminPassword)
     , json(val)
+    , options.signal && signal(options.signal)
     )
 
     await fetch(req).then(ok)
   }
 
-  async removeUnique(id: string): Promise<void> {
+  async removeUnique(id: string, options: MQManagerRequestOptions = {}): Promise<void> {
     const req = del(
       url(this.options.server)
     , pathname(`/api/mq/${id}/configurations/unique`)
     , password(this.options.adminPassword)
+    , options.signal && signal(options.signal)
     )
 
     await fetch(req).then(ok)
   }
 
-  async setDraftingTimeout(id: string, val: number): Promise<void> {
+  async setDraftingTimeout(id: string, val: number, options: MQManagerRequestOptions = {}): Promise<void> {
     const req = put(
       url(this.options.server)
     , pathname(`/api/mq/${id}/configurations/drafting-timeout`)
     , password(this.options.adminPassword)
     , json(val)
+    , options.signal && signal(options.signal)
     )
 
     await fetch(req).then(ok)
   }
 
-  async removeDraftingTimeout(id: string): Promise<void> {
+  async removeDraftingTimeout(id: string, options: MQManagerRequestOptions = {}): Promise<void> {
     const req = del(
       url(this.options.server)
     , pathname(`/api/mq/${id}/configurations/drafting-timeout`)
     , password(this.options.adminPassword)
+    , options.signal && signal(options.signal)
     )
 
     await fetch(req).then(ok)
   }
 
-  async setOrderedTimeout(id: string, val: number): Promise<void> {
+  async setOrderedTimeout(id: string, val: number, options: MQManagerRequestOptions = {}): Promise<void> {
     const req = put(
       url(this.options.server)
     , pathname(`/api/mq/${id}/configurations/ordered-timeout`)
     , password(this.options.adminPassword)
     , json(val)
+    , options.signal && signal(options.signal)
     )
 
     await fetch(req).then(ok)
   }
 
-  async removeOrderedTimeout(id: string): Promise<void> {
+  async removeOrderedTimeout(id: string, options: MQManagerRequestOptions = {}): Promise<void> {
     const req = del(
       url(this.options.server)
     , pathname(`/api/mq/${id}/configurations/ordered-timeout`)
     , password(this.options.adminPassword)
+    , options.signal && signal(options.signal)
     )
 
     await fetch(req).then(ok)
   }
 
-  async setActiveTimeout(id: string, val: number): Promise<void> {
+  async setActiveTimeout(id: string, val: number, options: MQManagerRequestOptions = {}): Promise<void> {
     const req = put(
       url(this.options.server)
     , pathname(`/api/mq/${id}/configurations/active-timeout`)
     , password(this.options.adminPassword)
     , json(val)
+    , options.signal && signal(options.signal)
     )
 
     await fetch(req).then(ok)
   }
 
-  async removeActiveTimeout(id: string): Promise<void> {
+  async removeActiveTimeout(id: string, options: MQManagerRequestOptions = {}): Promise<void> {
     const req = del(
       url(this.options.server)
     , pathname(`/api/mq/${id}/configurations/active-timeout`)
     , password(this.options.adminPassword)
+    , options.signal && signal(options.signal)
     )
 
     await fetch(req).then(ok)
   }
 
-  async setConcurrency(id: string, val: number): Promise<void> {
+  async setConcurrency(id: string, val: number, options: MQManagerRequestOptions = {}): Promise<void> {
     const req = put(
       url(this.options.server)
     , pathname(`/api/mq/${id}/configurations/concurrency`)
     , password(this.options.adminPassword)
     , json(val)
+    , options.signal && signal(options.signal)
     )
 
     await fetch(req).then(ok)
   }
 
-  async removeConcurrency(id: string): Promise<void> {
+  async removeConcurrency(id: string, options: MQManagerRequestOptions = {}): Promise<void> {
     const req = del(
       url(this.options.server)
     , pathname(`/api/mq/${id}/configurations/concurrency`)
     , password(this.options.adminPassword)
+    , options.signal && signal(options.signal)
     )
 
     await fetch(req).then(ok)
@@ -159,22 +168,25 @@ export class ConfigurationClient {
       duration: number
       limit: number
     }
+  , options: MQManagerRequestOptions = {}
   ): Promise<void> {
     const req = put(
       url(this.options.server)
     , pathname(`/api/mq/${id}/configurations/throttle`)
     , password(this.options.adminPassword)
     , json(val)
+    , options.signal && signal(options.signal)
     )
 
     await fetch(req).then(ok)
   }
 
-  async removeThrottle(id: string): Promise<void> {
+  async removeThrottle(id: string, options: MQManagerRequestOptions = {}): Promise<void> {
     const req = del(
       url(this.options.server)
     , pathname(`/api/mq/${id}/configurations/throttle`)
     , password(this.options.adminPassword)
+    , options.signal && signal(options.signal)
     )
 
     await fetch(req).then(ok)
