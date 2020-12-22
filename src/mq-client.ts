@@ -1,6 +1,5 @@
 import { fetch } from 'cross-fetch'
 import { post, put, get, del } from 'extra-request'
-import { Json } from '@blackglory/types'
 import { url, pathname, json, text, searchParam, signal } from 'extra-request/lib/es2018/transformers'
 import { ok, toText, toJSON } from 'extra-response'
 
@@ -57,7 +56,7 @@ export class MQClient {
     await fetch(req).then(ok)
   }
 
-  async setJSON(queueId: string, messageId: string, payload: Json, options: MQClientRequestOptions = {}): Promise<void> {
+  async setJSON<T>(queueId: string, messageId: string, payload: T, options: MQClientRequestOptions = {}): Promise<void> {
     const token = options.token ?? this.options.token
     const req = put(
       url(this.options.server)
@@ -88,8 +87,8 @@ export class MQClient {
     return this._get(queueId, messageId, options).then(toText)
   }
 
-  async getJSON(queueId: string, messageId: string, options?: MQClientRequestOptions): Promise<Json> {
-    return this._get(queueId, messageId, options).then(toJSON)
+  async getJSON<T>(queueId: string, messageId: string, options?: MQClientRequestOptions): Promise<T> {
+    return this._get(queueId, messageId, options).then(toJSON) as Promise<T>
   }
 
   async complete(queueId: string, messageId: string, options: MQClientRequestOptions = {}): Promise<void> {

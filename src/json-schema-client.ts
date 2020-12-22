@@ -23,7 +23,7 @@ export class JsonSchemaClient {
       .then(toJSON) as string[]
   }
 
-  async get(id: string, options: MQManagerRequestOptions = {}): Promise<Json> {
+  async get<T>(id: string, options: MQManagerRequestOptions = {}): Promise<T> {
     const req = get(
       url(this.options.server)
     , pathname(`/api/mq/${id}/json-schema`)
@@ -33,7 +33,7 @@ export class JsonSchemaClient {
 
     return await fetch(req)
       .then(ok)
-      .then(toJSON)
+      .then(toJSON) as T
   }
 
   async set(id: string, schema: Json, options: MQManagerRequestOptions = {}): Promise<void> {
