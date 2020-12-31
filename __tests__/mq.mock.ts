@@ -67,7 +67,8 @@ export const server = setupServer(
     return res(
       ctx.status(200)
     , ctx.json({
-        drafting: 0
+        id: req.params.mqId
+      , drafting: 0
       , waiting: 0
       , ordered: 0
       , active: 0

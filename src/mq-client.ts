@@ -4,6 +4,7 @@ import { url, pathname, json, text, searchParam, signal } from 'extra-request/li
 import { ok, toText, toJSON } from 'extra-response'
 
 interface Stats {
+  id: string
   drafting: number
   waiting: number
   ordered: number

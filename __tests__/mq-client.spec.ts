@@ -126,7 +126,8 @@ describe('MQClient', () => {
 
     expect(result).toBePromise()
     expect(proResult).toStrictEqual({
-      drafting: 0
+      id: queueId
+    , drafting: 0
     , waiting: 0
     , ordered: 0
     , active: 0

@@ -98,6 +98,7 @@ MQClient#clear(queueId: string, messageId: string, options?: MQClientRequestOpti
 
 ```ts
 MQClient#stats(queueId: string, options?: MQClientRequestOptions): Promise<{
+  id: string
   drafting: number
   waiting: number
   ordered: number
