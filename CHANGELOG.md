@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.8](https://github.com/BlackGlory/mq-js/compare/v0.5.7...v0.5.8) (2021-01-03)
+
+
+### Features
+
+* support X-MQ-Priority ([9a6cb8a](https://github.com/BlackGlory/mq-js/commit/9a6cb8a5f1841b43caa0dfec83e0d7e63b9a6965))
+
 ### [0.5.7](https://github.com/BlackGlory/mq-js/compare/v0.5.6...v0.5.7) (2020-12-31)
 
 
