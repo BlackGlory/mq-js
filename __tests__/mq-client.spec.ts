@@ -58,7 +58,7 @@ describe('MQClient', () => {
     expect(proResult).toBe('id')
   })
 
-  it('get(queueId: string, messageId: string, options?: { token?: string }): Promise<string>', async () => {
+  it('get(queueId: string, messageId: string, options?: { token?: string }): Promise<{ priority: number | null; message: string }>', async () => {
     const client = createClient()
     const queueId = 'queue-id'
     const messageId = 'message-id'
@@ -67,10 +67,13 @@ describe('MQClient', () => {
     const proResult = await result
 
     expect(result).toBePromise()
-    expect(proResult).toBe('null')
+    expect(proResult).toEqual({
+      priority: 1
+    , message: 'null'
+    })
   })
 
-  it('getJSON(queueId: string, messageId: string, options?: { token?: string }): Promise<Json>', async () => {
+  it('getJSON(queueId: string, messageId: string, options?: { token?: string }): Promise<{ priority: number | null; message: Json }>', async () => {
     const client = createClient()
     const queueId = 'queue-id'
     const messageId = 'message-id'
@@ -79,7 +82,10 @@ describe('MQClient', () => {
     const proResult = await result
 
     expect(result).toBePromise()
-    expect(proResult).toBe(null)
+    expect(proResult).toEqual({
+      priority: 1
+    , message: null
+    })
   })
 
   it('complete(queueId: string, messageId: string, options?: { token?: string }): Promise<void>', async () => {

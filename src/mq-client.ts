@@ -84,12 +84,20 @@ export class MQClient {
       .then(toText)
   }
 
-  async get(queueId: string, messageId: string, options?: MQClientRequestOptions): Promise<string> {
-    return this._get(queueId, messageId, options).then(toText)
+  async get(queueId: string, messageId: string, options?: MQClientRequestOptions): Promise<{ priority: number | null, message: string }> {
+    const res = await this._get(queueId, messageId, options)
+    const priority = parsePriority(res)
+    const message = await toText(res)
+
+    return { priority, message }
   }
 
-  async getJSON<T>(queueId: string, messageId: string, options?: MQClientRequestOptions): Promise<T> {
-    return this._get(queueId, messageId, options).then(toJSON) as Promise<T>
+  async getJSON<T>(queueId: string, messageId: string, options?: MQClientRequestOptions): Promise<{ priority: number | null, message: T }> {
+    const res = await this._get(queueId, messageId, options)
+    const priority = parsePriority(res)
+    const message = await toJSON(res) as T
+
+    return { priority, message }
   }
 
   async complete(queueId: string, messageId: string, options: MQClientRequestOptions = {}): Promise<void> {
@@ -150,5 +158,14 @@ export class MQClient {
     )
 
     return await fetch(req).then(ok)
+  }
+}
+
+function parsePriority(res: Response): number | null {
+  const priority = res.headers.get('X-MQ-Priority')
+  if (priority && priority !== 'null') {
+    return Number.parseInt(priority, 10)
+  } else {
+    return null
   }
 }

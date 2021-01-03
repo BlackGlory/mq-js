@@ -67,13 +67,19 @@ MQClient#order(queueId: string, options?: MQClientRequestOptions): Promise<strin
 #### get
 
 ```ts
-MQClient#get(queueId: string, messageId: string, options?: MQClientRequestOptions): Promise<string>
+MQClient#get(queueId: string, messageId: string, options?: MQClientRequestOptions): Promise<{
+  priority: number | null
+  message: string
+}>
 ```
 
 #### getJSON
 
 ```ts
-MQClient#getJSON(queueId: string, messageId: string, options?: MQClientRequestOptions): Promise<Json>
+MQClient#getJSON(queueId: string, messageId: string, options?: MQClientRequestOptions): Promise<{
+  priority: number | null
+  message: Json
+}>
 ```
 
 #### complete
