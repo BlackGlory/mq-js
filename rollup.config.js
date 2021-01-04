@@ -1,7 +1,9 @@
 import typescript from '@rollup/plugin-typescript'
 import commonjs from '@rollup/plugin-commonjs'
 import resolve from '@rollup/plugin-node-resolve'
+import json from '@rollup/plugin-json'
 import { terser } from 'rollup-plugin-terser'
+import analyze from 'rollup-plugin-analyzer'
 
 const UMD_NAME = 'MQ'
 
@@ -12,8 +14,10 @@ function createOptions({ directory, target }) {
     , output: createOutput('index')
     , plugins: [
         typescript({ target })
-      , resolve()
+      , json()
+      , resolve({ browser: true })
       , commonjs()
+      , analyze({ summaryOnly: true })
       ]
     }
   , {
@@ -21,7 +25,8 @@ function createOptions({ directory, target }) {
     , output: createMinification('index')
     , plugins: [
         typescript({ target })
-      , resolve()
+      , json()
+      , resolve({ browser: true })
       , commonjs()
       , terser()
       ]
