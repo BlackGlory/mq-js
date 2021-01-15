@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.11](https://github.com/BlackGlory/mq-js/compare/v0.5.10...v0.5.11) (2021-01-15)
+
+
+### Bug Fixes
+
+* esm bundle ([a61ea63](https://github.com/BlackGlory/mq-js/commit/a61ea636425285a072b68447198945094a73d8a4))
+
 ### [0.5.10](https://github.com/BlackGlory/mq-js/compare/v0.5.9...v0.5.10) (2021-01-08)
 
 ### [0.5.9](https://github.com/BlackGlory/mq-js/compare/v0.5.8...v0.5.9) (2021-01-04)
