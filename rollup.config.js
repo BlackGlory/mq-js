@@ -4,19 +4,28 @@ import resolve from '@rollup/plugin-node-resolve'
 import json from '@rollup/plugin-json'
 import { terser } from 'rollup-plugin-terser'
 import analyze from 'rollup-plugin-analyzer'
+import replace from '@rollup/plugin-replace'
 
 const UMD_NAME = 'MQ'
 
 function createOptions({ directory, target }) {
+  const commonPlugins = [
+    replace({
+      'Object.defineProperty(exports, "__esModule", { value: true });': ''
+    , delimiters: ['\n', '\n']
+    })
+  , typescript({ target })
+  , json()
+  , resolve({ browser: true })
+  , commonjs()
+  ]
+
   return [
     {
       input: 'src/index.ts'
     , output: createOutput('index')
     , plugins: [
-        typescript({ target })
-      , json()
-      , resolve({ browser: true })
-      , commonjs()
+        ...commonPlugins
       , analyze({ summaryOnly: true })
       ]
     }
@@ -24,10 +33,7 @@ function createOptions({ directory, target }) {
       input: 'src/index.ts'
     , output: createMinification('index')
     , plugins: [
-        typescript({ target })
-      , json()
-      , resolve({ browser: true })
-      , commonjs()
+        ...commonPlugins
       , terser()
       ]
     }
