@@ -58,7 +58,7 @@ describe('MQClient', () => {
     expect(proResult).toBe('id')
   })
 
-  it('get(queueId: string, messageId: string, options?: { token?: string }): Promise<{ priority: number | null; message: string }>', async () => {
+  it('get(queueId: string, messageId: string, options?: { token?: string }): Promise<{ priority: number | null; payload: string }>', async () => {
     const client = createClient()
     const queueId = 'queue-id'
     const messageId = 'message-id'
@@ -69,11 +69,11 @@ describe('MQClient', () => {
     expect(result).toBePromise()
     expect(proResult).toEqual({
       priority: 1
-    , message: 'null'
+    , payload: 'null'
     })
   })
 
-  it('getJSON(queueId: string, messageId: string, options?: { token?: string }): Promise<{ priority: number | null; message: Json }>', async () => {
+  it('getJSON(queueId: string, messageId: string, options?: { token?: string }): Promise<{ priority: number | null; payload: Json }>', async () => {
     const client = createClient()
     const queueId = 'queue-id'
     const messageId = 'message-id'
@@ -84,7 +84,7 @@ describe('MQClient', () => {
     expect(result).toBePromise()
     expect(proResult).toEqual({
       priority: 1
-    , message: null
+    , payload: null
     })
   })
 

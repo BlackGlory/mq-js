@@ -84,20 +84,20 @@ export class MQClient {
       .then(toText)
   }
 
-  async get(queueId: string, messageId: string, options?: MQClientRequestOptions): Promise<{ priority: number | null, message: string }> {
+  async get(queueId: string, messageId: string, options?: MQClientRequestOptions): Promise<{ priority: number | null, payload: string }> {
     const res = await this._get(queueId, messageId, options)
     const priority = parsePriority(res)
-    const message = await toText(res)
+    const payload = await toText(res)
 
-    return { priority, message }
+    return { priority, payload }
   }
 
-  async getJSON<T>(queueId: string, messageId: string, options?: MQClientRequestOptions): Promise<{ priority: number | null, message: T }> {
+  async getJSON<T>(queueId: string, messageId: string, options?: MQClientRequestOptions): Promise<{ priority: number | null, payload: T }> {
     const res = await this._get(queueId, messageId, options)
     const priority = parsePriority(res)
-    const message = await toJSON(res) as T
+    const payload = await toJSON(res) as T
 
-    return { priority, message }
+    return { priority, payload }
   }
 
   async complete(queueId: string, messageId: string, options: MQClientRequestOptions = {}): Promise<void> {
