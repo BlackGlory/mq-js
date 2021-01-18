@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.6.0](https://github.com/BlackGlory/mq-js/compare/v0.5.11...v0.6.0) (2021-01-18)
+
+
+### ⚠ BREAKING CHANGES
+
+* message => payload
+
+### Features
+
+* rename message to payload ([e8d8ca8](https://github.com/BlackGlory/mq-js/commit/e8d8ca88451c390e4994edb2221377a418441c1c))
+
 ### [0.5.11](https://github.com/BlackGlory/mq-js/compare/v0.5.10...v0.5.11) (2021-01-15)
 
 
