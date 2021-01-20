@@ -4,26 +4,31 @@ import resolve from '@rollup/plugin-node-resolve'
 import json from '@rollup/plugin-json'
 import { terser } from 'rollup-plugin-terser'
 import analyze from 'rollup-plugin-analyzer'
-import alias from '@rollup/plugin-alias'
 import replace from '@rollup/plugin-replace'
 
 const UMD_NAME = 'MQ'
 
+export default [
+  ...createOptions({
+    directory: 'es2015'
+  , target: 'ES2015'
+  })
+, ...createOptions({
+    directory: 'es2018'
+  , target: 'ES2018'
+  })
+]
+
 function createOptions({ directory, target }) {
   const commonPlugins = [
-    alias({
-      entries: [
-        { find: 'papaparse', replacement: 'node_modules/papaparse/papaparse.min.js' }
-      ]
-    })
-  , replace({
+    replace({
       'Object.defineProperty(exports, "__esModule", { value: true });': ''
     , delimiters: ['\n', '\n']
     })
-  , typescript({ target })
-  , json()
   , resolve({ browser: true })
   , commonjs()
+  , json()
+  , typescript({ target })
   ]
 
   return [
@@ -77,14 +82,3 @@ function createOptions({ directory, target }) {
     ]
   }
 }
-
-export default [
-  ...createOptions({
-    directory: 'es2015'
-  , target: 'ES2015'
-  })
-, ...createOptions({
-    directory: 'es2018'
-  , target: 'ES2018'
-  })
-]
