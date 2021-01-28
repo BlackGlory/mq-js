@@ -1,5 +1,5 @@
 import { fetch } from 'extra-fetch'
-import { post, put, get, del } from 'extra-request'
+import { post, put, patch, get, del } from 'extra-request'
 import { url, pathname, json, text, searchParam, signal } from 'extra-request/lib/es2018/transformers'
 import { ok, toText, toJSON } from 'extra-response'
 
@@ -20,6 +20,10 @@ export interface MQClientOptions {
 export interface MQClientRequestOptions {
   signal?: AbortSignal
   token?: string
+}
+
+export interface MQClientRequestOptionsWithoutToken {
+  signal?: AbortSignal
 }
 
 export class MQClient {
@@ -100,9 +104,9 @@ export class MQClient {
     return { priority, payload }
   }
 
-  async complete(queueId: string, messageId: string, options: MQClientRequestOptions = {}): Promise<void> {
+  async abandon(queueId: string, messageId: string, options: MQClientRequestOptions = {}): Promise<void> {
     const token = options.token ?? this.options.token
-    const req = post(
+    const req = del(
       url(this.options.server)
     , pathname(`/mq/${queueId}/messages/${messageId}`)
     , token && searchParam('token', token)
@@ -112,11 +116,73 @@ export class MQClient {
     await fetch(req).then(ok)
   }
 
-  async abandon(queueId: string, messageId: string, options: MQClientRequestOptions = {}): Promise<void> {
+  async complete(queueId: string, messageId: string, options: MQClientRequestOptions = {}): Promise<void> {
+    const token = options.token ?? this.options.token
+    const req = patch(
+      url(this.options.server)
+    , pathname(`/mq/${queueId}/messages/${messageId}/complete`)
+    , token && searchParam('token', token)
+    , options.signal && signal(options.signal)
+    )
+
+    await fetch(req).then(ok)
+  }
+
+  async fail(queueId: string, messageId: string, options: MQClientRequestOptions = {}): Promise<void> {
+    const token = options.token ?? this.options.token
+    const req = patch(
+      url(this.options.server)
+    , pathname(`/mq/${queueId}/messages/${messageId}/fail`)
+    , token && searchParam('token', token)
+    , options.signal && signal(options.signal)
+    )
+
+    await fetch(req).then(ok)
+  }
+
+  async renew(queueId: string, messageId: string, options: MQClientRequestOptions = {}): Promise<void> {
+    const token = options.token ?? this.options.token
+    const req = patch(
+      url(this.options.server)
+    , pathname(`/mq/${queueId}/messages/${messageId}/renew`)
+    , token && searchParam('token', token)
+    , options.signal && signal(options.signal)
+    )
+
+    await fetch(req).then(ok)
+  }
+
+  async getAllFailedMessageIds(queueId: string, options: MQClientRequestOptions = {}): Promise<string[]> {
+    const token = options.token ?? this.options.token
+    const req = get(
+      url(this.options.server)
+    , pathname(`/mq/${queueId}/failed-messages`)
+    , token && searchParam('token', token)
+    , options.signal && signal(options.signal)
+    )
+
+    return await fetch(req)
+      .then(ok)
+      .then(toJSON) as string[]
+  }
+
+  async abandonAllFailedMessages(queueId: string, options: MQClientRequestOptions = {}): Promise<void> {
     const token = options.token ?? this.options.token
     const req = del(
       url(this.options.server)
-    , pathname(`/mq/${queueId}/messages/${messageId}`)
+    , pathname(`/mq/${queueId}/failed-messages`)
+    , token && searchParam('token', token)
+    , options.signal && signal(options.signal)
+    )
+
+    await fetch(req).then(ok)
+  }
+
+  async renewAllFailedMessages(queueId: string, options: MQClientRequestOptions = {}): Promise<void> {
+    const token = options.token ?? this.options.token
+    const req = patch(
+      url(this.options.server)
+    , pathname(`/mq/${queueId}/failed-messages/renew`)
     , token && searchParam('token', token)
     , options.signal && signal(options.signal)
     )
@@ -136,7 +202,7 @@ export class MQClient {
     await fetch(req).then(ok)
   }
 
-  async stats(queueId: string, options: MQClientRequestOptions = {}): Promise<Stats> {
+  async stats(queueId: string, options: MQClientRequestOptionsWithoutToken = {}): Promise<Stats> {
     const req = get(
       url(this.options.server)
     , pathname(`/mq/${queueId}/stats`)
@@ -146,6 +212,18 @@ export class MQClient {
     return await fetch(req)
       .then(ok)
       .then(toJSON) as Stats
+  }
+
+  async getAllQueueIds(options: MQClientRequestOptionsWithoutToken = {}): Promise<string[]> {
+    const req = get(
+      url(this.options.server)
+    , pathname('/mq')
+    , options.signal && signal(options.signal)
+    )
+
+    return await fetch(req)
+      .then(ok)
+      .then(toJSON) as string[]
   }
 
   private async _get(queueId: string, messageId: string, options: MQClientRequestOptions = {}): Promise<Response> {

@@ -26,6 +26,12 @@ interface MQClientRequestOptions {
 }
 ```
 
+```ts
+interface MQClientRequestOptionsWithoutToken {
+  signal?: AbortSignal
+}
+```
+
 #### draft
 
 ```ts
@@ -82,16 +88,46 @@ MQClient#getJSON(queueId: string, messageId: string, options?: MQClientRequestOp
 }>
 ```
 
+#### abandon
+
+```ts
+MQClient#abandon(queueId: string, messageId: string, options?: MQClientRequestOptions): Promise<void>
+```
+
 #### complete
 
 ```ts
 MQClient#complete(queueId: string, messageId: string, options?: MQClientRequestOptions): Promise<void>
 ```
 
-#### abandon
+#### fail
 
 ```ts
-MQClient#abandon(queueId: string, messageId: string, options?: MQClientRequestOptions): Promise<void>
+MQClient#fail(queueId: string, messageId: string, options?: MQClientRequestOptions): Promise<void>
+```
+
+#### renew
+
+```ts
+MQClient#renew(queueId: string, messageId: string, options?: MQClientRequestOptions): Promise<void>
+```
+
+#### getAllFailedMessageIds
+
+```ts
+MQClient#getAllFailedMessageIds(queueId: string, options?: MQClientRequestOptions): Promise<string[]>
+```
+
+#### abandonAllFailedMessages
+
+```ts
+MQClient#abandonAllFailedMessages(queueId: string, options?: MQClientRequestOptions): Promise<void>
+```
+
+#### renewAllFailedMessages
+
+```ts
+MQClient#renewAllFailedMessages(queueId: string, options?: MQClientRequestOptions): Promise<void>
 ```
 
 #### clear
@@ -103,7 +139,7 @@ MQClient#clear(queueId: string, messageId: string, options?: MQClientRequestOpti
 #### stats
 
 ```ts
-MQClient#stats(queueId: string, options?: MQClientRequestOptions): Promise<{
+MQClient#stats(queueId: string, options?: MQClientRequestOptionsWithoutToken): Promise<{
   id: string
   drafting: number
   waiting: number
@@ -111,6 +147,12 @@ MQClient#stats(queueId: string, options?: MQClientRequestOptions): Promise<{
   active: number
   completed: number
 }>
+```
+
+#### getAllQueueIds
+
+```ts
+MQClient#getAllQueueIds(options?: MQClientRequestOptionsWithoutToken): Promise<string[]>
 ```
 
 ### MQManager

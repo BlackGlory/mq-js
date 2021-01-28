@@ -8,7 +8,7 @@ export const server = setupServer(
     if (badJson(req)) return res(ctx.status(400))
 
     return res(
-      ctx.status(200)
+      ctx.status(204)
     , ctx.text('id')
     )
   })
@@ -40,19 +40,60 @@ export const server = setupServer(
     )
   })
 
-, rest.post('/mq/:mqId/messages/:messageId', (req, res, ctx) => {
-    if (badToken(req)) return res(ctx.status(401))
-
-    return res(
-      ctx.status(200)
-    )
-  })
-
 , rest.delete('/mq/:mqId/messages/:messageId', (req, res, ctx) => {
     if (badToken(req)) return res(ctx.status(401))
 
     return res(
-      ctx.status(200)
+      ctx.status(204)
+    )
+  })
+
+, rest.patch('/mq/:mqId/messages/:messageId/complete', (req, res, ctx) => {
+    if (badToken(req)) return res(ctx.status(401))
+
+    return res(
+      ctx.status(204)
+    )
+  })
+
+, rest.patch('/mq/:mqId/messages/:messageId/fail', (req, res, ctx) => {
+    if (badToken(req)) return res(ctx.status(401))
+
+    return res(
+      ctx.status(204)
+    )
+  })
+
+, rest.patch('/mq/:mqId/messages/:messageId/renew', (req, res, ctx) => {
+    if (badToken(req)) return res(ctx.status(401))
+
+    return res(
+      ctx.status(204)
+    )
+  })
+
+, rest.get('/mq/:mqId/failed-messages', (req, res, ctx) => {
+    if (badToken(req)) return res(ctx.status(401))
+
+    return res(
+      ctx.status(204)
+    , ctx.json(['id'])
+    )
+  })
+
+, rest.delete('/mq/:mqId/failed-messages', (req, res, ctx) => {
+    if (badToken(req)) return res(ctx.status(401))
+
+    return res(
+      ctx.status(204)
+    )
+  })
+
+, rest.patch('/mq/:mqId/failed-messages/renew', (req, res, ctx) => {
+    if (badToken(req)) return res(ctx.status(401))
+
+    return res(
+      ctx.status(204)
     )
   })
 
@@ -75,6 +116,13 @@ export const server = setupServer(
       , active: 0
       , completed: 0
       })
+    )
+  })
+
+, rest.get('/mq', (req, res, ctx) => {
+    return res(
+      ctx.status(200)
+    , ctx.json(['id'])
     )
   })
 )
