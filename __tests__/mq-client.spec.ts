@@ -195,6 +195,7 @@ describe('MQClient', () => {
     , ordered: 0
     , active: 0
     , completed: 0
+    , failed: 0
     })
   })
 

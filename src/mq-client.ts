@@ -10,6 +10,7 @@ interface Stats {
   ordered: number
   active: number
   completed: number
+  failed: number
 }
 
 export interface MQClientOptions {

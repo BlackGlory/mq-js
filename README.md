@@ -146,6 +146,7 @@ MQClient#stats(queueId: string, options?: MQClientRequestOptionsWithoutToken): P
   ordered: number
   active: number
   completed: number
+  failed: number
 }>
 ```
 
