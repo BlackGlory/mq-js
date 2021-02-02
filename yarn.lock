@@ -913,6 +913,11 @@
     jest-diff "^26.0.0"
     pretty-format "^26.0.0"
 
+"@types/js-levenshtein@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@types/js-levenshtein/-/js-levenshtein-1.1.0.tgz#9541eec4ad6e3ec5633270a3a2b55d981edc44a9"
+  integrity sha512-14t0v1ICYRtRVcHASzes0v/O+TIeASb8aD55cWF1PidtInhFWSXcmhzhHqGjUWf9SUq1w70cvd1cWKUULubAfQ==
+
 "@types/json-schema@^7.0.3":
   version "7.0.6"
   resolved "https://registry.yarnpkg.com/@types/json-schema/-/json-schema-7.0.6.tgz#f4c7ec43e81b319a9815115031709f26987891f0"
@@ -2351,9 +2356,9 @@ event-target-shim@^5.0.0:
   resolved "https://registry.yarnpkg.com/event-target-shim/-/event-target-shim-5.0.1.tgz#5d4d3ebdf9583d63a5333ce2deb7480ab2b05789"
   integrity sha512-i/2XbnSz/uxRCU6+NdVJgKWDTM427+MqYbkQzD321DuCQJUqOuJKIA0IM2+W2xtYHdKOmZ4dR6fExsd4SXL+WQ==
 
-"eventsource@https://github.com/EventSource/eventsource#46fe04e03e54f4129a28bf75b3a1e5f4ab68b52a":
+"eventsource@git+https://github.com/EventSource/eventsource.git#46fe04e03e54f4129a28bf75b3a1e5f4ab68b52a":
   version "1.0.7"
-  resolved "https://github.com/EventSource/eventsource#46fe04e03e54f4129a28bf75b3a1e5f4ab68b52a"
+  resolved "git+https://github.com/EventSource/eventsource.git#46fe04e03e54f4129a28bf75b3a1e5f4ab68b52a"
   dependencies:
     original "^1.0.0"
 
@@ -2474,10 +2479,10 @@ extra-dom@^0.2.9:
     "@blackglory/types" "^0.2.10"
     iterable-operator "^0.13.0"
 
-extra-fetch@^0.1.10, extra-fetch@^0.1.9:
-  version "0.1.10"
-  resolved "https://registry.yarnpkg.com/extra-fetch/-/extra-fetch-0.1.10.tgz#12c4caea93a495af027bb7f7e9dd84d7163c3596"
-  integrity sha512-zhyhzLN2K7cyEXWMC3ZswArE7bZo1csukB5p+xp0YlxvOsd0H0DfnUILNl0x/xQXHKNUhvXgl7Ne9507xdCaSA==
+extra-fetch@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/extra-fetch/-/extra-fetch-1.0.0.tgz#cf1b356a8da38e1a6690470672558d621fba4d38"
+  integrity sha512-vZEwkyufwCFD/m2amBSqbhKUxllT1U6e2pUqgDp04m1cHI+0vZSDUy0k5Etz+tumNyiz7MXDzCCK0mjZw15THQ==
   dependencies:
     abort-controller "^3.0.0"
     domexception "^2.0.1"
@@ -2486,25 +2491,25 @@ extra-fetch@^0.1.10, extra-fetch@^0.1.9:
     formdata-node "^2.4.0"
     node-fetch "3.0.0-beta.9"
 
-extra-request@^0.3.5:
-  version "0.3.5"
-  resolved "https://registry.yarnpkg.com/extra-request/-/extra-request-0.3.5.tgz#b0e6d9ab8f7b3e7edf3f38822a6e56c94913cccf"
-  integrity sha512-WMqmUVpmM+anx69BKs1/rZ1FXetJ2DqGV4bObd9o67f33WhKcaRuIhJmxex5oMOLGnj/il6dK5edrP1J/1Imjg==
+extra-request@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/extra-request/-/extra-request-1.0.0.tgz#5282126f79b1737820a99cd8c4d69c195b41ec78"
+  integrity sha512-5hrR/2XI+Ys7c/9u0Kb/ErqGme/eUAFUgojwFTq+XD5VELnzFyT1XT4mhbR09JQ2fZkN/18uXaJ/oPUhnkZW+Q==
   dependencies:
-    "@blackglory/types" "^0.2.9"
+    "@blackglory/types" "^0.2.11"
     "@types/node" "^14.14.22"
-    extra-fetch "^0.1.9"
+    extra-fetch "^1.0.0"
     js-base64 "^3.6.0"
     papaparse "^5.3.0"
     typed-assert "^1.0.7"
 
-extra-response@^0.2.9:
-  version "0.2.9"
-  resolved "https://registry.yarnpkg.com/extra-response/-/extra-response-0.2.9.tgz#f6f4aea15be6b69de0b8652c9f8a5e3d78136df3"
-  integrity sha512-vDc/oCOxkStFjx+KNbAjtqjakEUGlfCMVIdaug8dV5DmbqPtpMfDJsODLafkyEX4MN+m5HYkBzhIkFB7lQAmjA==
+extra-response@^0.2.10:
+  version "0.2.10"
+  resolved "https://registry.yarnpkg.com/extra-response/-/extra-response-0.2.10.tgz#19869d2c881a2f275b8bb165ef470e9c266474d3"
+  integrity sha512-Xq1kX1N9w19Rddz6oPAcH9S1eX8WXKeVs4fU9r27jS+uW90VjBmxY0Tp2NUonx729hWBOzyBUQoHF0jKFq6K3A==
   dependencies:
     "@blackglory/http-status" "^0.1.7"
-    iterable-operator "^0.12.11"
+    iterable-operator "^0.13.0"
     papaparse "^5.3.0"
 
 extsprintf@1.3.0:
@@ -3498,13 +3503,6 @@ istanbul-reports@^3.0.2:
     html-escaper "^2.0.0"
     istanbul-lib-report "^3.0.0"
 
-iterable-operator@^0.12.11:
-  version "0.12.11"
-  resolved "https://registry.yarnpkg.com/iterable-operator/-/iterable-operator-0.12.11.tgz#09e72a17deccbf392afa822fc6123fbe1e453899"
-  integrity sha512-f6g7Ftzxk4JyJNL19/tB1Lt7CnXQC2kcRQ2+SZX0RaSr8+3SuAPLAMzU515dRl5/yfK9YI0JdDvW+hL02+tShQ==
-  dependencies:
-    "@blackglory/types" "^0.2.9"
-
 iterable-operator@^0.13.0:
   version "0.13.0"
   resolved "https://registry.yarnpkg.com/iterable-operator/-/iterable-operator-0.13.0.tgz#965f9eff97740e218f85d900cbef40401101e86a"
@@ -3956,6 +3954,11 @@ js-base64@^3.6.0:
   version "3.6.0"
   resolved "https://registry.yarnpkg.com/js-base64/-/js-base64-3.6.0.tgz#773e1de628f4f298d65a7e9842c50244751f5756"
   integrity sha512-wVdUBYQeY2gY73RIlPrysvpYx+2vheGo8Y1SNQv/BzHToWpAZzJU7Z6uheKMAe+GLSBig5/Ps2nxg/8tRB73xg==
+
+js-levenshtein@^1.1.6:
+  version "1.1.6"
+  resolved "https://registry.yarnpkg.com/js-levenshtein/-/js-levenshtein-1.1.6.tgz#c6cee58eb3550372df8deb85fad5ce66ce01d59d"
+  integrity sha512-X2BB11YZtrRqY4EnQcLX5Rh373zbK4alC1FW7D7MBhL2gtcC17cTnr6DmfHZeS0s2rTHjUTMMHfG7gO8SSdw+g==
 
 js-tokens@^4.0.0:
   version "4.0.0"
@@ -4456,18 +4459,20 @@ ms@2.1.2:
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.2.tgz#d09d1f357b443f493382a8eb3ccd183872ae6009"
   integrity sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==
 
-msw@^0.26.0:
-  version "0.26.0"
-  resolved "https://registry.yarnpkg.com/msw/-/msw-0.26.0.tgz#10a61e0ecf6cd9bbb6583f45d5532bee54649a50"
-  integrity sha512-VdLPMwmQ5xUUlrBh7SzCr7GsJ9wDNQ+Kid9kTox6HVzSc+XrVSxblOhIkB1eg9H6S+nXC1abiSddn7/AAO0bsw==
+msw@^0.26.1:
+  version "0.26.1"
+  resolved "https://registry.yarnpkg.com/msw/-/msw-0.26.1.tgz#e4bb4b3707cd20f7493a4da9c729eca669303464"
+  integrity sha512-nIoXBk8ZbUJxPiVATCNIEq6f/DQ0aYdfu4ZWAHhoDUleQDGup/tpZWZvzf3RPUeiA9UTdJ5rpwlcutIxJxHxkA==
   dependencies:
     "@open-draft/until" "^1.0.3"
     "@types/cookie" "^0.4.0"
+    "@types/js-levenshtein" "^1.1.0"
     chalk "^4.1.0"
     chokidar "^3.4.2"
     cookie "^0.4.1"
     graphql "^15.4.0"
     headers-utils "^1.2.0"
+    js-levenshtein "^1.1.6"
     node-fetch "^2.6.1"
     node-match-path "^0.6.1"
     node-request-interceptor "^0.6.3"
