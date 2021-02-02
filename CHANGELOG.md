@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.4](https://github.com/BlackGlory/mq-js/compare/v0.6.3...v0.6.4) (2021-02-02)
+
+
+### Bug Fixes
+
+* stats ([d1d8657](https://github.com/BlackGlory/mq-js/commit/d1d865775b248c189c3a9e2a76c539637b25b0ac))
+
 ### [0.6.3](https://github.com/BlackGlory/mq-js/compare/v0.6.2...v0.6.3) (2021-01-28)
 
 
