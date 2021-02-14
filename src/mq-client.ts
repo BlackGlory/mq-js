@@ -2,6 +2,7 @@ import { fetch } from 'extra-fetch'
 import { post, put, patch, get, del } from 'extra-request'
 import { url, pathname, json, text, searchParam, signal } from 'extra-request/lib/es2018/transformers'
 import { ok, toText, toJSON } from 'extra-response'
+export { NotFound, Conflict } from '@blackglory/http-status'
 
 interface Stats {
   id: string
@@ -49,6 +50,10 @@ export class MQClient {
       .then(toText)
   }
 
+  /**
+   * @throws {NotFound}
+   * @throws {Conflict}
+   */
   async set(queueId: string, messageId: string, payload: string, options: MQClientRequestOptions = {}): Promise<void> {
     const token = options.token ?? this.options.token
     const req = put(
@@ -62,6 +67,10 @@ export class MQClient {
     await fetch(req).then(ok)
   }
 
+  /**
+   * @throws {NotFound}
+   * @throws {Conflict}
+   */
   async setJSON<T>(queueId: string, messageId: string, payload: T, options: MQClientRequestOptions = {}): Promise<void> {
     const token = options.token ?? this.options.token
     const req = put(
@@ -89,6 +98,10 @@ export class MQClient {
       .then(toText)
   }
 
+  /**
+   * @throws {NotFound}
+   * @throws {Conflict}
+   */
   async get(queueId: string, messageId: string, options?: MQClientRequestOptions): Promise<{ priority: number | null, payload: string }> {
     const res = await this._get(queueId, messageId, options)
     const priority = parsePriority(res)
@@ -97,6 +110,10 @@ export class MQClient {
     return { priority, payload }
   }
 
+  /**
+   * @throws {NotFound}
+   * @throws {Conflict}
+   */
   async getJSON<T>(queueId: string, messageId: string, options?: MQClientRequestOptions): Promise<{ priority: number | null, payload: T }> {
     const res = await this._get(queueId, messageId, options)
     const priority = parsePriority(res)
@@ -105,6 +122,9 @@ export class MQClient {
     return { priority, payload }
   }
 
+  /**
+   * @throws {NotFound}
+   */
   async abandon(queueId: string, messageId: string, options: MQClientRequestOptions = {}): Promise<void> {
     const token = options.token ?? this.options.token
     const req = del(
@@ -117,6 +137,10 @@ export class MQClient {
     await fetch(req).then(ok)
   }
 
+  /**
+   * @throws {NotFound}
+   * @throws {Conflict}
+   */
   async complete(queueId: string, messageId: string, options: MQClientRequestOptions = {}): Promise<void> {
     const token = options.token ?? this.options.token
     const req = patch(
@@ -129,6 +153,10 @@ export class MQClient {
     await fetch(req).then(ok)
   }
 
+  /**
+   * @throws {NotFound}
+   * @throws {Conflict}
+   */
   async fail(queueId: string, messageId: string, options: MQClientRequestOptions = {}): Promise<void> {
     const token = options.token ?? this.options.token
     const req = patch(
@@ -141,6 +169,10 @@ export class MQClient {
     await fetch(req).then(ok)
   }
 
+  /**
+   * @throws {NotFound}
+   * @throws {Conflict}
+   */
   async renew(queueId: string, messageId: string, options: MQClientRequestOptions = {}): Promise<void> {
     const token = options.token ?? this.options.token
     const req = patch(
