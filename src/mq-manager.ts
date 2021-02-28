@@ -5,13 +5,13 @@ import { TokenPolicyClient } from './token-policy-client'
 import { TokenClient } from './token-client'
 import { ConfigurationClient } from './configuration-client'
 
-export interface MQManagerOptions {
+export interface IMQManagerOptions {
   server: string
   adminPassword: string
 }
 
 export class MQManager {
-  constructor(private options: MQManagerOptions) {}
+  constructor(private options: IMQManagerOptions) {}
 
   JsonSchema = new JsonSchemaClient(this.options)
   Blacklist = new BlacklistClient(this.options)

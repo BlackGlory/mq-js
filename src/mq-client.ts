@@ -4,7 +4,7 @@ import { url, pathname, json, text, searchParam, signal } from 'extra-request/li
 import { ok, toText, toJSON } from 'extra-response'
 export { NotFound, Conflict } from '@blackglory/http-status'
 
-interface Stats {
+interface IStats {
   id: string
   drafting: number
   waiting: number
@@ -14,27 +14,27 @@ interface Stats {
   failed: number
 }
 
-export interface MQClientOptions {
+export interface IMQClientOptions {
   server: string
   token?: string
 }
 
-export interface MQClientRequestOptions {
+export interface IMQClientRequestOptions {
   signal?: AbortSignal
   token?: string
 }
 
-export interface MQClientRequestOptionsWithoutToken {
+export interface IMQClientRequestOptionsWithoutToken {
   signal?: AbortSignal
 }
 
 export class MQClient {
-  constructor(private options: MQClientOptions) {}
+  constructor(private options: IMQClientOptions) {}
 
   async draft(
     queueId: string
   , priority: number | null
-  , options: MQClientRequestOptions = {}
+  , options: IMQClientRequestOptions = {}
   ): Promise<string> {
     const token = options.token ?? this.options.token
     const req = post(
@@ -54,7 +54,7 @@ export class MQClient {
    * @throws {NotFound}
    * @throws {Conflict}
    */
-  async set(queueId: string, messageId: string, payload: string, options: MQClientRequestOptions = {}): Promise<void> {
+  async set(queueId: string, messageId: string, payload: string, options: IMQClientRequestOptions = {}): Promise<void> {
     const token = options.token ?? this.options.token
     const req = put(
       url(this.options.server)
@@ -71,7 +71,7 @@ export class MQClient {
    * @throws {NotFound}
    * @throws {Conflict}
    */
-  async setJSON<T>(queueId: string, messageId: string, payload: T, options: MQClientRequestOptions = {}): Promise<void> {
+  async setJSON<T>(queueId: string, messageId: string, payload: T, options: IMQClientRequestOptions = {}): Promise<void> {
     const token = options.token ?? this.options.token
     const req = put(
       url(this.options.server)
@@ -84,7 +84,7 @@ export class MQClient {
     await fetch(req).then(ok)
   }
 
-  async order(queueId: string, options: MQClientRequestOptions = {}): Promise<string> {
+  async order(queueId: string, options: IMQClientRequestOptions = {}): Promise<string> {
     const token = options.token ?? this.options.token
     const req = get(
       url(this.options.server)
@@ -102,7 +102,7 @@ export class MQClient {
    * @throws {NotFound}
    * @throws {Conflict}
    */
-  async get(queueId: string, messageId: string, options?: MQClientRequestOptions): Promise<{ priority: number | null, payload: string }> {
+  async get(queueId: string, messageId: string, options?: IMQClientRequestOptions): Promise<{ priority: number | null, payload: string }> {
     const res = await this._get(queueId, messageId, options)
     const priority = parsePriority(res)
     const payload = await toText(res)
@@ -114,7 +114,7 @@ export class MQClient {
    * @throws {NotFound}
    * @throws {Conflict}
    */
-  async getJSON<T>(queueId: string, messageId: string, options?: MQClientRequestOptions): Promise<{ priority: number | null, payload: T }> {
+  async getJSON<T>(queueId: string, messageId: string, options?: IMQClientRequestOptions): Promise<{ priority: number | null, payload: T }> {
     const res = await this._get(queueId, messageId, options)
     const priority = parsePriority(res)
     const payload = await toJSON(res) as T
@@ -125,7 +125,7 @@ export class MQClient {
   /**
    * @throws {NotFound}
    */
-  async abandon(queueId: string, messageId: string, options: MQClientRequestOptions = {}): Promise<void> {
+  async abandon(queueId: string, messageId: string, options: IMQClientRequestOptions = {}): Promise<void> {
     const token = options.token ?? this.options.token
     const req = del(
       url(this.options.server)
@@ -141,7 +141,7 @@ export class MQClient {
    * @throws {NotFound}
    * @throws {Conflict}
    */
-  async complete(queueId: string, messageId: string, options: MQClientRequestOptions = {}): Promise<void> {
+  async complete(queueId: string, messageId: string, options: IMQClientRequestOptions = {}): Promise<void> {
     const token = options.token ?? this.options.token
     const req = patch(
       url(this.options.server)
@@ -157,7 +157,7 @@ export class MQClient {
    * @throws {NotFound}
    * @throws {Conflict}
    */
-  async fail(queueId: string, messageId: string, options: MQClientRequestOptions = {}): Promise<void> {
+  async fail(queueId: string, messageId: string, options: IMQClientRequestOptions = {}): Promise<void> {
     const token = options.token ?? this.options.token
     const req = patch(
       url(this.options.server)
@@ -173,7 +173,7 @@ export class MQClient {
    * @throws {NotFound}
    * @throws {Conflict}
    */
-  async renew(queueId: string, messageId: string, options: MQClientRequestOptions = {}): Promise<void> {
+  async renew(queueId: string, messageId: string, options: IMQClientRequestOptions = {}): Promise<void> {
     const token = options.token ?? this.options.token
     const req = patch(
       url(this.options.server)
@@ -185,7 +185,7 @@ export class MQClient {
     await fetch(req).then(ok)
   }
 
-  async getAllFailedMessageIds(queueId: string, options: MQClientRequestOptions = {}): Promise<string[]> {
+  async getAllFailedMessageIds(queueId: string, options: IMQClientRequestOptions = {}): Promise<string[]> {
     const token = options.token ?? this.options.token
     const req = get(
       url(this.options.server)
@@ -199,7 +199,7 @@ export class MQClient {
       .then(toJSON) as string[]
   }
 
-  async abandonAllFailedMessages(queueId: string, options: MQClientRequestOptions = {}): Promise<void> {
+  async abandonAllFailedMessages(queueId: string, options: IMQClientRequestOptions = {}): Promise<void> {
     const token = options.token ?? this.options.token
     const req = del(
       url(this.options.server)
@@ -211,7 +211,7 @@ export class MQClient {
     await fetch(req).then(ok)
   }
 
-  async renewAllFailedMessages(queueId: string, options: MQClientRequestOptions = {}): Promise<void> {
+  async renewAllFailedMessages(queueId: string, options: IMQClientRequestOptions = {}): Promise<void> {
     const token = options.token ?? this.options.token
     const req = patch(
       url(this.options.server)
@@ -223,7 +223,7 @@ export class MQClient {
     await fetch(req).then(ok)
   }
 
-  async clear(queueId: string, options: MQClientRequestOptions = {}): Promise<void> {
+  async clear(queueId: string, options: IMQClientRequestOptions = {}): Promise<void> {
     const token = options.token ?? this.options.token
     const req = del(
       url(this.options.server)
@@ -235,7 +235,7 @@ export class MQClient {
     await fetch(req).then(ok)
   }
 
-  async stats(queueId: string, options: MQClientRequestOptionsWithoutToken = {}): Promise<Stats> {
+  async stats(queueId: string, options: IMQClientRequestOptionsWithoutToken = {}): Promise<IStats> {
     const req = get(
       url(this.options.server)
     , pathname(`/mq/${queueId}/stats`)
@@ -244,10 +244,10 @@ export class MQClient {
 
     return await fetch(req)
       .then(ok)
-      .then(toJSON) as Stats
+      .then(toJSON) as IStats
   }
 
-  async getAllQueueIds(options: MQClientRequestOptionsWithoutToken = {}): Promise<string[]> {
+  async getAllQueueIds(options: IMQClientRequestOptionsWithoutToken = {}): Promise<string[]> {
     const req = get(
       url(this.options.server)
     , pathname('/mq')
@@ -259,7 +259,7 @@ export class MQClient {
       .then(toJSON) as string[]
   }
 
-  private async _get(queueId: string, messageId: string, options: MQClientRequestOptions = {}): Promise<Response> {
+  private async _get(queueId: string, messageId: string, options: IMQClientRequestOptions = {}): Promise<Response> {
     const token =  options.token ?? this.options.token
     const req = get(
       url(this.options.server)

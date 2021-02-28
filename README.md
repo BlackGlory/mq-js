@@ -20,14 +20,14 @@ new MQClient({
 ```
 
 ```ts
-interface MQClientRequestOptions {
+interface IMQClientRequestOptions {
   signal?: AbortSignal
   token?: string
 }
 ```
 
 ```ts
-interface MQClientRequestOptionsWithoutToken {
+interface IMQClientRequestOptionsWithoutToken {
   signal?: AbortSignal
 }
 ```
@@ -38,7 +38,7 @@ interface MQClientRequestOptionsWithoutToken {
 MQClient#draft(
   queueId: string
 , priority: number | null
-, options?: MQClientRequestOptions
+, options?: IMQClientRequestOptions
 ): Promise<string>
 ```
 
@@ -49,7 +49,7 @@ MQClient#set(
   queueId: string
 , messageId: string
 , payload: string
-, options?: MQClientRequestOptions
+, options?: IMQClientRequestOptions
 ): Promise<void>
 ```
 
@@ -60,20 +60,20 @@ MQClient#setJSON(
   queueId: string
 , messageId: string
 , payload: Json
-, options?: MQClientRequestOptions
+, options?: IMQClientRequestOptions
 ): Promise<void>
 ```
 
 #### order
 
 ```ts
-MQClient#order(queueId: string, options?: MQClientRequestOptions): Promise<string>
+MQClient#order(queueId: string, options?: IMQClientRequestOptions): Promise<string>
 ```
 
 #### get
 
 ```ts
-MQClient#get(queueId: string, messageId: string, options?: MQClientRequestOptions): Promise<{
+MQClient#get(queueId: string, messageId: string, options?: IMQClientRequestOptions): Promise<{
   priority: number | null
   payload: string
 }>
@@ -82,7 +82,7 @@ MQClient#get(queueId: string, messageId: string, options?: MQClientRequestOption
 #### getJSON
 
 ```ts
-MQClient#getJSON(queueId: string, messageId: string, options?: MQClientRequestOptions): Promise<{
+MQClient#getJSON(queueId: string, messageId: string, options?: IMQClientRequestOptions): Promise<{
   priority: number | null
   payload: Json
 }>
@@ -91,55 +91,55 @@ MQClient#getJSON(queueId: string, messageId: string, options?: MQClientRequestOp
 #### abandon
 
 ```ts
-MQClient#abandon(queueId: string, messageId: string, options?: MQClientRequestOptions): Promise<void>
+MQClient#abandon(queueId: string, messageId: string, options?: IMQClientRequestOptions): Promise<void>
 ```
 
 #### complete
 
 ```ts
-MQClient#complete(queueId: string, messageId: string, options?: MQClientRequestOptions): Promise<void>
+MQClient#complete(queueId: string, messageId: string, options?: IMQClientRequestOptions): Promise<void>
 ```
 
 #### fail
 
 ```ts
-MQClient#fail(queueId: string, messageId: string, options?: MQClientRequestOptions): Promise<void>
+MQClient#fail(queueId: string, messageId: string, options?: IMQClientRequestOptions): Promise<void>
 ```
 
 #### renew
 
 ```ts
-MQClient#renew(queueId: string, messageId: string, options?: MQClientRequestOptions): Promise<void>
+MQClient#renew(queueId: string, messageId: string, options?: IMQClientRequestOptions): Promise<void>
 ```
 
 #### getAllFailedMessageIds
 
 ```ts
-MQClient#getAllFailedMessageIds(queueId: string, options?: MQClientRequestOptions): Promise<string[]>
+MQClient#getAllFailedMessageIds(queueId: string, options?: IMQClientRequestOptions): Promise<string[]>
 ```
 
 #### abandonAllFailedMessages
 
 ```ts
-MQClient#abandonAllFailedMessages(queueId: string, options?: MQClientRequestOptions): Promise<void>
+MQClient#abandonAllFailedMessages(queueId: string, options?: IMQClientRequestOptions): Promise<void>
 ```
 
 #### renewAllFailedMessages
 
 ```ts
-MQClient#renewAllFailedMessages(queueId: string, options?: MQClientRequestOptions): Promise<void>
+MQClient#renewAllFailedMessages(queueId: string, options?: IMQClientRequestOptions): Promise<void>
 ```
 
 #### clear
 
 ```ts
-MQClient#clear(queueId: string, messageId: string, options?: MQClientRequestOptions): Promise<void>
+MQClient#clear(queueId: string, messageId: string, options?: IMQClientRequestOptions): Promise<void>
 ```
 
 #### stats
 
 ```ts
-MQClient#stats(queueId: string, options?: MQClientRequestOptionsWithoutToken): Promise<{
+MQClient#stats(queueId: string, options?: IMQClientRequestOptionsWithoutToken): Promise<{
   id: string
   drafting: number
   waiting: number
@@ -153,7 +153,7 @@ MQClient#stats(queueId: string, options?: MQClientRequestOptionsWithoutToken): P
 #### getAllQueueIds
 
 ```ts
-MQClient#getAllQueueIds(options?: MQClientRequestOptionsWithoutToken): Promise<string[]>
+MQClient#getAllQueueIds(options?: IMQClientRequestOptionsWithoutToken): Promise<string[]>
 ```
 
 ### MQManager
@@ -166,7 +166,7 @@ new MQManager({
 ```
 
 ```ts
-interface MQManagerRequestOptions {
+interface IMQManagerRequestOptions {
   signal?: AbortSignal
 }
 ```
@@ -176,25 +176,25 @@ interface MQManagerRequestOptions {
 ##### getIds
 
 ```ts
-MQManager#JsonSchema.getIds(options?: MQManagerRequestOptions): Promise<string[]>
+MQManager#JsonSchema.getIds(options?: IMQManagerRequestOptions): Promise<string[]>
 ```
 
 ##### get
 
 ```ts
-MQManager#JsonSchema.get(id: string, options?: MQManagerRequestOptions): Promise<Json>
+MQManager#JsonSchema.get(id: string, options?: IMQManagerRequestOptions): Promise<Json>
 ```
 
 ##### set
 
 ```ts
-MQManager#JsonSchema.set(id: string, schema: Json, options?: MQManagerRequestOptions): Promise<void>
+MQManager#JsonSchema.set(id: string, schema: Json, options?: IMQManagerRequestOptions): Promise<void>
 ```
 
 ##### remove
 
 ```ts
-MQManager#JsonSchema.remove(id: string, options?: MQManagerRequestOptions): Promise<void>
+MQManager#JsonSchema.remove(id: string, options?: IMQManagerRequestOptions): Promise<void>
 ```
 
 #### Configuration
@@ -202,13 +202,13 @@ MQManager#JsonSchema.remove(id: string, options?: MQManagerRequestOptions): Prom
 ##### getIds
 
 ```ts
-MQManager#Configuration.getIds(options?: MQManagerRequestOptions): Promise<string[]>
+MQManager#Configuration.getIds(options?: IMQManagerRequestOptions): Promise<string[]>
 ```
 
 ##### get
 
 ```ts
-MQManager#Configuration.get(id: string, options?: MQManagerRequestOptions): Promise<{
+MQManager#Configuration.get(id: string, options?: IMQManagerRequestOptions): Promise<{
   unique: boolean | null
   draftTimeout: number | null
   orderedTimeout: number | null
@@ -224,61 +224,61 @@ MQManager#Configuration.get(id: string, options?: MQManagerRequestOptions): Prom
 ##### setUnique
 
 ```ts
-MQManager#Configuration.setUnique(id: string, val: boolean, options?: MQManagerRequestOptions): Promise<void>
+MQManager#Configuration.setUnique(id: string, val: boolean, options?: IMQManagerRequestOptions): Promise<void>
 ```
 
 ##### removeUnique
 
 ```ts
-MQManager#Configuration.removeUnique(id: string, options?: MQManagerRequestOptions): Promise<void>
+MQManager#Configuration.removeUnique(id: string, options?: IMQManagerRequestOptions): Promise<void>
 ```
 
 ##### setDraftTimeout
 
 ```ts
-MQManager#Configuration.setDraftTimeout(id: string, val: number, options?: MQManagerRequestOptions): Promise<void>
+MQManager#Configuration.setDraftTimeout(id: string, val: number, options?: IMQManagerRequestOptions): Promise<void>
 ```
 
 ##### removeDraftTimeout
 
 ```ts
-MQManager#Configuration.removeDraftTimeout(id: string, options?: MQManagerRequestOptions): Promise<void>
+MQManager#Configuration.removeDraftTimeout(id: string, options?: IMQManagerRequestOptions): Promise<void>
 ```
 
 ##### setOrderedTimeout
 
 ```ts
-MQManager#Configuration.setOrderedTimeout(id: string, val : number, options?: MQManagerRequestOptions): Promise<void>
+MQManager#Configuration.setOrderedTimeout(id: string, val : number, options?: IMQManagerRequestOptions): Promise<void>
 ```
 
 ##### removeOrderedTimeout
 
 ```ts
-MQManager#Configuration.removeOrderedTimeout(id: string, options?: MQManagerRequestOptions): Promise<void>
+MQManager#Configuration.removeOrderedTimeout(id: string, options?: IMQManagerRequestOptions): Promise<void>
 ```
 
 ##### setActiveTimeout
 
 ```ts
-MQManager#Configuration.setActiveTimeout(id: string, val: number, options?: MQManagerRequestOptions): Promise<void>
+MQManager#Configuration.setActiveTimeout(id: string, val: number, options?: IMQManagerRequestOptions): Promise<void>
 ```
 
 ##### removeActiveTimeout
 
 ```ts
-MQManager#Configuration.removeActiveTimeout(id: string, options?: MQManagerRequestOptions): Promise<void>
+MQManager#Configuration.removeActiveTimeout(id: string, options?: IMQManagerRequestOptions): Promise<void>
 ```
 
 ##### setConcurrency
 
 ```ts
-MQManager#Configuration.setConcucrrency(id: string, val: number, optinos?: MQManagerRequestOptions): Promise<void>
+MQManager#Configuration.setConcucrrency(id: string, val: number, optinos?: IMQManagerRequestOptions): Promise<void>
 ```
 
 ##### removeConcurrency
 
 ```ts
-MQManager#Configuration.removeConcurrency(id: string, options?: MQManagerRequestOptions): Promise<void>
+MQManager#Configuration.removeConcurrency(id: string, options?: IMQManagerRequestOptions): Promise<void>
 ```
 
 ##### setThrottle
@@ -290,14 +290,14 @@ MQManager#Configuration.setThrottle(
     duration: number
     limit: number
   }
-, options?: MQManagerRequestOptions
+, options?: IMQManagerRequestOptions
 ): Promise<void>
 ```
 
 ##### removeThrottle
 
 ```ts
-MQManager#Configuration.removeThrottle(id: string, options?: MQManagerRequestOptions): Promise<void>
+MQManager#Configuration.removeThrottle(id: string, options?: IMQManagerRequestOptions): Promise<void>
 ```
 
 #### Blacklist
@@ -305,19 +305,19 @@ MQManager#Configuration.removeThrottle(id: string, options?: MQManagerRequestOpt
 ##### getIds
 
 ```ts
-MQManager#Blacklist.getIds(options?: MQManagerRequestOptions): Promise<string[]>
+MQManager#Blacklist.getIds(options?: IMQManagerRequestOptions): Promise<string[]>
 ```
 
 ##### add
 
 ```ts
-MQManager#Blacklist.add(id: string, options?: MQManagerRequestOptions): Promise<void>
+MQManager#Blacklist.add(id: string, options?: IMQManagerRequestOptions): Promise<void>
 ```
 
 ##### remove
 
 ```ts
-MQManager#Blacklist.remove(id: string, options?: MQManagerRequestOptions): Promise<void>
+MQManager#Blacklist.remove(id: string, options?: IMQManagerRequestOptions): Promise<void>
 ```
 
 #### Whitelist
@@ -325,19 +325,19 @@ MQManager#Blacklist.remove(id: string, options?: MQManagerRequestOptions): Promi
 ##### getIds
 
 ```ts
-MQManager#Whitelist.getIds(options?: MQManagerRequestOptions): Promise<string[]>
+MQManager#Whitelist.getIds(options?: IMQManagerRequestOptions): Promise<string[]>
 ```
 
 ##### add
 
 ```ts
-MQManager#Whitelist.add(id: string, options?: MQManagerRequestOptions): Promise<void>
+MQManager#Whitelist.add(id: string, options?: IMQManagerRequestOptions): Promise<void>
 ```
 
 ##### remove
 
 ```ts
-MQManager#Whitelist.remove(id: string, options?: MQManagerRequestOptions): Promise<void>
+MQManager#Whitelist.remove(id: string, options?: IMQManagerRequestOptions): Promise<void>
 ```
 
 #### TokenPolicy
@@ -345,13 +345,13 @@ MQManager#Whitelist.remove(id: string, options?: MQManagerRequestOptions): Promi
 ##### getIds
 
 ```ts
-MQManager#TokenPolicy.getIds(options?: MQManagerRequestOptions): Promise<string[]>
+MQManager#TokenPolicy.getIds(options?: IMQManagerRequestOptions): Promise<string[]>
 ```
 
 ##### get
 
 ```ts
-MQManager#TokenPolicy.get(id: string, options?: MQManagerRequestOptions): Promise<{
+MQManager#TokenPolicy.get(id: string, options?: IMQManagerRequestOptions): Promise<{
   produceTokenRequired: boolean | null
   consumeTokenRequired: boolean | null
   clearTokenRequired: boolean | null
@@ -361,38 +361,38 @@ MQManager#TokenPolicy.get(id: string, options?: MQManagerRequestOptions): Promis
 ##### setProduceTokenRequired
 
 ```ts
-MQManager#TokenPolicy.setProduceTokenRequired(id: string, val: boolean, options?: MQManagerRequestOptions): Promise<void>
+MQManager#TokenPolicy.setProduceTokenRequired(id: string, val: boolean, options?: IMQManagerRequestOptions): Promise<void>
 ```
 
 ##### removeProduceTokenRequired
 
 ```ts
-MQManager#TokenPolicy.removeProduceTokenRequired(id: string, options?: MQManagerRequestOptions): Promise<void>
+MQManager#TokenPolicy.removeProduceTokenRequired(id: string, options?: IMQManagerRequestOptions): Promise<void>
 ```
 
 ##### setConsumeTokenRequired
 
 
 ```ts
-MQManager#TokenPolicy.setConsumeTokenRequired(id: string, val: boolean, options?: MQManagerRequestOptions): Promise<void>
+MQManager#TokenPolicy.setConsumeTokenRequired(id: string, val: boolean, options?: IMQManagerRequestOptions): Promise<void>
 ```
 
 ##### removeConsumeTokenRequired
 
 ```ts
-MQManager#TokenPolicy.removeConsumeTokenRequired(id: string, options?: MQManagerRequestOptions): Promise<void>
+MQManager#TokenPolicy.removeConsumeTokenRequired(id: string, options?: IMQManagerRequestOptions): Promise<void>
 ```
 
 ##### setClearTokenRequired
 
 ```ts
-MQManager#TokenPolicy.setClearTokenRequired(id: string, val: boolean, options?: MQManagerRequestOptions): Promise<void>
+MQManager#TokenPolicy.setClearTokenRequired(id: string, val: boolean, options?: IMQManagerRequestOptions): Promise<void>
 ```
 
 ##### removeClearTokenRequired
 
 ```ts
-MQManager#TokenPolicy.removeClearTokenRequired(id: string, options?: MQManagerRequestOptions): Promise<void>
+MQManager#TokenPolicy.removeClearTokenRequired(id: string, options?: IMQManagerRequestOptions): Promise<void>
 ```
 
 #### Token
@@ -400,13 +400,13 @@ MQManager#TokenPolicy.removeClearTokenRequired(id: string, options?: MQManagerRe
 ##### getIds
 
 ```ts
-MQManager#Token.getIds(options?: MQManagerRequestOptions): Promise<string[]>
+MQManager#Token.getIds(options?: IMQManagerRequestOptions): Promise<string[]>
 ```
 
 ##### getTokens
 
 ```ts
-MQManager#Token.getTokens(id: string, options?: MQManagerRequestOptions): Promise<Array<{
+MQManager#Token.getTokens(id: string, options?: IMQManagerRequestOptions): Promise<Array<{
   token: string
   produce: boolean
   consume: boolean
@@ -417,35 +417,35 @@ MQManager#Token.getTokens(id: string, options?: MQManagerRequestOptions): Promis
 ##### addProduceToken
 
 ```ts
-MQManager#Token.addProduceToken(id: string, token: string, options?: MQManagerRequestOptions): Promise<void>
+MQManager#Token.addProduceToken(id: string, token: string, options?: IMQManagerRequestOptions): Promise<void>
 ```
 
 ##### removeProduceToken
 
 ```ts
-MQManager#Token.removeProduceToken(id: string, token: string, options?: MQManagerRequestOptions): Promise<void>
+MQManager#Token.removeProduceToken(id: string, token: string, options?: IMQManagerRequestOptions): Promise<void>
 ```
 
 ##### addConsumeToken
 
 ```ts
-MQManager#Token.addConsumeToken(id: string, token: string, options?: MQManagerRequestOptions): Promise<void>
+MQManager#Token.addConsumeToken(id: string, token: string, options?: IMQManagerRequestOptions): Promise<void>
 ```
 
 ##### removeConsumeToken
 
 ```ts
-MQManager#Token.removeConsumeToken(id: string, token: string, options?: MQManagerRequestOptions): Promise<void>
+MQManager#Token.removeConsumeToken(id: string, token: string, options?: IMQManagerRequestOptions): Promise<void>
 ```
 
 ##### addClearToken
 
 ```ts
-MQManager#Token.addClearToken(id: string, token: string, options?: MQManagerRequestOptions): Promise<void>
+MQManager#Token.addClearToken(id: string, token: string, options?: IMQManagerRequestOptions): Promise<void>
 ```
 
 ##### removeClearToken
 
 ```ts
-MQManager#Token.removeClearToken(id: string, token: string, options?: MQManagerRequestOptions): Promise<void>
+MQManager#Token.removeClearToken(id: string, token: string, options?: IMQManagerRequestOptions): Promise<void>
 ```

@@ -4,11 +4,11 @@ import { password } from './utils'
 import { get, put, del } from 'extra-request'
 import { url, pathname, json, signal } from 'extra-request/lib/es2018/transformers'
 import { ok, toJSON } from 'extra-response'
-import type { MQManagerOptions } from './mq-manager'
+import type { IMQManagerOptions } from './mq-manager'
 import { MQManagerRequestOptions } from './types'
 
 export class JsonSchemaClient {
-  constructor(private options: MQManagerOptions) {}
+  constructor(private options: IMQManagerOptions) {}
 
   async getIds(options: MQManagerRequestOptions = {}): Promise<string[]> {
     const req = get(
