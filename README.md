@@ -16,6 +16,7 @@ yarn add @blackglory/mq-js
 new MQClient({
   server: string
 , token?: string
+, keepalive?: boolean
 })
 ```
 
@@ -23,12 +24,14 @@ new MQClient({
 interface IMQClientRequestOptions {
   signal?: AbortSignal
   token?: string
+  keepalive?: boolean
 }
 ```
 
 ```ts
 interface IMQClientRequestOptionsWithoutToken {
   signal?: AbortSignal
+  keepalive?: boolean
 }
 ```
 

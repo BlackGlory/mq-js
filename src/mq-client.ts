@@ -1,6 +1,6 @@
 import { fetch } from 'extra-fetch'
 import { post, put, patch, get, del } from 'extra-request'
-import { url, pathname, json, text, searchParam, signal } from 'extra-request/lib/es2018/transformers'
+import { url, pathname, json, text, searchParam, signal, keepalive } from 'extra-request/lib/es2018/transformers'
 import { ok, toText, toJSON } from 'extra-response'
 export { NotFound, Conflict, HTTPClientError } from '@blackglory/http-status'
 
@@ -17,15 +17,18 @@ interface IStats {
 export interface IMQClientOptions {
   server: string
   token?: string
+  keepalive?: boolean
 }
 
 export interface IMQClientRequestOptions {
   signal?: AbortSignal
   token?: string
+  keepalive?: boolean
 }
 
 export interface IMQClientRequestOptionsWithoutToken {
   signal?: AbortSignal
+  keepalive?: boolean
 }
 
 export class MQClient {
@@ -43,6 +46,7 @@ export class MQClient {
     , token && searchParam('token', token)
     , json({ priority })
     , options.signal && signal(options.signal)
+    , keepalive(options.keepalive ?? this.options.keepalive)
     )
 
     return await fetch(req)
@@ -62,6 +66,7 @@ export class MQClient {
     , token && searchParam('token', token)
     , text(payload)
     , options.signal && signal(options.signal)
+    , keepalive(options.keepalive ?? this.options.keepalive)
     )
 
     await fetch(req).then(ok)
@@ -79,6 +84,7 @@ export class MQClient {
     , token && searchParam('token', token)
     , json(payload)
     , options.signal && signal(options.signal)
+    , keepalive(options.keepalive ?? this.options.keepalive)
     )
 
     await fetch(req).then(ok)
@@ -91,6 +97,7 @@ export class MQClient {
     , pathname(`/mq/${queueId}/messages`)
     , token && searchParam('token', token)
     , options.signal && signal(options.signal)
+    , keepalive(options.keepalive ?? this.options.keepalive)
     )
 
     return await fetch(req)
@@ -132,6 +139,7 @@ export class MQClient {
     , pathname(`/mq/${queueId}/messages/${messageId}`)
     , token && searchParam('token', token)
     , options.signal && signal(options.signal)
+    , keepalive(options.keepalive ?? this.options.keepalive)
     )
 
     await fetch(req).then(ok)
@@ -148,6 +156,7 @@ export class MQClient {
     , pathname(`/mq/${queueId}/messages/${messageId}/complete`)
     , token && searchParam('token', token)
     , options.signal && signal(options.signal)
+    , keepalive(options.keepalive ?? this.options.keepalive)
     )
 
     await fetch(req).then(ok)
@@ -164,6 +173,7 @@ export class MQClient {
     , pathname(`/mq/${queueId}/messages/${messageId}/fail`)
     , token && searchParam('token', token)
     , options.signal && signal(options.signal)
+    , keepalive(options.keepalive ?? this.options.keepalive)
     )
 
     await fetch(req).then(ok)
@@ -180,6 +190,7 @@ export class MQClient {
     , pathname(`/mq/${queueId}/messages/${messageId}/renew`)
     , token && searchParam('token', token)
     , options.signal && signal(options.signal)
+    , keepalive(options.keepalive ?? this.options.keepalive)
     )
 
     await fetch(req).then(ok)
@@ -192,6 +203,7 @@ export class MQClient {
     , pathname(`/mq/${queueId}/failed-messages`)
     , token && searchParam('token', token)
     , options.signal && signal(options.signal)
+    , keepalive(options.keepalive ?? this.options.keepalive)
     )
 
     return await fetch(req)
@@ -206,6 +218,7 @@ export class MQClient {
     , pathname(`/mq/${queueId}/failed-messages`)
     , token && searchParam('token', token)
     , options.signal && signal(options.signal)
+    , keepalive(options.keepalive ?? this.options.keepalive)
     )
 
     await fetch(req).then(ok)
@@ -218,6 +231,7 @@ export class MQClient {
     , pathname(`/mq/${queueId}/failed-messages/renew`)
     , token && searchParam('token', token)
     , options.signal && signal(options.signal)
+    , keepalive(options.keepalive ?? this.options.keepalive)
     )
 
     await fetch(req).then(ok)
@@ -230,6 +244,7 @@ export class MQClient {
     , pathname(`/mq/${queueId}`)
     , token && searchParam('token', token)
     , options.signal && signal(options.signal)
+    , keepalive(options.keepalive ?? this.options.keepalive)
     )
 
     await fetch(req).then(ok)
@@ -240,6 +255,7 @@ export class MQClient {
       url(this.options.server)
     , pathname(`/mq/${queueId}/stats`)
     , options.signal && signal(options.signal)
+    , keepalive(options.keepalive ?? this.options.keepalive)
     )
 
     return await fetch(req)
@@ -252,6 +268,7 @@ export class MQClient {
       url(this.options.server)
     , pathname('/mq')
     , options.signal && signal(options.signal)
+    , keepalive(options.keepalive ?? this.options.keepalive)
     )
 
     return await fetch(req)
@@ -266,6 +283,7 @@ export class MQClient {
     , pathname(`/mq/${queueId}/messages/${messageId}`)
     , token && searchParam('token', token)
     , options.signal && signal(options.signal)
+    , keepalive(options.keepalive ?? this.options.keepalive)
     )
 
     return await fetch(req).then(ok)
