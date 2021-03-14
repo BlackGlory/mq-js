@@ -18,7 +18,7 @@ export class TokenPolicyClient {
   async getIds(options: MQManagerRequestOptions = {}): Promise<string[]> {
     const req = get(
       url(this.options.server)
-    , pathname('/api/mq-with-token-policies')
+    , pathname('/admin/mq-with-token-policies')
     , password(this.options.adminPassword)
     , options.signal && signal(options.signal)
     )
@@ -31,7 +31,7 @@ export class TokenPolicyClient {
   async get(id: string, options: MQManagerRequestOptions = {}): Promise<TokenPolicy> {
     const req = get(
       url(this.options.server)
-    , pathname(`/api/mq/${id}/token-policies`)
+    , pathname(`/admin/mq/${id}/token-policies`)
     , password(this.options.adminPassword)
     , options.signal && signal(options.signal)
     )
@@ -44,7 +44,7 @@ export class TokenPolicyClient {
   async setProduceTokenRequired(id: string, val: boolean, options: MQManagerRequestOptions = {}): Promise<void> {
     const req = put(
       url(this.options.server)
-    , pathname(`/api/mq/${id}/token-policies/produce-token-required`)
+    , pathname(`/admin/mq/${id}/token-policies/produce-token-required`)
     , password(this.options.adminPassword)
     , json(val)
     , options.signal && signal(options.signal)
@@ -56,7 +56,7 @@ export class TokenPolicyClient {
   async removeProduceTokenRequired(id: string, options: MQManagerRequestOptions = {}): Promise<void> {
     const req = del(
       url(this.options.server)
-    , pathname(`/api/mq/${id}/token-policies/produce-token-required`)
+    , pathname(`/admin/mq/${id}/token-policies/produce-token-required`)
     , password(this.options.adminPassword)
     , options.signal && signal(options.signal)
     )
@@ -67,7 +67,7 @@ export class TokenPolicyClient {
   async setConsumeTokenRequired(id: string, val: boolean, options: MQManagerRequestOptions = {}): Promise<void> {
     const req = put(
       url(this.options.server)
-    , pathname(`/api/mq/${id}/token-policies/consume-token-required`)
+    , pathname(`/admin/mq/${id}/token-policies/consume-token-required`)
     , password(this.options.adminPassword)
     , json(val)
     , options.signal && signal(options.signal)
@@ -79,7 +79,7 @@ export class TokenPolicyClient {
   async removeConsumeTokenRequired(id: string, options: MQManagerRequestOptions = {}): Promise<void> {
     const req = del(
       url(this.options.server)
-    , pathname(`/api/mq/${id}/token-policies/consume-token-required`)
+    , pathname(`/admin/mq/${id}/token-policies/consume-token-required`)
     , password(this.options.adminPassword)
     , options.signal && signal(options.signal)
     )
@@ -90,7 +90,7 @@ export class TokenPolicyClient {
   async setClearTokenRequired(id: string, val: boolean, options: MQManagerRequestOptions = {}): Promise<void> {
     const req = put(
       url(this.options.server)
-    , pathname(`/api/mq/${id}/token-policies/clear-token-required`)
+    , pathname(`/admin/mq/${id}/token-policies/clear-token-required`)
     , password(this.options.adminPassword)
     , json(val)
     , options.signal && signal(options.signal)
@@ -102,7 +102,7 @@ export class TokenPolicyClient {
   async removeClearTokenRequired(id: string, options: MQManagerRequestOptions = {}): Promise<void> {
     const req = del(
       url(this.options.server)
-    , pathname(`/api/mq/${id}/token-policies/clear-token-required`)
+    , pathname(`/admin/mq/${id}/token-policies/clear-token-required`)
     , password(this.options.adminPassword)
     , options.signal && signal(options.signal)
     )

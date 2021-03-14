@@ -24,7 +24,7 @@ export class ConfigurationClient {
   async getIds(options: MQManagerRequestOptions = {}): Promise<string[]> {
     const req = get(
       url(this.options.server)
-    , pathname('/api/mq-with-configurations')
+    , pathname('/admin/mq-with-configurations')
     , password(this.options.adminPassword)
     , options.signal && signal(options.signal)
     )
@@ -37,7 +37,7 @@ export class ConfigurationClient {
   async get(id: string, options: MQManagerRequestOptions = {}): Promise<Configuration> {
     const req = get(
       url(this.options.server)
-    , pathname(`/api/mq/${id}/configurations`)
+    , pathname(`/admin/mq/${id}/configurations`)
     , password(this.options.adminPassword)
     , options.signal && signal(options.signal)
     )
@@ -50,7 +50,7 @@ export class ConfigurationClient {
   async setUnique(id: string, val: boolean, options: MQManagerRequestOptions = {}): Promise<void> {
     const req = put(
       url(this.options.server)
-    , pathname(`/api/mq/${id}/configurations/unique`)
+    , pathname(`/admin/mq/${id}/configurations/unique`)
     , password(this.options.adminPassword)
     , json(val)
     , options.signal && signal(options.signal)
@@ -62,7 +62,7 @@ export class ConfigurationClient {
   async removeUnique(id: string, options: MQManagerRequestOptions = {}): Promise<void> {
     const req = del(
       url(this.options.server)
-    , pathname(`/api/mq/${id}/configurations/unique`)
+    , pathname(`/admin/mq/${id}/configurations/unique`)
     , password(this.options.adminPassword)
     , options.signal && signal(options.signal)
     )
@@ -73,7 +73,7 @@ export class ConfigurationClient {
   async setDraftingTimeout(id: string, val: number, options: MQManagerRequestOptions = {}): Promise<void> {
     const req = put(
       url(this.options.server)
-    , pathname(`/api/mq/${id}/configurations/drafting-timeout`)
+    , pathname(`/admin/mq/${id}/configurations/drafting-timeout`)
     , password(this.options.adminPassword)
     , json(val)
     , options.signal && signal(options.signal)
@@ -85,7 +85,7 @@ export class ConfigurationClient {
   async removeDraftingTimeout(id: string, options: MQManagerRequestOptions = {}): Promise<void> {
     const req = del(
       url(this.options.server)
-    , pathname(`/api/mq/${id}/configurations/drafting-timeout`)
+    , pathname(`/admin/mq/${id}/configurations/drafting-timeout`)
     , password(this.options.adminPassword)
     , options.signal && signal(options.signal)
     )
@@ -96,7 +96,7 @@ export class ConfigurationClient {
   async setOrderedTimeout(id: string, val: number, options: MQManagerRequestOptions = {}): Promise<void> {
     const req = put(
       url(this.options.server)
-    , pathname(`/api/mq/${id}/configurations/ordered-timeout`)
+    , pathname(`/admin/mq/${id}/configurations/ordered-timeout`)
     , password(this.options.adminPassword)
     , json(val)
     , options.signal && signal(options.signal)
@@ -108,7 +108,7 @@ export class ConfigurationClient {
   async removeOrderedTimeout(id: string, options: MQManagerRequestOptions = {}): Promise<void> {
     const req = del(
       url(this.options.server)
-    , pathname(`/api/mq/${id}/configurations/ordered-timeout`)
+    , pathname(`/admin/mq/${id}/configurations/ordered-timeout`)
     , password(this.options.adminPassword)
     , options.signal && signal(options.signal)
     )
@@ -119,7 +119,7 @@ export class ConfigurationClient {
   async setActiveTimeout(id: string, val: number, options: MQManagerRequestOptions = {}): Promise<void> {
     const req = put(
       url(this.options.server)
-    , pathname(`/api/mq/${id}/configurations/active-timeout`)
+    , pathname(`/admin/mq/${id}/configurations/active-timeout`)
     , password(this.options.adminPassword)
     , json(val)
     , options.signal && signal(options.signal)
@@ -131,7 +131,7 @@ export class ConfigurationClient {
   async removeActiveTimeout(id: string, options: MQManagerRequestOptions = {}): Promise<void> {
     const req = del(
       url(this.options.server)
-    , pathname(`/api/mq/${id}/configurations/active-timeout`)
+    , pathname(`/admin/mq/${id}/configurations/active-timeout`)
     , password(this.options.adminPassword)
     , options.signal && signal(options.signal)
     )
@@ -142,7 +142,7 @@ export class ConfigurationClient {
   async setConcurrency(id: string, val: number, options: MQManagerRequestOptions = {}): Promise<void> {
     const req = put(
       url(this.options.server)
-    , pathname(`/api/mq/${id}/configurations/concurrency`)
+    , pathname(`/admin/mq/${id}/configurations/concurrency`)
     , password(this.options.adminPassword)
     , json(val)
     , options.signal && signal(options.signal)
@@ -154,7 +154,7 @@ export class ConfigurationClient {
   async removeConcurrency(id: string, options: MQManagerRequestOptions = {}): Promise<void> {
     const req = del(
       url(this.options.server)
-    , pathname(`/api/mq/${id}/configurations/concurrency`)
+    , pathname(`/admin/mq/${id}/configurations/concurrency`)
     , password(this.options.adminPassword)
     , options.signal && signal(options.signal)
     )
@@ -172,7 +172,7 @@ export class ConfigurationClient {
   ): Promise<void> {
     const req = put(
       url(this.options.server)
-    , pathname(`/api/mq/${id}/configurations/throttle`)
+    , pathname(`/admin/mq/${id}/configurations/throttle`)
     , password(this.options.adminPassword)
     , json(val)
     , options.signal && signal(options.signal)
@@ -184,7 +184,7 @@ export class ConfigurationClient {
   async removeThrottle(id: string, options: MQManagerRequestOptions = {}): Promise<void> {
     const req = del(
       url(this.options.server)
-    , pathname(`/api/mq/${id}/configurations/throttle`)
+    , pathname(`/admin/mq/${id}/configurations/throttle`)
     , password(this.options.adminPassword)
     , options.signal && signal(options.signal)
     )

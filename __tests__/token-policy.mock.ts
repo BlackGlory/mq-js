@@ -3,7 +3,7 @@ import { rest } from 'msw'
 import { badAuth, badJson } from '@test/utils'
 
 export const server = setupServer(
-  rest.get('/api/mq-with-token-policies', (req, res, ctx) => {
+  rest.get('/admin/mq-with-token-policies', (req, res, ctx) => {
     if (badAuth(req)) return res(ctx.status(401))
 
     return res(
@@ -12,7 +12,7 @@ export const server = setupServer(
     )
   })
 
-, rest.get('/api/mq/:id/token-policies', (req, res, ctx) => {
+, rest.get('/admin/mq/:id/token-policies', (req, res, ctx) => {
     if (badAuth(req)) return res(ctx.status(401))
 
     return res(
@@ -25,40 +25,40 @@ export const server = setupServer(
     )
   })
 
-, rest.put('/api/mq/:id/token-policies/produce-token-required', (req, res, ctx) => {
+, rest.put('/admin/mq/:id/token-policies/produce-token-required', (req, res, ctx) => {
     if (badAuth(req)) return res(ctx.status(401))
     if (badJson(req)) return res(ctx.status(400))
 
     return res(ctx.status(204))
   })
 
-, rest.delete('/api/mq/:id/token-policies/produce-token-required', (req, res, ctx) => {
+, rest.delete('/admin/mq/:id/token-policies/produce-token-required', (req, res, ctx) => {
     if (badAuth(req)) return res(ctx.status(401))
 
     return res(ctx.status(204))
   })
 
-, rest.put('/api/mq/:id/token-policies/consume-token-required', (req, res, ctx) => {
-    if (badAuth(req)) return res(ctx.status(401))
-    if (badJson(req)) return res(ctx.status(400))
-
-    return res(ctx.status(204))
-  })
-
-, rest.delete('/api/mq/:id/token-policies/consume-token-required', (req, res, ctx) => {
-    if (badAuth(req)) return res(ctx.status(401))
-
-    return res(ctx.status(204))
-  })
-
-, rest.put('/api/mq/:id/token-policies/clear-token-required', (req, res, ctx) => {
+, rest.put('/admin/mq/:id/token-policies/consume-token-required', (req, res, ctx) => {
     if (badAuth(req)) return res(ctx.status(401))
     if (badJson(req)) return res(ctx.status(400))
 
     return res(ctx.status(204))
   })
 
-, rest.delete('/api/mq/:id/token-policies/clear-token-required', (req, res, ctx) => {
+, rest.delete('/admin/mq/:id/token-policies/consume-token-required', (req, res, ctx) => {
+    if (badAuth(req)) return res(ctx.status(401))
+
+    return res(ctx.status(204))
+  })
+
+, rest.put('/admin/mq/:id/token-policies/clear-token-required', (req, res, ctx) => {
+    if (badAuth(req)) return res(ctx.status(401))
+    if (badJson(req)) return res(ctx.status(400))
+
+    return res(ctx.status(204))
+  })
+
+, rest.delete('/admin/mq/:id/token-policies/clear-token-required', (req, res, ctx) => {
     if (badAuth(req)) return res(ctx.status(401))
 
     return res(ctx.status(204))

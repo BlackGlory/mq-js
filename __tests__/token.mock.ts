@@ -3,7 +3,7 @@ import { rest } from 'msw'
 import { badAuth } from '@test/utils'
 
 export const server = setupServer(
-  rest.get('/api/mq-with-tokens', (req, res, ctx) => {
+  rest.get('/admin/mq-with-tokens', (req, res, ctx) => {
     if (badAuth(req)) return res(ctx.status(401))
 
     return res(
@@ -12,7 +12,7 @@ export const server = setupServer(
     )
   })
 
-, rest.get('/api/mq/:id/tokens', (req, res, ctx) => {
+, rest.get('/admin/mq/:id/tokens', (req, res, ctx) => {
     if (badAuth(req)) return res(ctx.status(401))
 
     return res(
@@ -28,37 +28,37 @@ export const server = setupServer(
     )
   })
 
-, rest.put('/api/mq/:id/tokens/:token/produce', (req, res, ctx) => {
+, rest.put('/admin/mq/:id/tokens/:token/produce', (req, res, ctx) => {
     if (badAuth(req)) return res(ctx.status(401))
 
     return res(ctx.status(204))
   })
 
-, rest.delete('/api/mq/:id/tokens/:token/produce', (req, res, ctx) => {
+, rest.delete('/admin/mq/:id/tokens/:token/produce', (req, res, ctx) => {
     if (badAuth(req)) return res(ctx.status(401))
 
     return res(ctx.status(204))
   })
 
-, rest.put('/api/mq/:id/tokens/:token/consume', (req, res, ctx) => {
+, rest.put('/admin/mq/:id/tokens/:token/consume', (req, res, ctx) => {
     if (badAuth(req)) return res(ctx.status(401))
 
     return res(ctx.status(204))
   })
 
-, rest.delete('/api/mq/:id/tokens/:token/consume', (req, res, ctx) => {
+, rest.delete('/admin/mq/:id/tokens/:token/consume', (req, res, ctx) => {
     if (badAuth(req)) return res(ctx.status(401))
 
     return res(ctx.status(204))
   })
 
-, rest.put('/api/mq/:id/tokens/:token/clear', (req, res, ctx) => {
+, rest.put('/admin/mq/:id/tokens/:token/clear', (req, res, ctx) => {
     if (badAuth(req)) return res(ctx.status(401))
 
     return res(ctx.status(204))
   })
 
-, rest.delete('/api/mq/:id/tokens/:token/clear', (req, res, ctx) => {
+, rest.delete('/admin/mq/:id/tokens/:token/clear', (req, res, ctx) => {
     if (badAuth(req)) return res(ctx.status(401))
 
     return res(ctx.status(204))

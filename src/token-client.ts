@@ -19,7 +19,7 @@ export class TokenClient {
   async getIds(options: MQManagerRequestOptions = {}): Promise<string[]> {
     const req = get(
       url(this.options.server)
-    , pathname('/api/mq-with-tokens')
+    , pathname('/admin/mq-with-tokens')
     , password(this.options.adminPassword)
     , options.signal && signal(options.signal)
     )
@@ -32,7 +32,7 @@ export class TokenClient {
   async getTokens(id: string, options: MQManagerRequestOptions = {}): Promise<TokenInfo[]> {
     const req = get(
       url(this.options.server)
-    , pathname(`/api/mq/${id}/tokens`)
+    , pathname(`/admin/mq/${id}/tokens`)
     , password(this.options.adminPassword)
     , options.signal && signal(options.signal)
     )
@@ -45,7 +45,7 @@ export class TokenClient {
   async addProduceToken(id: string, token: string, options: MQManagerRequestOptions = {}): Promise<void> {
     const req = put(
       url(this.options.server)
-    , pathname(`/api/mq/${id}/tokens/${token}/produce`)
+    , pathname(`/admin/mq/${id}/tokens/${token}/produce`)
     , password(this.options.adminPassword)
     , options.signal && signal(options.signal)
     )
@@ -56,7 +56,7 @@ export class TokenClient {
   async removeProduceToken(id: string, token: string, options: MQManagerRequestOptions = {}): Promise<void> {
     const req = del(
       url(this.options.server)
-    , pathname(`/api/mq/${id}/tokens/${token}/produce`)
+    , pathname(`/admin/mq/${id}/tokens/${token}/produce`)
     , password(this.options.adminPassword)
     , options.signal && signal(options.signal)
     )
@@ -67,7 +67,7 @@ export class TokenClient {
   async addConsumeToken(id: string, token: string, options: MQManagerRequestOptions = {}): Promise<void> {
     const req = put(
       url(this.options.server)
-    , pathname(`/api/mq/${id}/tokens/${token}/consume`)
+    , pathname(`/admin/mq/${id}/tokens/${token}/consume`)
     , password(this.options.adminPassword)
     , options.signal && signal(options.signal)
     )
@@ -78,7 +78,7 @@ export class TokenClient {
   async removeConsumeToken(id: string, token: string, options: MQManagerRequestOptions = {}): Promise<void> {
     const req = del(
       url(this.options.server)
-    , pathname(`/api/mq/${id}/tokens/${token}/consume`)
+    , pathname(`/admin/mq/${id}/tokens/${token}/consume`)
     , password(this.options.adminPassword)
     , options.signal && signal(options.signal)
     )
@@ -89,7 +89,7 @@ export class TokenClient {
   async addClearToken(id: string, token: string, options: MQManagerRequestOptions = {}): Promise<void> {
     const req = put(
       url(this.options.server)
-    , pathname(`/api/mq/${id}/tokens/${token}/clear`)
+    , pathname(`/admin/mq/${id}/tokens/${token}/clear`)
     , password(this.options.adminPassword)
     , options.signal && signal(options.signal)
     )
@@ -100,7 +100,7 @@ export class TokenClient {
   async removeClearToken(id: string, token: string, options: MQManagerRequestOptions = {}): Promise<void> {
     const req = del(
       url(this.options.server)
-    , pathname(`/api/mq/${id}/tokens/${token}/clear`)
+    , pathname(`/admin/mq/${id}/tokens/${token}/clear`)
     , password(this.options.adminPassword)
     , options.signal && signal(options.signal)
     )
