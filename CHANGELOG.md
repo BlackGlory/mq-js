@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.7.0](https://github.com/BlackGlory/mq-js/compare/v0.6.17...v0.7.0) (2021-03-14)
+
+
+### ⚠ BREAKING CHANGES
+
+* rename /api to /admin
+
+### Features
+
+* rename /api to /admin ([7ace9e2](https://github.com/BlackGlory/mq-js/commit/7ace9e21f5c81d1b0f93ee551922c929bb46bfa4))
+
 ### [0.6.17](https://github.com/BlackGlory/mq-js/compare/v0.6.16...v0.6.17) (2021-03-10)
 
 
