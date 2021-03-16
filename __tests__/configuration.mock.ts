@@ -3,7 +3,7 @@ import { rest } from 'msw'
 import { badAuth, badJson } from '@test/utils'
 
 export const server = setupServer(
-  rest.get('/admin/mq-with-configurations', (req, res, ctx) => {
+  rest.get('/admin/mq-with-config', (req, res, ctx) => {
     if (badAuth(req)) return res(ctx.status(401))
 
     return res(
@@ -12,7 +12,7 @@ export const server = setupServer(
     )
   })
 
-, rest.get('/admin/mq/:id/configurations', (req, res, ctx) => {
+, rest.get('/admin/mq/:id/config', (req, res, ctx) => {
     if (badAuth(req)) return res(ctx.status(401))
 
     return res(
@@ -28,79 +28,79 @@ export const server = setupServer(
     )
   })
 
-, rest.put('/admin/mq/:id/configurations/unique', (req, res, ctx) => {
+, rest.put('/admin/mq/:id/config/unique', (req, res, ctx) => {
     if (badAuth(req)) return res(ctx.status(401))
     if (badJson(req)) return res(ctx.status(400))
 
     return res(ctx.status(204))
   })
 
-, rest.delete('/admin/mq/:id/configurations/unique', (req, res, ctx) => {
+, rest.delete('/admin/mq/:id/config/unique', (req, res, ctx) => {
     if (badAuth(req)) return res(ctx.status(401))
 
     return res(ctx.status(204))
   })
 
-, rest.put('/admin/mq/:id/configurations/drafting-timeout', (req, res, ctx) => {
-    if (badAuth(req)) return res(ctx.status(401))
-    if (badJson(req)) return res(ctx.status(400))
-
-    return res(ctx.status(204))
-  })
-
-, rest.delete('/admin/mq/:id/configurations/drafting-timeout', (req, res, ctx) => {
-    if (badAuth(req)) return res(ctx.status(401))
-
-    return res(ctx.status(204))
-  })
-
-, rest.put('/admin/mq/:id/configurations/ordered-timeout', (req, res, ctx) => {
+, rest.put('/admin/mq/:id/config/drafting-timeout', (req, res, ctx) => {
     if (badAuth(req)) return res(ctx.status(401))
     if (badJson(req)) return res(ctx.status(400))
 
     return res(ctx.status(204))
   })
 
-, rest.delete('/admin/mq/:id/configurations/ordered-timeout', (req, res, ctx) => {
+, rest.delete('/admin/mq/:id/config/drafting-timeout', (req, res, ctx) => {
     if (badAuth(req)) return res(ctx.status(401))
 
     return res(ctx.status(204))
   })
 
-, rest.put('/admin/mq/:id/configurations/active-timeout', (req, res, ctx) => {
-    if (badAuth(req)) return res(ctx.status(401))
-    if (badJson(req)) return res(ctx.status(400))
-
-    return res(ctx.status(204))
-  })
-
-, rest.delete('/admin/mq/:id/configurations/active-timeout', (req, res, ctx) => {
-    if (badAuth(req)) return res(ctx.status(401))
-
-    return res(ctx.status(204))
-  })
-
-, rest.put('/admin/mq/:id/configurations/concurrency', (req, res, ctx) => {
+, rest.put('/admin/mq/:id/config/ordered-timeout', (req, res, ctx) => {
     if (badAuth(req)) return res(ctx.status(401))
     if (badJson(req)) return res(ctx.status(400))
 
     return res(ctx.status(204))
   })
 
-, rest.delete('/admin/mq/:id/configurations/concurrency', (req, res, ctx) => {
+, rest.delete('/admin/mq/:id/config/ordered-timeout', (req, res, ctx) => {
     if (badAuth(req)) return res(ctx.status(401))
 
     return res(ctx.status(204))
   })
 
-, rest.put('/admin/mq/:id/configurations/throttle', (req, res, ctx) => {
+, rest.put('/admin/mq/:id/config/active-timeout', (req, res, ctx) => {
     if (badAuth(req)) return res(ctx.status(401))
     if (badJson(req)) return res(ctx.status(400))
 
     return res(ctx.status(204))
   })
 
-, rest.delete('/admin/mq/:id/configurations/throttle', (req, res, ctx) => {
+, rest.delete('/admin/mq/:id/config/active-timeout', (req, res, ctx) => {
+    if (badAuth(req)) return res(ctx.status(401))
+
+    return res(ctx.status(204))
+  })
+
+, rest.put('/admin/mq/:id/config/concurrency', (req, res, ctx) => {
+    if (badAuth(req)) return res(ctx.status(401))
+    if (badJson(req)) return res(ctx.status(400))
+
+    return res(ctx.status(204))
+  })
+
+, rest.delete('/admin/mq/:id/config/concurrency', (req, res, ctx) => {
+    if (badAuth(req)) return res(ctx.status(401))
+
+    return res(ctx.status(204))
+  })
+
+, rest.put('/admin/mq/:id/config/throttle', (req, res, ctx) => {
+    if (badAuth(req)) return res(ctx.status(401))
+    if (badJson(req)) return res(ctx.status(400))
+
+    return res(ctx.status(204))
+  })
+
+, rest.delete('/admin/mq/:id/config/throttle', (req, res, ctx) => {
     if (badAuth(req)) return res(ctx.status(401))
 
     return res(ctx.status(204))
