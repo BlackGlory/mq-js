@@ -1,3 +1,3 @@
-export interface MQManagerRequestOptions {
+export interface IMQManagerRequestOptions {
   signal?: AbortSignal
 }

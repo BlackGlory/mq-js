@@ -4,9 +4,9 @@ import { get, put, del } from 'extra-request'
 import { url, pathname, json, signal } from 'extra-request/lib/es2018/transformers'
 import { ok, toJSON } from 'extra-response'
 import type { IMQManagerOptions } from './mq-manager'
-import { MQManagerRequestOptions } from './types'
+import { IMQManagerRequestOptions } from './types'
 
-interface Configuration {
+interface IConfiguration {
   unique: boolean | null
   draftingTimeout: number | null
   orderedTimeout: number | null
@@ -21,7 +21,7 @@ interface Configuration {
 export class ConfigurationClient {
   constructor(private options: IMQManagerOptions) {}
 
-  async getIds(options: MQManagerRequestOptions = {}): Promise<string[]> {
+  async getIds(options: IMQManagerRequestOptions = {}): Promise<string[]> {
     const req = get(
       url(this.options.server)
     , pathname('/admin/mq-with-config')
@@ -34,7 +34,7 @@ export class ConfigurationClient {
       .then(toJSON) as string[]
   }
 
-  async get(id: string, options: MQManagerRequestOptions = {}): Promise<Configuration> {
+  async get(id: string, options: IMQManagerRequestOptions = {}): Promise<IConfiguration> {
     const req = get(
       url(this.options.server)
     , pathname(`/admin/mq/${id}/config`)
@@ -44,10 +44,10 @@ export class ConfigurationClient {
 
     return await fetch(req)
       .then(ok)
-      .then(toJSON) as Configuration
+      .then(toJSON) as IConfiguration
   }
 
-  async setUnique(id: string, val: boolean, options: MQManagerRequestOptions = {}): Promise<void> {
+  async setUnique(id: string, val: boolean, options: IMQManagerRequestOptions = {}): Promise<void> {
     const req = put(
       url(this.options.server)
     , pathname(`/admin/mq/${id}/config/unique`)
@@ -59,7 +59,7 @@ export class ConfigurationClient {
     await fetch(req).then(ok)
   }
 
-  async removeUnique(id: string, options: MQManagerRequestOptions = {}): Promise<void> {
+  async removeUnique(id: string, options: IMQManagerRequestOptions = {}): Promise<void> {
     const req = del(
       url(this.options.server)
     , pathname(`/admin/mq/${id}/config/unique`)
@@ -70,7 +70,7 @@ export class ConfigurationClient {
     await fetch(req).then(ok)
   }
 
-  async setDraftingTimeout(id: string, val: number, options: MQManagerRequestOptions = {}): Promise<void> {
+  async setDraftingTimeout(id: string, val: number, options: IMQManagerRequestOptions = {}): Promise<void> {
     const req = put(
       url(this.options.server)
     , pathname(`/admin/mq/${id}/config/drafting-timeout`)
@@ -82,7 +82,7 @@ export class ConfigurationClient {
     await fetch(req).then(ok)
   }
 
-  async removeDraftingTimeout(id: string, options: MQManagerRequestOptions = {}): Promise<void> {
+  async removeDraftingTimeout(id: string, options: IMQManagerRequestOptions = {}): Promise<void> {
     const req = del(
       url(this.options.server)
     , pathname(`/admin/mq/${id}/config/drafting-timeout`)
@@ -93,7 +93,7 @@ export class ConfigurationClient {
     await fetch(req).then(ok)
   }
 
-  async setOrderedTimeout(id: string, val: number, options: MQManagerRequestOptions = {}): Promise<void> {
+  async setOrderedTimeout(id: string, val: number, options: IMQManagerRequestOptions = {}): Promise<void> {
     const req = put(
       url(this.options.server)
     , pathname(`/admin/mq/${id}/config/ordered-timeout`)
@@ -105,7 +105,7 @@ export class ConfigurationClient {
     await fetch(req).then(ok)
   }
 
-  async removeOrderedTimeout(id: string, options: MQManagerRequestOptions = {}): Promise<void> {
+  async removeOrderedTimeout(id: string, options: IMQManagerRequestOptions = {}): Promise<void> {
     const req = del(
       url(this.options.server)
     , pathname(`/admin/mq/${id}/config/ordered-timeout`)
@@ -116,7 +116,7 @@ export class ConfigurationClient {
     await fetch(req).then(ok)
   }
 
-  async setActiveTimeout(id: string, val: number, options: MQManagerRequestOptions = {}): Promise<void> {
+  async setActiveTimeout(id: string, val: number, options: IMQManagerRequestOptions = {}): Promise<void> {
     const req = put(
       url(this.options.server)
     , pathname(`/admin/mq/${id}/config/active-timeout`)
@@ -128,7 +128,7 @@ export class ConfigurationClient {
     await fetch(req).then(ok)
   }
 
-  async removeActiveTimeout(id: string, options: MQManagerRequestOptions = {}): Promise<void> {
+  async removeActiveTimeout(id: string, options: IMQManagerRequestOptions = {}): Promise<void> {
     const req = del(
       url(this.options.server)
     , pathname(`/admin/mq/${id}/config/active-timeout`)
@@ -139,7 +139,7 @@ export class ConfigurationClient {
     await fetch(req).then(ok)
   }
 
-  async setConcurrency(id: string, val: number, options: MQManagerRequestOptions = {}): Promise<void> {
+  async setConcurrency(id: string, val: number, options: IMQManagerRequestOptions = {}): Promise<void> {
     const req = put(
       url(this.options.server)
     , pathname(`/admin/mq/${id}/config/concurrency`)
@@ -151,7 +151,7 @@ export class ConfigurationClient {
     await fetch(req).then(ok)
   }
 
-  async removeConcurrency(id: string, options: MQManagerRequestOptions = {}): Promise<void> {
+  async removeConcurrency(id: string, options: IMQManagerRequestOptions = {}): Promise<void> {
     const req = del(
       url(this.options.server)
     , pathname(`/admin/mq/${id}/config/concurrency`)
@@ -168,7 +168,7 @@ export class ConfigurationClient {
       duration: number
       limit: number
     }
-  , options: MQManagerRequestOptions = {}
+  , options: IMQManagerRequestOptions = {}
   ): Promise<void> {
     const req = put(
       url(this.options.server)
@@ -181,7 +181,7 @@ export class ConfigurationClient {
     await fetch(req).then(ok)
   }
 
-  async removeThrottle(id: string, options: MQManagerRequestOptions = {}): Promise<void> {
+  async removeThrottle(id: string, options: IMQManagerRequestOptions = {}): Promise<void> {
     const req = del(
       url(this.options.server)
     , pathname(`/admin/mq/${id}/config/throttle`)

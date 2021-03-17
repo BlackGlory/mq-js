@@ -5,12 +5,12 @@ import { get, put, del } from 'extra-request'
 import { url, pathname, json, signal } from 'extra-request/lib/es2018/transformers'
 import { ok, toJSON } from 'extra-response'
 import type { IMQManagerOptions } from './mq-manager'
-import { MQManagerRequestOptions } from './types'
+import { IMQManagerRequestOptions } from './types'
 
 export class JsonSchemaClient {
   constructor(private options: IMQManagerOptions) {}
 
-  async getIds(options: MQManagerRequestOptions = {}): Promise<string[]> {
+  async getIds(options: IMQManagerRequestOptions = {}): Promise<string[]> {
     const req = get(
       url(this.options.server)
     , pathname('/admin/mq-with-json-schema')
@@ -23,7 +23,7 @@ export class JsonSchemaClient {
       .then(toJSON) as string[]
   }
 
-  async get(id: string, options: MQManagerRequestOptions = {}): Promise<unknown> {
+  async get(id: string, options: IMQManagerRequestOptions = {}): Promise<unknown> {
     const req = get(
       url(this.options.server)
     , pathname(`/admin/mq/${id}/json-schema`)
@@ -36,7 +36,7 @@ export class JsonSchemaClient {
       .then(toJSON)
   }
 
-  async set(id: string, schema: Json, options: MQManagerRequestOptions = {}): Promise<void> {
+  async set(id: string, schema: Json, options: IMQManagerRequestOptions = {}): Promise<void> {
     const req = put(
       url(this.options.server)
     , pathname(`/admin/mq/${id}/json-schema`)
@@ -48,7 +48,7 @@ export class JsonSchemaClient {
     await fetch(req).then(ok)
   }
 
-  async remove(id: string, options: MQManagerRequestOptions = {}): Promise<void> {
+  async remove(id: string, options: IMQManagerRequestOptions = {}): Promise<void> {
     const req = del(
       url(this.options.server)
     , pathname(`/admin/mq/${id}/json-schema`)
