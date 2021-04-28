@@ -15,7 +15,7 @@ interface ITokenPolicy {
 export class TokenPolicyClient {
   constructor(private options: IMQManagerOptions) {}
 
-  async getIds(options: IMQManagerRequestOptions = {}): Promise<string[]> {
+  async getNamespaces(options: IMQManagerRequestOptions = {}): Promise<string[]> {
     const req = get(
       url(this.options.server)
     , pathname('/admin/mq-with-token-policies')
@@ -28,10 +28,13 @@ export class TokenPolicyClient {
       .then(toJSON) as string[]
   }
 
-  async get(id: string, options: IMQManagerRequestOptions = {}): Promise<ITokenPolicy> {
+  async get(
+    namespaces: string
+  , options: IMQManagerRequestOptions = {}
+  ): Promise<ITokenPolicy> {
     const req = get(
       url(this.options.server)
-    , pathname(`/admin/mq/${id}/token-policies`)
+    , pathname(`/admin/mq/${namespaces}/token-policies`)
     , password(this.options.adminPassword)
     , options.signal && signal(options.signal)
     )
@@ -41,10 +44,14 @@ export class TokenPolicyClient {
       .then(toJSON) as ITokenPolicy
   }
 
-  async setProduceTokenRequired(id: string, val: boolean, options: IMQManagerRequestOptions = {}): Promise<void> {
+  async setProduceTokenRequired(
+    namespaces: string
+  , val: boolean
+  , options: IMQManagerRequestOptions = {}
+  ): Promise<void> {
     const req = put(
       url(this.options.server)
-    , pathname(`/admin/mq/${id}/token-policies/produce-token-required`)
+    , pathname(`/admin/mq/${namespaces}/token-policies/produce-token-required`)
     , password(this.options.adminPassword)
     , json(val)
     , options.signal && signal(options.signal)
@@ -53,10 +60,13 @@ export class TokenPolicyClient {
     await fetch(req).then(ok)
   }
 
-  async removeProduceTokenRequired(id: string, options: IMQManagerRequestOptions = {}): Promise<void> {
+  async removeProduceTokenRequired(
+    namespaces: string
+  , options: IMQManagerRequestOptions = {}
+  ): Promise<void> {
     const req = del(
       url(this.options.server)
-    , pathname(`/admin/mq/${id}/token-policies/produce-token-required`)
+    , pathname(`/admin/mq/${namespaces}/token-policies/produce-token-required`)
     , password(this.options.adminPassword)
     , options.signal && signal(options.signal)
     )
@@ -64,10 +74,14 @@ export class TokenPolicyClient {
     await fetch(req).then(ok)
   }
 
-  async setConsumeTokenRequired(id: string, val: boolean, options: IMQManagerRequestOptions = {}): Promise<void> {
+  async setConsumeTokenRequired(
+    namespaces: string
+  , val: boolean
+  , options: IMQManagerRequestOptions = {}
+  ): Promise<void> {
     const req = put(
       url(this.options.server)
-    , pathname(`/admin/mq/${id}/token-policies/consume-token-required`)
+    , pathname(`/admin/mq/${namespaces}/token-policies/consume-token-required`)
     , password(this.options.adminPassword)
     , json(val)
     , options.signal && signal(options.signal)
@@ -76,10 +90,13 @@ export class TokenPolicyClient {
     await fetch(req).then(ok)
   }
 
-  async removeConsumeTokenRequired(id: string, options: IMQManagerRequestOptions = {}): Promise<void> {
+  async removeConsumeTokenRequired(
+    namespaces: string
+  , options: IMQManagerRequestOptions = {}
+  ): Promise<void> {
     const req = del(
       url(this.options.server)
-    , pathname(`/admin/mq/${id}/token-policies/consume-token-required`)
+    , pathname(`/admin/mq/${namespaces}/token-policies/consume-token-required`)
     , password(this.options.adminPassword)
     , options.signal && signal(options.signal)
     )
@@ -87,10 +104,14 @@ export class TokenPolicyClient {
     await fetch(req).then(ok)
   }
 
-  async setClearTokenRequired(id: string, val: boolean, options: IMQManagerRequestOptions = {}): Promise<void> {
+  async setClearTokenRequired(
+    namespaces: string
+  , val: boolean
+  , options: IMQManagerRequestOptions = {}
+  ): Promise<void> {
     const req = put(
       url(this.options.server)
-    , pathname(`/admin/mq/${id}/token-policies/clear-token-required`)
+    , pathname(`/admin/mq/${namespaces}/token-policies/clear-token-required`)
     , password(this.options.adminPassword)
     , json(val)
     , options.signal && signal(options.signal)
@@ -99,10 +120,13 @@ export class TokenPolicyClient {
     await fetch(req).then(ok)
   }
 
-  async removeClearTokenRequired(id: string, options: IMQManagerRequestOptions = {}): Promise<void> {
+  async removeClearTokenRequired(
+    namespaces: string
+  , options: IMQManagerRequestOptions = {}
+  ): Promise<void> {
     const req = del(
       url(this.options.server)
-    , pathname(`/admin/mq/${id}/token-policies/clear-token-required`)
+    , pathname(`/admin/mq/${namespaces}/token-policies/clear-token-required`)
     , password(this.options.adminPassword)
     , options.signal && signal(options.signal)
     )

@@ -8,21 +8,21 @@ beforeEach(() => server.resetHandlers())
 afterAll(() => server.close())
 
 describe('TokenClient', () => {
-  it('getIds(): Promise<string[]>', async () => {
+  test('getNamespaces(): Promise<string[]>', async () => {
     const client = createClient()
 
-    const result = client.getIds()
+    const result = client.getNamespaces()
     const proResult = await result
 
     expect(result).toBePromise()
-    expect(proResult).toStrictEqual(['id'])
+    expect(proResult).toStrictEqual(['namespace'])
   })
 
-  it('getTokens(id: string): Promise<Array<{ token: string; write: boolean; read: boolean }>>', async () => {
+  test('getTokens(namespace: string): Promise<Array<{ token: string; write: boolean; read: boolean }>>', async () => {
     const client = createClient()
-    const id = 'id'
+    const namespace = 'namespace'
 
-    const result = client.getTokens(id)
+    const result = client.getTokens(namespace)
     const proResult = await result
 
     expect(result).toBePromise()
@@ -34,72 +34,72 @@ describe('TokenClient', () => {
     }])
   })
 
-  it('addProduceToken(id: string, token: string): Promise<void>', async () => {
+  test('addProduceToken(namespace: string, token: string): Promise<void>', async () => {
     const client = createClient()
-    const id = 'id'
+    const namespace = 'namespace'
     const token = 'token'
 
-    const result = client.addProduceToken(id, token)
+    const result = client.addProduceToken(namespace, token)
     const proResult = await result
 
     expect(result).toBePromise()
     expect(proResult).toBeUndefined()
   })
 
-  it('removeProduceToken(id: string, token: string): Promise<void>', async () => {
+  test('removeProduceToken(namespace: string, token: string): Promise<void>', async () => {
     const client = createClient()
-    const id = 'id'
+    const namespace = 'namespace'
     const token = 'token'
 
-    const result = client.removeProduceToken(id, token)
+    const result = client.removeProduceToken(namespace, token)
     const proResult = await result
 
     expect(result).toBePromise()
     expect(proResult).toBeUndefined()
   })
 
-  it('addConsumeToken(id: string, token: string): Promise<void>', async () => {
+  test('addConsumeToken(namespace: string, token: string): Promise<void>', async () => {
     const client = createClient()
-    const id = 'id'
+    const namespace = 'namespace'
     const token = 'token'
 
-    const result = client.addConsumeToken(id, token)
+    const result = client.addConsumeToken(namespace, token)
     const proResult = await result
 
     expect(result).toBePromise()
     expect(proResult).toBeUndefined()
   })
 
-  it('removeConsumeToken(id: string, token: string): Promise<void>', async () => {
+  test('removeConsumeToken(namespace: string, token: string): Promise<void>', async () => {
     const client = createClient()
-    const id = 'id'
+    const namespace = 'namespace'
     const token = 'token'
 
-    const result = client.removeConsumeToken(id, token)
+    const result = client.removeConsumeToken(namespace, token)
     const proResult = await result
 
     expect(result).toBePromise()
     expect(proResult).toBeUndefined()
   })
 
-  it('addClearToken(id: string, token: string): Promise<void>', async () => {
+  test('addClearToken(namespace: string, token: string): Promise<void>', async () => {
     const client = createClient()
-    const id = 'id'
+    const namespace = 'namespace'
     const token = 'token'
 
-    const result = client.addClearToken(id, token)
+    const result = client.addClearToken(namespace, token)
     const proResult = await result
 
     expect(result).toBePromise()
     expect(proResult).toBeUndefined()
   })
 
-  it('removeClearToken(id: string, token: string): Promise<void>', async () => {
+  test('removeClearToken(namespace: string, token: string): Promise<void>', async () => {
     const client = createClient()
-    const id = 'id'
+    const namespace = 'namespace'
     const token = 'token'
 
-    const result = client.removeClearToken(id, token)
+    const result = client.removeClearToken(namespace, token)
     const proResult = await result
 
     expect(result).toBePromise()

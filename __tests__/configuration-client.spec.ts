@@ -8,21 +8,21 @@ beforeEach(() => server.resetHandlers())
 afterAll(() => server.close())
 
 describe('ConfigurationClient', () => {
-  it('getIds(): Promise<string[]>', async () => {
+  test('getNamespaces(): Promise<string[]>', async () => {
     const client = createClient()
 
-    const result = client.getIds()
+    const result = client.getNamespaces()
     const proResult = await result
 
     expect(result).toBePromise()
-    expect(proResult).toStrictEqual(['id'])
+    expect(proResult).toStrictEqual(['namespace'])
   })
 
-  it('get(id: string): Promise<Configuration>', async () => {
+  test('get(namespace: string): Promise<Configuration>', async () => {
     const client = createClient()
-    const id = 'id'
+    const namespace = 'namespace'
 
-    const result = client.get(id)
+    const result = client.get(namespace)
     const proResult = await result
 
     expect(result).toBePromise()
@@ -36,141 +36,146 @@ describe('ConfigurationClient', () => {
     })
   })
 
-  it('setUnique(id: string, val: boolean): Promise<void>', async () => {
+  test('setUnique(namespace: string, val: boolean): Promise<void>', async () => {
     const client = createClient()
-    const id = 'id'
+    const namespace = 'namespace'
     const val = true
 
-    const result = client.setUnique(id, val)
+    const result = client.setUnique(namespace, val)
     const proResult = await result
 
     expect(result).toBePromise()
     expect(proResult).toBeUndefined()
   })
 
-  it('removeUnique(id: string): Promise<void>', async () => {
+  test('removeUnique(namespace: string): Promise<void>', async () => {
     const client = createClient()
-    const id = 'id'
+    const namespace = 'namespace'
 
-    const result = client.removeUnique(id)
+    const result = client.removeUnique(namespace)
     const proResult = await result
 
     expect(result).toBePromise()
     expect(proResult).toBeUndefined()
   })
 
-  it('setDraftingTimeout(id: string, val: number): Promise<void>', async () => {
+  test('setDraftingTimeout(namespace: string, val: number): Promise<void>', async () => {
     const client = createClient()
-    const id = 'id'
+    const namespace = 'namespace'
     const val = 100
 
-    const result = client.setDraftingTimeout(id, val)
+    const result = client.setDraftingTimeout(namespace, val)
     const proResult = await result
 
     expect(result).toBePromise()
     expect(proResult).toBeUndefined()
   })
 
-  it('removeDraftingTimeout(id: string): Promise<void>', async () => {
+  test('removeDraftingTimeout(namespace: string): Promise<void>', async () => {
     const client = createClient()
-    const id = 'id'
+    const namespace = 'namespace'
 
-    const result = client.removeDraftingTimeout(id)
+    const result = client.removeDraftingTimeout(namespace)
     const proResult = await result
 
     expect(result).toBePromise()
     expect(proResult).toBeUndefined()
   })
 
-  it('setOrderedTimeout(id: string, val: number): Promise<void>', async () => {
+  test('setOrderedTimeout(namespace: string, val: number): Promise<void>', async () => {
     const client = createClient()
-    const id = 'id'
+    const namespace = 'namespace'
     const val = 100
 
-    const result = client.setOrderedTimeout(id, val)
+    const result = client.setOrderedTimeout(namespace, val)
     const proResult = await result
 
     expect(result).toBePromise()
     expect(proResult).toBeUndefined()
   })
 
-  it('removeOrderedTimeout(id: string): Promise<void>', async () => {
+  test('removeOrderedTimeout(namespace: string): Promise<void>', async () => {
     const client = createClient()
-    const id = 'id'
+    const namespace = 'namespace'
 
-    const result = client.removeOrderedTimeout(id)
+    const result = client.removeOrderedTimeout(namespace)
     const proResult = await result
 
     expect(result).toBePromise()
     expect(proResult).toBeUndefined()
   })
 
-  it('setActiveTimeout(id: string, val: number): Promise<void>', async () => {
+  test('setActiveTimeout(namespace: string, val: number): Promise<void>', async () => {
     const client = createClient()
-    const id = 'id'
+    const namespace = 'namespace'
     const val = 100
 
-    const result = client.setActiveTimeout(id, val)
+    const result = client.setActiveTimeout(namespace, val)
     const proResult = await result
 
     expect(result).toBePromise()
     expect(proResult).toBeUndefined()
   })
 
-  it('removeActiveTimeout(id: string): Promise<void>', async () => {
+  test('removeActiveTimeout(namespace: string): Promise<void>', async () => {
     const client = createClient()
-    const id = 'id'
+    const namespace = 'namespace'
 
-    const result = client.removeActiveTimeout(id)
+    const result = client.removeActiveTimeout(namespace)
     const proResult = await result
 
     expect(result).toBePromise()
     expect(proResult).toBeUndefined()
   })
 
-  it('setConcurrency(id: string, val: number): Promise<void>', async () => {
+  test('setConcurrency(namespace: string, val: number): Promise<void>', async () => {
     const client = createClient()
-    const id = 'id'
+    const namespace = 'namespace'
     const val = 100
 
-    const result = client.setConcurrency(id, val)
+    const result = client.setConcurrency(namespace, val)
     const proResult = await result
 
     expect(result).toBePromise()
     expect(proResult).toBeUndefined()
   })
 
-  it('removeConcurrency(id: string): Promise<void>', async () => {
+  test('removeConcurrency(namespace: string): Promise<void>', async () => {
     const client = createClient()
-    const id = 'id'
+    const namespace = 'namespace'
 
-    const result = client.removeConcurrency(id)
+    const result = client.removeConcurrency(namespace)
     const proResult = await result
 
     expect(result).toBePromise()
     expect(proResult).toBeUndefined()
   })
 
-  it('setThrottle(id: string, val: { duration: number; limit: number }): Promise<void>', async () => {
+  it(`
+    setThrottle(
+      namespace: string
+    , val: { duration: number; limit: number }
+    ): Promise<void>
+  `, async () => {
     const client = createClient()
-    const id = 'id'
+    const namespace = 'namespace'
     const val = {
       duration: 100
     , limit: 100
     }
 
-    const result = client.setThrottle(id, val)
+    const result = client.setThrottle(namespace, val)
     const proResult = await result
 
     expect(result).toBePromise()
     expect(proResult).toBeUndefined()
   })
 
-  it('removeThrottle(id: string): Promise<void>', async () => {
+  test('removeThrottle(namespace: string): Promise<void>', async () => {
     const client = createClient()
-    const id = 'id'
+    const namespace = 'namespace'
 
-    const result = client.removeThrottle(id)
+    const result = client.removeThrottle(namespace)
     const proResult = await result
 
     expect(result).toBePromise()

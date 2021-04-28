@@ -9,7 +9,7 @@ import { IMQManagerRequestOptions } from './types'
 export class BlacklistClient {
   constructor(private options: IMQManagerOptions) {}
 
-  async getIds(options: IMQManagerRequestOptions = {}): Promise<string[]> {
+  async getNamespaces(options: IMQManagerRequestOptions = {}): Promise<string[]> {
     const req = get(
       url(this.options.server)
     , pathname('/admin/blacklist')
@@ -22,10 +22,10 @@ export class BlacklistClient {
       .then(toJSON) as string[]
   }
 
-  async add(id: string, options: IMQManagerRequestOptions = {}): Promise<void> {
+  async add(namespaces: string, options: IMQManagerRequestOptions = {}): Promise<void> {
     const req = put(
       url(this.options.server)
-    , pathname(`/admin/blacklist/${id}`)
+    , pathname(`/admin/blacklist/${namespaces}`)
     , password(this.options.adminPassword)
     , options.signal && signal(options.signal)
     )
@@ -33,10 +33,10 @@ export class BlacklistClient {
     await fetch(req).then(ok)
   }
 
-  async remove(id: string, options: IMQManagerRequestOptions = {}): Promise<void> {
+  async remove(namespaces: string, options: IMQManagerRequestOptions = {}): Promise<void> {
     const req = del(
       url(this.options.server)
-    , pathname(`/admin/blacklist/${id}`)
+    , pathname(`/admin/blacklist/${namespaces}`)
     , password(this.options.adminPassword)
     , options.signal && signal(options.signal)
     )

@@ -77,7 +77,7 @@ export const server = setupServer(
 
     return res(
       ctx.status(204)
-    , ctx.json(['id'])
+    , ctx.json(['namespace'])
     )
   })
 
@@ -123,7 +123,7 @@ export const server = setupServer(
 , rest.get('/mq', (req, res, ctx) => {
     return res(
       ctx.status(200)
-    , ctx.json(['id'])
+    , ctx.json(['namespace'])
     )
   })
 )

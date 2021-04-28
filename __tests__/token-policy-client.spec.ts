@@ -8,21 +8,21 @@ beforeEach(() => server.resetHandlers())
 afterAll(() => server.close())
 
 describe('TokenPolicyClient', () => {
-  it('getIds(): Promise<string[]>', async () => {
+  test('getNamespaces(): Promise<string[]>', async () => {
     const client = createClient()
 
-    const result = client.getIds()
+    const result = client.getNamespaces()
     const proResult = await result
 
     expect(result).toBePromise()
-    expect(proResult).toStrictEqual(['id'])
+    expect(proResult).toStrictEqual(['namespace'])
   })
 
-  it('get(id: string): Promise<{ produceTokenRequired: boolean | null; consumeTokenRequired: boolean | null }>', async () => {
+  test('get(namespace: string): Promise<{ produceTokenRequired: boolean | null; consumeTokenRequired: boolean | null }>', async () => {
     const client = createClient()
-    const id = 'id'
+    const namespace = 'namespace'
 
-    const result = client.get(id)
+    const result = client.get(namespace)
     const proResult = await result
 
     expect(result).toBePromise()
@@ -33,69 +33,69 @@ describe('TokenPolicyClient', () => {
     })
   })
 
-  it('setProduceTokenRequired(id: string, val: boolean): Promise<void>', async () => {
+  test('setProduceTokenRequired(namespace: string, val: boolean): Promise<void>', async () => {
     const client = createClient()
-    const id = 'id'
+    const namespace = 'namespace'
     const val = true
 
-    const result = client.setProduceTokenRequired(id, val)
+    const result = client.setProduceTokenRequired(namespace, val)
     const proResult = await result
 
     expect(result).toBePromise()
     expect(proResult).toBeUndefined()
   })
 
-  it('removeProduceTokenRequired(id: string): Promise<void>', async () => {
+  test('removeProduceTokenRequired(namespace: string): Promise<void>', async () => {
     const client = createClient()
-    const id = 'id'
+    const namespace = 'namespace'
 
-    const result = client.removeProduceTokenRequired(id)
+    const result = client.removeProduceTokenRequired(namespace)
     const proResult = await result
 
     expect(result).toBePromise()
     expect(proResult).toBeUndefined()
   })
 
-  it('setConsumeTokenRequired(id: string, val: boolean): Promise<void>', async () => {
+  test('setConsumeTokenRequired(namespace: string, val: boolean): Promise<void>', async () => {
     const client = createClient()
-    const id = 'id'
+    const namespace = 'namespace'
     const val = true
 
-    const result = client.setConsumeTokenRequired(id, val)
+    const result = client.setConsumeTokenRequired(namespace, val)
     const proResult = await result
 
     expect(result).toBePromise()
     expect(proResult).toBeUndefined()
   })
 
-  it('removeConsumeTokenRequired(id: string): Promise<void>', async () => {
+  test('removeConsumeTokenRequired(namespace: string): Promise<void>', async () => {
     const client = createClient()
-    const id = 'id'
+    const namespace = 'namespace'
 
-    const result = client.removeConsumeTokenRequired(id)
+    const result = client.removeConsumeTokenRequired(namespace)
     const proResult = await result
 
     expect(result).toBePromise()
     expect(proResult).toBeUndefined()
   })
 
-  it('setClearTokenRequired(id: string, val: boolean): Promise<void>', async () => {
+  test('setClearTokenRequired(namespace: string, val: boolean): Promise<void>', async () => {
     const client = createClient()
-    const id = 'id'
+    const namespace = 'namespace'
     const val = true
 
-    const result = client.setClearTokenRequired(id, val)
+    const result = client.setClearTokenRequired(namespace, val)
     const proResult = await result
 
     expect(result).toBePromise()
     expect(proResult).toBeUndefined()
   })
 
-  it('removeClearTokenRequired(id: string): Promise<void>', async () => {
+  test('removeClearTokenRequired(namespace: string): Promise<void>', async () => {
     const client = createClient()
-    const id = 'id'
+    const namespace = 'namespace'
 
-    const result = client.removeClearTokenRequired(id)
+    const result = client.removeClearTokenRequired(namespace)
     const proResult = await result
 
     expect(result).toBePromise()

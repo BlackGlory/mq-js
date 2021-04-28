@@ -21,7 +21,7 @@ interface IConfiguration {
 export class ConfigurationClient {
   constructor(private options: IMQManagerOptions) {}
 
-  async getIds(options: IMQManagerRequestOptions = {}): Promise<string[]> {
+  async getNamespaces(options: IMQManagerRequestOptions = {}): Promise<string[]> {
     const req = get(
       url(this.options.server)
     , pathname('/admin/mq-with-config')
@@ -34,10 +34,13 @@ export class ConfigurationClient {
       .then(toJSON) as string[]
   }
 
-  async get(id: string, options: IMQManagerRequestOptions = {}): Promise<IConfiguration> {
+  async get(
+    namespaces: string
+  , options: IMQManagerRequestOptions = {}
+  ): Promise<IConfiguration> {
     const req = get(
       url(this.options.server)
-    , pathname(`/admin/mq/${id}/config`)
+    , pathname(`/admin/mq/${namespaces}/config`)
     , password(this.options.adminPassword)
     , options.signal && signal(options.signal)
     )
@@ -47,10 +50,14 @@ export class ConfigurationClient {
       .then(toJSON) as IConfiguration
   }
 
-  async setUnique(id: string, val: boolean, options: IMQManagerRequestOptions = {}): Promise<void> {
+  async setUnique(
+    namespaces: string
+  , val: boolean
+  , options: IMQManagerRequestOptions = {}
+  ): Promise<void> {
     const req = put(
       url(this.options.server)
-    , pathname(`/admin/mq/${id}/config/unique`)
+    , pathname(`/admin/mq/${namespaces}/config/unique`)
     , password(this.options.adminPassword)
     , json(val)
     , options.signal && signal(options.signal)
@@ -59,10 +66,13 @@ export class ConfigurationClient {
     await fetch(req).then(ok)
   }
 
-  async removeUnique(id: string, options: IMQManagerRequestOptions = {}): Promise<void> {
+  async removeUnique(
+    namespaces: string
+  , options: IMQManagerRequestOptions = {}
+  ): Promise<void> {
     const req = del(
       url(this.options.server)
-    , pathname(`/admin/mq/${id}/config/unique`)
+    , pathname(`/admin/mq/${namespaces}/config/unique`)
     , password(this.options.adminPassword)
     , options.signal && signal(options.signal)
     )
@@ -70,10 +80,14 @@ export class ConfigurationClient {
     await fetch(req).then(ok)
   }
 
-  async setDraftingTimeout(id: string, val: number, options: IMQManagerRequestOptions = {}): Promise<void> {
+  async setDraftingTimeout(
+    namespaces: string
+  , val: number
+  , options: IMQManagerRequestOptions = {}
+  ): Promise<void> {
     const req = put(
       url(this.options.server)
-    , pathname(`/admin/mq/${id}/config/drafting-timeout`)
+    , pathname(`/admin/mq/${namespaces}/config/drafting-timeout`)
     , password(this.options.adminPassword)
     , json(val)
     , options.signal && signal(options.signal)
@@ -82,10 +96,13 @@ export class ConfigurationClient {
     await fetch(req).then(ok)
   }
 
-  async removeDraftingTimeout(id: string, options: IMQManagerRequestOptions = {}): Promise<void> {
+  async removeDraftingTimeout(
+    namespaces: string
+  , options: IMQManagerRequestOptions = {}
+  ): Promise<void> {
     const req = del(
       url(this.options.server)
-    , pathname(`/admin/mq/${id}/config/drafting-timeout`)
+    , pathname(`/admin/mq/${namespaces}/config/drafting-timeout`)
     , password(this.options.adminPassword)
     , options.signal && signal(options.signal)
     )
@@ -93,10 +110,14 @@ export class ConfigurationClient {
     await fetch(req).then(ok)
   }
 
-  async setOrderedTimeout(id: string, val: number, options: IMQManagerRequestOptions = {}): Promise<void> {
+  async setOrderedTimeout(
+    namespaces: string
+  , val: number
+  , options: IMQManagerRequestOptions = {}
+  ): Promise<void> {
     const req = put(
       url(this.options.server)
-    , pathname(`/admin/mq/${id}/config/ordered-timeout`)
+    , pathname(`/admin/mq/${namespaces}/config/ordered-timeout`)
     , password(this.options.adminPassword)
     , json(val)
     , options.signal && signal(options.signal)
@@ -105,10 +126,13 @@ export class ConfigurationClient {
     await fetch(req).then(ok)
   }
 
-  async removeOrderedTimeout(id: string, options: IMQManagerRequestOptions = {}): Promise<void> {
+  async removeOrderedTimeout(
+    namespaces: string
+  , options: IMQManagerRequestOptions = {}
+  ): Promise<void> {
     const req = del(
       url(this.options.server)
-    , pathname(`/admin/mq/${id}/config/ordered-timeout`)
+    , pathname(`/admin/mq/${namespaces}/config/ordered-timeout`)
     , password(this.options.adminPassword)
     , options.signal && signal(options.signal)
     )
@@ -116,10 +140,14 @@ export class ConfigurationClient {
     await fetch(req).then(ok)
   }
 
-  async setActiveTimeout(id: string, val: number, options: IMQManagerRequestOptions = {}): Promise<void> {
+  async setActiveTimeout(
+    namespaces: string
+  , val: number
+  , options: IMQManagerRequestOptions = {}
+  ): Promise<void> {
     const req = put(
       url(this.options.server)
-    , pathname(`/admin/mq/${id}/config/active-timeout`)
+    , pathname(`/admin/mq/${namespaces}/config/active-timeout`)
     , password(this.options.adminPassword)
     , json(val)
     , options.signal && signal(options.signal)
@@ -128,10 +156,13 @@ export class ConfigurationClient {
     await fetch(req).then(ok)
   }
 
-  async removeActiveTimeout(id: string, options: IMQManagerRequestOptions = {}): Promise<void> {
+  async removeActiveTimeout(
+    namespaces: string
+  , options: IMQManagerRequestOptions = {}
+  ): Promise<void> {
     const req = del(
       url(this.options.server)
-    , pathname(`/admin/mq/${id}/config/active-timeout`)
+    , pathname(`/admin/mq/${namespaces}/config/active-timeout`)
     , password(this.options.adminPassword)
     , options.signal && signal(options.signal)
     )
@@ -139,10 +170,14 @@ export class ConfigurationClient {
     await fetch(req).then(ok)
   }
 
-  async setConcurrency(id: string, val: number, options: IMQManagerRequestOptions = {}): Promise<void> {
+  async setConcurrency(
+    namespaces: string
+  , val: number
+  , options: IMQManagerRequestOptions = {}
+  ): Promise<void> {
     const req = put(
       url(this.options.server)
-    , pathname(`/admin/mq/${id}/config/concurrency`)
+    , pathname(`/admin/mq/${namespaces}/config/concurrency`)
     , password(this.options.adminPassword)
     , json(val)
     , options.signal && signal(options.signal)
@@ -151,10 +186,13 @@ export class ConfigurationClient {
     await fetch(req).then(ok)
   }
 
-  async removeConcurrency(id: string, options: IMQManagerRequestOptions = {}): Promise<void> {
+  async removeConcurrency(
+    namespaces: string
+  , options: IMQManagerRequestOptions = {}
+  ): Promise<void> {
     const req = del(
       url(this.options.server)
-    , pathname(`/admin/mq/${id}/config/concurrency`)
+    , pathname(`/admin/mq/${namespaces}/config/concurrency`)
     , password(this.options.adminPassword)
     , options.signal && signal(options.signal)
     )
@@ -163,7 +201,7 @@ export class ConfigurationClient {
   }
 
   async setThrottle(
-    id: string
+    namespaces: string
   , val: {
       duration: number
       limit: number
@@ -172,7 +210,7 @@ export class ConfigurationClient {
   ): Promise<void> {
     const req = put(
       url(this.options.server)
-    , pathname(`/admin/mq/${id}/config/throttle`)
+    , pathname(`/admin/mq/${namespaces}/config/throttle`)
     , password(this.options.adminPassword)
     , json(val)
     , options.signal && signal(options.signal)
@@ -181,10 +219,13 @@ export class ConfigurationClient {
     await fetch(req).then(ok)
   }
 
-  async removeThrottle(id: string, options: IMQManagerRequestOptions = {}): Promise<void> {
+  async removeThrottle(
+    namespaces: string
+  , options: IMQManagerRequestOptions = {}
+  ): Promise<void> {
     const req = del(
       url(this.options.server)
-    , pathname(`/admin/mq/${id}/config/throttle`)
+    , pathname(`/admin/mq/${namespaces}/config/throttle`)
     , password(this.options.adminPassword)
     , options.signal && signal(options.signal)
     )

@@ -16,7 +16,7 @@ interface ITokenInfo {
 export class TokenClient {
   constructor(private options: IMQManagerOptions) {}
 
-  async getIds(options: IMQManagerRequestOptions = {}): Promise<string[]> {
+  async getNamespaces(options: IMQManagerRequestOptions = {}): Promise<string[]> {
     const req = get(
       url(this.options.server)
     , pathname('/admin/mq-with-tokens')

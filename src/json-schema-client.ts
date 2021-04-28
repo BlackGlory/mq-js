@@ -10,7 +10,7 @@ import { IMQManagerRequestOptions } from './types'
 export class JsonSchemaClient {
   constructor(private options: IMQManagerOptions) {}
 
-  async getIds(options: IMQManagerRequestOptions = {}): Promise<string[]> {
+  async getNamespaces(options: IMQManagerRequestOptions = {}): Promise<string[]> {
     const req = get(
       url(this.options.server)
     , pathname('/admin/mq-with-json-schema')
@@ -23,10 +23,13 @@ export class JsonSchemaClient {
       .then(toJSON) as string[]
   }
 
-  async get(id: string, options: IMQManagerRequestOptions = {}): Promise<unknown> {
+  async get(
+    namespaces: string
+  , options: IMQManagerRequestOptions = {}
+  ): Promise<unknown> {
     const req = get(
       url(this.options.server)
-    , pathname(`/admin/mq/${id}/json-schema`)
+    , pathname(`/admin/mq/${namespaces}/json-schema`)
     , password(this.options.adminPassword)
     , options.signal && signal(options.signal)
     )
@@ -36,10 +39,14 @@ export class JsonSchemaClient {
       .then(toJSON)
   }
 
-  async set(id: string, schema: Json, options: IMQManagerRequestOptions = {}): Promise<void> {
+  async set(
+    namespaces: string
+  , schema: Json
+  , options: IMQManagerRequestOptions = {}
+  ): Promise<void> {
     const req = put(
       url(this.options.server)
-    , pathname(`/admin/mq/${id}/json-schema`)
+    , pathname(`/admin/mq/${namespaces}/json-schema`)
     , password(this.options.adminPassword)
     , json(schema)
     , options.signal && signal(options.signal)
@@ -48,10 +55,13 @@ export class JsonSchemaClient {
     await fetch(req).then(ok)
   }
 
-  async remove(id: string, options: IMQManagerRequestOptions = {}): Promise<void> {
+  async remove(
+    namespaces: string
+  , options: IMQManagerRequestOptions = {}
+  ): Promise<void> {
     const req = del(
       url(this.options.server)
-    , pathname(`/admin/mq/${id}/json-schema`)
+    , pathname(`/admin/mq/${namespaces}/json-schema`)
     , password(this.options.adminPassword)
     , options.signal && signal(options.signal)
     )
