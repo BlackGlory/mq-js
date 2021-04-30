@@ -18,7 +18,11 @@ describe('TokenClient', () => {
     expect(proResult).toStrictEqual(['namespace'])
   })
 
-  test('getTokens(namespace: string): Promise<Array<{ token: string; write: boolean; read: boolean }>>', async () => {
+  test(`
+    getTokens(
+      namespace: string
+    ): Promise<Array<{ token: string; write: boolean; read: boolean }>>
+  `, async () => {
     const client = createClient()
     const namespace = 'namespace'
 

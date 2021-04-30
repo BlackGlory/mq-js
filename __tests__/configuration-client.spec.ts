@@ -151,7 +151,7 @@ describe('ConfigurationClient', () => {
     expect(proResult).toBeUndefined()
   })
 
-  it(`
+  test(`
     setThrottle(
       namespace: string
     , val: { duration: number; limit: number }

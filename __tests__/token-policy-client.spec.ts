@@ -18,7 +18,12 @@ describe('TokenPolicyClient', () => {
     expect(proResult).toStrictEqual(['namespace'])
   })
 
-  test('get(namespace: string): Promise<{ produceTokenRequired: boolean | null; consumeTokenRequired: boolean | null }>', async () => {
+  test(`
+    get(namespace: string): Promise<{
+      produceTokenRequired: boolean | null
+      consumeTokenRequired: boolean | null
+    }>
+  `, async () => {
     const client = createClient()
     const namespace = 'namespace'
 
@@ -33,7 +38,9 @@ describe('TokenPolicyClient', () => {
     })
   })
 
-  test('setProduceTokenRequired(namespace: string, val: boolean): Promise<void>', async () => {
+  test(`
+    setProduceTokenRequired(namespace: string, val: boolean): Promise<void>
+  `, async () => {
     const client = createClient()
     const namespace = 'namespace'
     const val = true
@@ -56,7 +63,9 @@ describe('TokenPolicyClient', () => {
     expect(proResult).toBeUndefined()
   })
 
-  test('setConsumeTokenRequired(namespace: string, val: boolean): Promise<void>', async () => {
+  test(`
+    setConsumeTokenRequired(namespace: string, val: boolean): Promise<void>
+  `, async () => {
     const client = createClient()
     const namespace = 'namespace'
     const val = true
@@ -79,7 +88,9 @@ describe('TokenPolicyClient', () => {
     expect(proResult).toBeUndefined()
   })
 
-  test('setClearTokenRequired(namespace: string, val: boolean): Promise<void>', async () => {
+  test(`
+    setClearTokenRequired(namespace: string, val: boolean): Promise<void>
+  `, async () => {
     const client = createClient()
     const namespace = 'namespace'
     const val = true

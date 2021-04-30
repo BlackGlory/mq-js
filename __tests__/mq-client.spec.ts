@@ -20,7 +20,9 @@ describe('MQClient', () => {
     expect(proResult).toBe('id')
   })
 
-  test('set(queueId: string, messageId: string, payload: string): Promise<void>', async () => {
+  test(`
+    set(queueId: string, messageId: string, payload: string): Promise<void>
+  `, async () => {
     const client = createClient()
     const queueId = 'queue-id'
     const messageId = 'message-id'
@@ -33,7 +35,13 @@ describe('MQClient', () => {
     expect(proResult).toBeUndefined()
   })
 
-  test('setJSON(queueId: string, messageId: string, payload: Json): Promise<void>', async () => {
+  test(`
+    setJSON(
+      queueId: string
+    , messageId: string
+    , payload: Json
+    ): Promise<void>
+  `, async () => {
     const client = createClient()
     const queueId = 'queue-id'
     const messageId = 'message-id'
@@ -57,7 +65,12 @@ describe('MQClient', () => {
     expect(proResult).toBe('id')
   })
 
-  test('get(queueId: string, messageId: string): Promise<{ priority: number | null; payload: string }>', async () => {
+  test(`
+    get(
+      queueId: string
+    , messageId: string
+    ): Promise<{ priority: number | null; payload: string }>
+  `, async () => {
     const client = createClient()
     const queueId = 'queue-id'
     const messageId = 'message-id'
@@ -72,7 +85,12 @@ describe('MQClient', () => {
     })
   })
 
-  test('getJSON(queueId: string, messageId: string): Promise<{ priority: number | null; payload: Json }>', async () => {
+  test(`
+    getJSON(
+      queueId: string
+    , messageId: string
+    ): Promise<{ priority: number | null; payload: Json }>
+  `, async () => {
     const client = createClient()
     const queueId = 'queue-id'
     const messageId = 'message-id'
@@ -168,7 +186,7 @@ describe('MQClient', () => {
     expect(proResult).toBeUndefined()
   })
 
-  test('clear(queueId: string, options?: { token?: string }): Promise<void>', async () => {
+  test('clear(queueId: string): Promise<void>', async () => {
     const client = createClient()
     const queueId = 'queue-id'
 
