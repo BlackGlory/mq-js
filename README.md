@@ -76,7 +76,11 @@ MQClient#order(namespace: string, options?: IMQClientRequestOptions): Promise<st
 #### get
 
 ```ts
-MQClient#get(namespace: string, id: string, options?: IMQClientRequestOptions): Promise<{
+MQClient#get(
+  namespace: string
+, id: string
+, options?: IMQClientRequestOptions
+): Promise<{
   priority: number | null
   payload: string
 }>
@@ -85,7 +89,11 @@ MQClient#get(namespace: string, id: string, options?: IMQClientRequestOptions): 
 #### getJSON
 
 ```ts
-MQClient#getJSON(namespace: string, id: string, options?: IMQClientRequestOptions): Promise<{
+MQClient#getJSON(
+  namespace: string
+, id: string
+, options?: IMQClientRequestOptions
+): Promise<{
   priority: number | null
   payload: Json
 }>
@@ -94,25 +102,41 @@ MQClient#getJSON(namespace: string, id: string, options?: IMQClientRequestOption
 #### abandon
 
 ```ts
-MQClient#abandon(namespace: string, id: string, options?: IMQClientRequestOptions): Promise<void>
+MQClient#abandon(
+  namespace: string
+, id: string
+, options?: IMQClientRequestOptions
+): Promise<void>
 ```
 
 #### complete
 
 ```ts
-MQClient#complete(namespace: string, id: string, options?: IMQClientRequestOptions): Promise<void>
+MQClient#complete(
+  namespace: string
+, id: string
+, options?: IMQClientRequestOptions
+): Promise<void>
 ```
 
 #### fail
 
 ```ts
-MQClient#fail(namespace: string, id: string, options?: IMQClientRequestOptions): Promise<void>
+MQClient#fail(
+  namespace: string
+, id: string
+, options?: IMQClientRequestOptions
+): Promise<void>
 ```
 
 #### renew
 
 ```ts
-MQClient#renew(namespace: string, id: string, options?: IMQClientRequestOptions): Promise<void>
+MQClient#renew(
+  namespace: string
+, id: string
+, options?: IMQClientRequestOptions
+): Promise<void>
 ```
 
 #### getAllFailedMessageIds
@@ -145,13 +169,20 @@ MQClient#renewAllFailedMessages(
 #### clear
 
 ```ts
-MQClient#clear(namespace: string, id: string, options?: IMQClientRequestOptions): Promise<void>
+MQClient#clear(
+  namespace: string
+, id: string
+, options?: IMQClientRequestOptions
+): Promise<void>
 ```
 
 #### stats
 
 ```ts
-MQClient#stats(namespace: string, options?: IMQClientRequestOptionsWithoutToken): Promise<{
+MQClient#stats(
+  namespace: string
+, options?: IMQClientRequestOptionsWithoutToken
+): Promise<{
   id: string
   drafting: number
   waiting: number
@@ -165,7 +196,9 @@ MQClient#stats(namespace: string, options?: IMQClientRequestOptionsWithoutToken)
 #### getAllQueueIds
 
 ```ts
-MQClient#getAllQueueIds(options?: IMQClientRequestOptionsWithoutToken): Promise<string[]>
+MQClient#getAllQueueIds(
+  options?: IMQClientRequestOptionsWithoutToken
+): Promise<string[]>
 ```
 
 ### MQManager
@@ -188,13 +221,18 @@ interface IMQManagerRequestOptions {
 ##### getNamespaces
 
 ```ts
-MQManager#JsonSchema.getNamespaces(options?: IMQManagerRequestOptions): Promise<string[]>
+MQManager#JsonSchema.getNamespaces(
+  options?: IMQManagerRequestOptions
+): Promise<string[]>
 ```
 
 ##### get
 
 ```ts
-MQManager#JsonSchema.get(namespace: string, options?: IMQManagerRequestOptions): Promise<Json>
+MQManager#JsonSchema.get(
+  namespace: string
+, options?: IMQManagerRequestOptions
+): Promise<Json>
 ```
 
 ##### set
@@ -221,13 +259,18 @@ MQManager#JsonSchema.remove(
 ##### getNamespaces
 
 ```ts
-MQManager#Configuration.getNamespaces(options?: IMQManagerRequestOptions): Promise<string[]>
+MQManager#Configuration.getNamespaces(
+  options?: IMQManagerRequestOptions
+): Promise<string[]>
 ```
 
 ##### get
 
 ```ts
-MQManager#Configuration.get(namespace: string, options?: IMQManagerRequestOptions): Promise<{
+MQManager#Configuration.get(
+  namespace: string
+, options?: IMQManagerRequestOptions
+): Promise<{
   unique: boolean | null
   draftTimeout: number | null
   orderedTimeout: number | null
@@ -368,13 +411,19 @@ MQManager#Blacklist.getNamespaces(options?: IMQManagerRequestOptions): Promise<s
 ##### add
 
 ```ts
-MQManager#Blacklist.add(namespace: string, options?: IMQManagerRequestOptions): Promise<void>
+MQManager#Blacklist.add(
+  namespace: string
+, options?: IMQManagerRequestOptions
+): Promise<void>
 ```
 
 ##### remove
 
 ```ts
-MQManager#Blacklist.remove(namespace: string, options?: IMQManagerRequestOptions): Promise<void>
+MQManager#Blacklist.remove(
+  namespace: string
+, options?: IMQManagerRequestOptions
+): Promise<void>
 ```
 
 #### Whitelist
@@ -388,13 +437,19 @@ MQManager#Whitelist.getNamespaces(options?: IMQManagerRequestOptions): Promise<s
 ##### add
 
 ```ts
-MQManager#Whitelist.add(namespace: string, options?: IMQManagerRequestOptions): Promise<void>
+MQManager#Whitelist.add(
+  namespace: string
+, options?: IMQManagerRequestOptions
+): Promise<void>
 ```
 
 ##### remove
 
 ```ts
-MQManager#Whitelist.remove(namespace: string, options?: IMQManagerRequestOptions): Promise<void>
+MQManager#Whitelist.remove(
+  namespace: string
+, options?: IMQManagerRequestOptions
+): Promise<void>
 ```
 
 #### TokenPolicy
@@ -402,13 +457,18 @@ MQManager#Whitelist.remove(namespace: string, options?: IMQManagerRequestOptions
 ##### getNamespaces
 
 ```ts
-MQManager#TokenPolicy.getNamespaces(options?: IMQManagerRequestOptions): Promise<string[]>
+MQManager#TokenPolicy.getNamespaces(
+  options?: IMQManagerRequestOptions
+): Promise<string[]>
 ```
 
 ##### get
 
 ```ts
-MQManager#TokenPolicy.get(namespace: string, options?: IMQManagerRequestOptions): Promise<{
+MQManager#TokenPolicy.get(
+  namespace: string
+, options?: IMQManagerRequestOptions
+): Promise<{
   produceTokenRequired: boolean | null
   consumeTokenRequired: boolean | null
   clearTokenRequired: boolean | null
