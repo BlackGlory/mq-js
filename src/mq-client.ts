@@ -36,7 +36,7 @@ export class MQClient {
 
   async draft(
     namespace: string
-  , priority: number | null
+  , priority: number | null = null
   , options: IMQClientRequestOptions = {}
   ): Promise<string> {
     const token = options.token ?? this.options.token

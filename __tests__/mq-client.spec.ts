@@ -9,12 +9,11 @@ beforeEach(() => server.resetHandlers())
 afterAll(() => server.close())
 
 describe('MQClient', () => {
-  test('draft(queueId: string, priority: number | null): Promise<string>', async () => {
+  test('draft(queueId: string): Promise<string>', async () => {
     const client = createClient()
     const queueId = 'queue-id'
-    const priority = null
 
-    const result = client.draft(queueId, priority)
+    const result = client.draft(queueId)
     const proResult = await result
 
     expect(result).toBePromise()

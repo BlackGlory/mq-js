@@ -40,7 +40,7 @@ interface IMQClientRequestOptionsWithoutToken {
 ```ts
 MQClient#draft(
   namespace: string
-, priority: number | null
+, priority?: number | null
 , options?: IMQClientRequestOptions
 ): Promise<string>
 ```
