@@ -50,7 +50,9 @@ describe('TokenClient', () => {
     expect(proResult).toBeUndefined()
   })
 
-  test('removeProduceToken(namespace: string, token: string): Promise<void>', async () => {
+  test(`
+    removeProduceToken(namespace: string, token: string): Promise<void>
+  `, async () => {
     const client = createClient()
     const namespace = 'namespace'
     const token = 'token'
@@ -74,7 +76,9 @@ describe('TokenClient', () => {
     expect(proResult).toBeUndefined()
   })
 
-  test('removeConsumeToken(namespace: string, token: string): Promise<void>', async () => {
+  test(`
+    removeConsumeToken(namespace: string, token: string): Promise<void>
+  `, async () => {
     const client = createClient()
     const namespace = 'namespace'
     const token = 'token'
@@ -98,7 +102,9 @@ describe('TokenClient', () => {
     expect(proResult).toBeUndefined()
   })
 
-  test('removeClearToken(namespace: string, token: string): Promise<void>', async () => {
+  test(`
+    removeClearToken(namespace: string, token: string): Promise<void>
+  `, async () => {
     const client = createClient()
     const namespace = 'namespace'
     const token = 'token'

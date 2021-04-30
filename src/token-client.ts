@@ -29,10 +29,13 @@ export class TokenClient {
       .then(toJSON) as string[]
   }
 
-  async getTokens(id: string, options: IMQManagerRequestOptions = {}): Promise<ITokenInfo[]> {
+  async getTokens(
+    namespace: string
+  , options: IMQManagerRequestOptions = {}
+  ): Promise<ITokenInfo[]> {
     const req = get(
       url(this.options.server)
-    , pathname(`/admin/mq/${id}/tokens`)
+    , pathname(`/admin/mq/${namespace}/tokens`)
     , password(this.options.adminPassword)
     , options.signal && signal(options.signal)
     )
@@ -42,10 +45,14 @@ export class TokenClient {
       .then(toJSON) as ITokenInfo[]
   }
 
-  async addProduceToken(id: string, token: string, options: IMQManagerRequestOptions = {}): Promise<void> {
+  async addProduceToken(
+    namespace: string
+  , token: string
+  , options: IMQManagerRequestOptions = {}
+  ): Promise<void> {
     const req = put(
       url(this.options.server)
-    , pathname(`/admin/mq/${id}/tokens/${token}/produce`)
+    , pathname(`/admin/mq/${namespace}/tokens/${token}/produce`)
     , password(this.options.adminPassword)
     , options.signal && signal(options.signal)
     )
@@ -53,10 +60,14 @@ export class TokenClient {
     await fetch(req).then(ok)
   }
 
-  async removeProduceToken(id: string, token: string, options: IMQManagerRequestOptions = {}): Promise<void> {
+  async removeProduceToken(
+    namespace: string
+  , token: string
+  , options: IMQManagerRequestOptions = {}
+  ): Promise<void> {
     const req = del(
       url(this.options.server)
-    , pathname(`/admin/mq/${id}/tokens/${token}/produce`)
+    , pathname(`/admin/mq/${namespace}/tokens/${token}/produce`)
     , password(this.options.adminPassword)
     , options.signal && signal(options.signal)
     )
@@ -64,10 +75,14 @@ export class TokenClient {
     await fetch(req).then(ok)
   }
 
-  async addConsumeToken(id: string, token: string, options: IMQManagerRequestOptions = {}): Promise<void> {
+  async addConsumeToken(
+    namespace: string
+  , token: string
+  , options: IMQManagerRequestOptions = {}
+  ): Promise<void> {
     const req = put(
       url(this.options.server)
-    , pathname(`/admin/mq/${id}/tokens/${token}/consume`)
+    , pathname(`/admin/mq/${namespace}/tokens/${token}/consume`)
     , password(this.options.adminPassword)
     , options.signal && signal(options.signal)
     )
@@ -75,10 +90,14 @@ export class TokenClient {
     await fetch(req).then(ok)
   }
 
-  async removeConsumeToken(id: string, token: string, options: IMQManagerRequestOptions = {}): Promise<void> {
+  async removeConsumeToken(
+    namespace: string
+  , token: string
+  , options: IMQManagerRequestOptions = {}
+  ): Promise<void> {
     const req = del(
       url(this.options.server)
-    , pathname(`/admin/mq/${id}/tokens/${token}/consume`)
+    , pathname(`/admin/mq/${namespace}/tokens/${token}/consume`)
     , password(this.options.adminPassword)
     , options.signal && signal(options.signal)
     )
@@ -86,10 +105,14 @@ export class TokenClient {
     await fetch(req).then(ok)
   }
 
-  async addClearToken(id: string, token: string, options: IMQManagerRequestOptions = {}): Promise<void> {
+  async addClearToken(
+    namespace: string
+  , token: string
+  , options: IMQManagerRequestOptions = {}
+  ): Promise<void> {
     const req = put(
       url(this.options.server)
-    , pathname(`/admin/mq/${id}/tokens/${token}/clear`)
+    , pathname(`/admin/mq/${namespace}/tokens/${token}/clear`)
     , password(this.options.adminPassword)
     , options.signal && signal(options.signal)
     )
@@ -97,10 +120,14 @@ export class TokenClient {
     await fetch(req).then(ok)
   }
 
-  async removeClearToken(id: string, token: string, options: IMQManagerRequestOptions = {}): Promise<void> {
+  async removeClearToken(
+    namespace: string
+  , token: string
+  , options: IMQManagerRequestOptions = {}
+  ): Promise<void> {
     const req = del(
       url(this.options.server)
-    , pathname(`/admin/mq/${id}/tokens/${token}/clear`)
+    , pathname(`/admin/mq/${namespace}/tokens/${token}/clear`)
     , password(this.options.adminPassword)
     , options.signal && signal(options.signal)
     )
