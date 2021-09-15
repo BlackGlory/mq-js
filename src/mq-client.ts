@@ -1,8 +1,11 @@
 import { fetch } from 'extra-fetch'
-import { post, put, patch, get, del } from 'extra-request'
-import { url, pathname, json, text, searchParam, signal, keepalive } from 'extra-request/lib/es2018/transformers'
+import { post, put, patch, get, del, IHTTPOptionsTransformer } from 'extra-request'
+import { url, pathname, json, text, searchParams, signal, keepalive }
+  from 'extra-request/lib/es2018/transformers'
 import { ok, toText, toJSON } from 'extra-response'
 export { NotFound, Conflict, HTTPClientError } from '@blackglory/http-status'
+import { raceAbortSignals, timeoutSignal } from 'extra-promise'
+import { Falsy } from 'justypes'
 
 interface IStats {
   id: string
@@ -18,35 +21,55 @@ export interface IMQClientOptions {
   server: string
   token?: string
   keepalive?: boolean
+  timeout?: number
 }
 
 export interface IMQClientRequestOptions {
   signal?: AbortSignal
   token?: string
   keepalive?: boolean
+  timeout?: number | false
 }
 
 export interface IMQClientRequestOptionsWithoutToken {
   signal?: AbortSignal
   keepalive?: boolean
+  timeout?: number | false
 }
 
 export class MQClient {
   constructor(private options: IMQClientOptions) {}
+
+  private getCommonTransformers(
+    options: IMQClientRequestOptions | IMQClientRequestOptionsWithoutToken
+  ): Array<IHTTPOptionsTransformer | Falsy> {
+    const token = 'token' in options
+                  ? (options.token ?? this.options.token)
+                  : this.options.token
+
+    return [
+      url(this.options.server)
+    , token && searchParams({ token })
+    , signal(raceAbortSignals([
+        options.signal
+      , options.timeout !== false && (
+          (options.timeout && timeoutSignal(options.timeout)) ??
+          (this.options.timeout && timeoutSignal(this.options.timeout))
+        )
+      ]))
+    , keepalive(options.keepalive ?? this.options.keepalive)
+    ]
+  }
 
   async draft(
     namespace: string
   , priority: number | null = null
   , options: IMQClientRequestOptions = {}
   ): Promise<string> {
-    const token = options.token ?? this.options.token
     const req = post(
-      url(this.options.server)
+      ...this.getCommonTransformers(options)
     , pathname(`/mq/${namespace}/messages`)
-    , token && searchParam('token', token)
     , json({ priority })
-    , options.signal && signal(options.signal)
-    , keepalive(options.keepalive ?? this.options.keepalive)
     )
 
     return await fetch(req)
@@ -64,14 +87,10 @@ export class MQClient {
   , payload: string
   , options: IMQClientRequestOptions = {}
   ): Promise<void> {
-    const token = options.token ?? this.options.token
     const req = put(
-      url(this.options.server)
+      ...this.getCommonTransformers(options)
     , pathname(`/mq/${namespace}/messages/${id}`)
-    , token && searchParam('token', token)
     , text(payload)
-    , options.signal && signal(options.signal)
-    , keepalive(options.keepalive ?? this.options.keepalive)
     )
 
     await fetch(req).then(ok)
@@ -87,14 +106,10 @@ export class MQClient {
   , payload: T
   , options: IMQClientRequestOptions = {}
   ): Promise<void> {
-    const token = options.token ?? this.options.token
     const req = put(
-      url(this.options.server)
+      ...this.getCommonTransformers(options)
     , pathname(`/mq/${namespace}/messages/${id}`)
-    , token && searchParam('token', token)
     , json(payload)
-    , options.signal && signal(options.signal)
-    , keepalive(options.keepalive ?? this.options.keepalive)
     )
 
     await fetch(req).then(ok)
@@ -104,13 +119,9 @@ export class MQClient {
     namespace: string
   , options: IMQClientRequestOptions = {}
   ): Promise<string> {
-    const token = options.token ?? this.options.token
     const req = get(
-      url(this.options.server)
+      ...this.getCommonTransformers(options)
     , pathname(`/mq/${namespace}/messages`)
-    , token && searchParam('token', token)
-    , options.signal && signal(options.signal)
-    , keepalive(options.keepalive ?? this.options.keepalive)
     )
 
     return await fetch(req)
@@ -158,13 +169,9 @@ export class MQClient {
   , id: string
   , options: IMQClientRequestOptions = {}
   ): Promise<void> {
-    const token = options.token ?? this.options.token
     const req = del(
-      url(this.options.server)
+      ...this.getCommonTransformers(options)
     , pathname(`/mq/${namespace}/messages/${id}`)
-    , token && searchParam('token', token)
-    , options.signal && signal(options.signal)
-    , keepalive(options.keepalive ?? this.options.keepalive)
     )
 
     await fetch(req).then(ok)
@@ -179,13 +186,9 @@ export class MQClient {
   , id: string
   , options: IMQClientRequestOptions = {}
   ): Promise<void> {
-    const token = options.token ?? this.options.token
     const req = patch(
-      url(this.options.server)
+      ...this.getCommonTransformers(options)
     , pathname(`/mq/${namespace}/messages/${id}/complete`)
-    , token && searchParam('token', token)
-    , options.signal && signal(options.signal)
-    , keepalive(options.keepalive ?? this.options.keepalive)
     )
 
     await fetch(req).then(ok)
@@ -200,13 +203,9 @@ export class MQClient {
   , id: string
   , options: IMQClientRequestOptions = {}
   ): Promise<void> {
-    const token = options.token ?? this.options.token
     const req = patch(
-      url(this.options.server)
+      ...this.getCommonTransformers(options)
     , pathname(`/mq/${namespace}/messages/${id}/fail`)
-    , token && searchParam('token', token)
-    , options.signal && signal(options.signal)
-    , keepalive(options.keepalive ?? this.options.keepalive)
     )
 
     await fetch(req).then(ok)
@@ -221,13 +220,9 @@ export class MQClient {
   , id: string
   , options: IMQClientRequestOptions = {}
   ): Promise<void> {
-    const token = options.token ?? this.options.token
     const req = patch(
-      url(this.options.server)
+      ...this.getCommonTransformers(options)
     , pathname(`/mq/${namespace}/messages/${id}/renew`)
-    , token && searchParam('token', token)
-    , options.signal && signal(options.signal)
-    , keepalive(options.keepalive ?? this.options.keepalive)
     )
 
     await fetch(req).then(ok)
@@ -237,13 +232,9 @@ export class MQClient {
     namespace: string
   , options: IMQClientRequestOptions = {}
   ): Promise<string[]> {
-    const token = options.token ?? this.options.token
     const req = get(
-      url(this.options.server)
+      ...this.getCommonTransformers(options)
     , pathname(`/mq/${namespace}/failed-messages`)
-    , token && searchParam('token', token)
-    , options.signal && signal(options.signal)
-    , keepalive(options.keepalive ?? this.options.keepalive)
     )
 
     return await fetch(req)
@@ -255,13 +246,9 @@ export class MQClient {
     namespace: string
   , options: IMQClientRequestOptions = {}
   ): Promise<void> {
-    const token = options.token ?? this.options.token
     const req = del(
-      url(this.options.server)
+      ...this.getCommonTransformers(options)
     , pathname(`/mq/${namespace}/failed-messages`)
-    , token && searchParam('token', token)
-    , options.signal && signal(options.signal)
-    , keepalive(options.keepalive ?? this.options.keepalive)
     )
 
     await fetch(req).then(ok)
@@ -271,26 +258,18 @@ export class MQClient {
     namespace: string
   , options: IMQClientRequestOptions = {}
   ): Promise<void> {
-    const token = options.token ?? this.options.token
     const req = patch(
-      url(this.options.server)
+      ...this.getCommonTransformers(options)
     , pathname(`/mq/${namespace}/failed-messages/renew`)
-    , token && searchParam('token', token)
-    , options.signal && signal(options.signal)
-    , keepalive(options.keepalive ?? this.options.keepalive)
     )
 
     await fetch(req).then(ok)
   }
 
   async clear(namespace: string, options: IMQClientRequestOptions = {}): Promise<void> {
-    const token = options.token ?? this.options.token
     const req = del(
-      url(this.options.server)
+      ...this.getCommonTransformers(options)
     , pathname(`/mq/${namespace}`)
-    , token && searchParam('token', token)
-    , options.signal && signal(options.signal)
-    , keepalive(options.keepalive ?? this.options.keepalive)
     )
 
     await fetch(req).then(ok)
@@ -301,10 +280,8 @@ export class MQClient {
   , options: IMQClientRequestOptionsWithoutToken = {}
   ): Promise<IStats> {
     const req = get(
-      url(this.options.server)
+      ...this.getCommonTransformers(options)
     , pathname(`/mq/${namespace}/stats`)
-    , options.signal && signal(options.signal)
-    , keepalive(options.keepalive ?? this.options.keepalive)
     )
 
     return await fetch(req)
@@ -316,10 +293,8 @@ export class MQClient {
     options: IMQClientRequestOptionsWithoutToken = {}
   ): Promise<string[]> {
     const req = get(
-      url(this.options.server)
+      ...this.getCommonTransformers(options)
     , pathname('/mq')
-    , options.signal && signal(options.signal)
-    , keepalive(options.keepalive ?? this.options.keepalive)
     )
 
     return await fetch(req)
@@ -332,13 +307,9 @@ export class MQClient {
   , id: string
   , options: IMQClientRequestOptions = {}
   ): Promise<Response> {
-    const token =  options.token ?? this.options.token
     const req = get(
-      url(this.options.server)
+      ...this.getCommonTransformers(options)
     , pathname(`/mq/${namespace}/messages/${id}`)
-    , token && searchParam('token', token)
-    , options.signal && signal(options.signal)
-    , keepalive(options.keepalive ?? this.options.keepalive)
     )
 
     return await fetch(req).then(ok)

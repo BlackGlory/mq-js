@@ -17,6 +17,7 @@ new MQClient({
   server: string
 , token?: string
 , keepalive?: boolean
+, timeout?: number
 })
 ```
 
@@ -25,6 +26,7 @@ interface IMQClientRequestOptions {
   signal?: AbortSignal
   token?: string
   keepalive?: boolean
+  timeout?: number | false
 }
 ```
 
@@ -32,6 +34,7 @@ interface IMQClientRequestOptions {
 interface IMQClientRequestOptionsWithoutToken {
   signal?: AbortSignal
   keepalive?: boolean
+  timeout?: number | false
 }
 ```
 
@@ -207,12 +210,16 @@ MQClient#getAllQueueIds(
 new MQManager({
   server: string
 , adminPassword: string
+, keepalive?: boolean
+, timeout?: number
 })
 ```
 
 ```ts
 interface IMQManagerRequestOptions {
   signal?: AbortSignal
+  keepalive?: boolean
+  timeout?: number | false
 }
 ```
 

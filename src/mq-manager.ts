@@ -8,6 +8,8 @@ import { ConfigurationClient } from './configuration-client'
 export interface IMQManagerOptions {
   server: string
   adminPassword: string
+  keepalive?: boolean
+  timeout?: number
 }
 
 export class MQManager {

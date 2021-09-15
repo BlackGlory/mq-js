@@ -1,10 +1,8 @@
 import { fetch } from 'extra-fetch'
-import { password } from './utils'
 import { get, put, del } from 'extra-request'
-import { url, pathname, json, signal } from 'extra-request/lib/es2018/transformers'
+import { pathname, json } from 'extra-request/lib/es2018/transformers'
 import { ok, toJSON } from 'extra-response'
-import type { IMQManagerOptions } from './mq-manager'
-import { IMQManagerRequestOptions } from './types'
+import { IMQManagerRequestOptions, MQManagerBase } from './utils'
 
 interface ITokenPolicy {
   produceTokenRequired: boolean | null
@@ -12,15 +10,11 @@ interface ITokenPolicy {
   clearTokenRequired: boolean | null
 }
 
-export class TokenPolicyClient {
-  constructor(private options: IMQManagerOptions) {}
-
+export class TokenPolicyClient extends MQManagerBase {
   async getNamespaces(options: IMQManagerRequestOptions = {}): Promise<string[]> {
     const req = get(
-      url(this.options.server)
+      ...this.getCommonTransformers(options)
     , pathname('/admin/mq-with-token-policies')
-    , password(this.options.adminPassword)
-    , options.signal && signal(options.signal)
     )
 
     return await fetch(req)
@@ -33,10 +27,8 @@ export class TokenPolicyClient {
   , options: IMQManagerRequestOptions = {}
   ): Promise<ITokenPolicy> {
     const req = get(
-      url(this.options.server)
+      ...this.getCommonTransformers(options)
     , pathname(`/admin/mq/${namespaces}/token-policies`)
-    , password(this.options.adminPassword)
-    , options.signal && signal(options.signal)
     )
 
     return await fetch(req)
@@ -50,11 +42,9 @@ export class TokenPolicyClient {
   , options: IMQManagerRequestOptions = {}
   ): Promise<void> {
     const req = put(
-      url(this.options.server)
+      ...this.getCommonTransformers(options)
     , pathname(`/admin/mq/${namespaces}/token-policies/produce-token-required`)
-    , password(this.options.adminPassword)
     , json(val)
-    , options.signal && signal(options.signal)
     )
 
     await fetch(req).then(ok)
@@ -65,10 +55,8 @@ export class TokenPolicyClient {
   , options: IMQManagerRequestOptions = {}
   ): Promise<void> {
     const req = del(
-      url(this.options.server)
+      ...this.getCommonTransformers(options)
     , pathname(`/admin/mq/${namespaces}/token-policies/produce-token-required`)
-    , password(this.options.adminPassword)
-    , options.signal && signal(options.signal)
     )
 
     await fetch(req).then(ok)
@@ -80,11 +68,9 @@ export class TokenPolicyClient {
   , options: IMQManagerRequestOptions = {}
   ): Promise<void> {
     const req = put(
-      url(this.options.server)
+      ...this.getCommonTransformers(options)
     , pathname(`/admin/mq/${namespaces}/token-policies/consume-token-required`)
-    , password(this.options.adminPassword)
     , json(val)
-    , options.signal && signal(options.signal)
     )
 
     await fetch(req).then(ok)
@@ -95,10 +81,8 @@ export class TokenPolicyClient {
   , options: IMQManagerRequestOptions = {}
   ): Promise<void> {
     const req = del(
-      url(this.options.server)
+      ...this.getCommonTransformers(options)
     , pathname(`/admin/mq/${namespaces}/token-policies/consume-token-required`)
-    , password(this.options.adminPassword)
-    , options.signal && signal(options.signal)
     )
 
     await fetch(req).then(ok)
@@ -110,11 +94,9 @@ export class TokenPolicyClient {
   , options: IMQManagerRequestOptions = {}
   ): Promise<void> {
     const req = put(
-      url(this.options.server)
+      ...this.getCommonTransformers(options)
     , pathname(`/admin/mq/${namespaces}/token-policies/clear-token-required`)
-    , password(this.options.adminPassword)
     , json(val)
-    , options.signal && signal(options.signal)
     )
 
     await fetch(req).then(ok)
@@ -125,10 +107,8 @@ export class TokenPolicyClient {
   , options: IMQManagerRequestOptions = {}
   ): Promise<void> {
     const req = del(
-      url(this.options.server)
+      ...this.getCommonTransformers(options)
     , pathname(`/admin/mq/${namespaces}/token-policies/clear-token-required`)
-    , password(this.options.adminPassword)
-    , options.signal && signal(options.signal)
     )
 
     await fetch(req).then(ok)

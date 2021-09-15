@@ -1,10 +1,8 @@
 import { fetch } from 'extra-fetch'
-import { password } from './utils'
 import { get, put, del } from 'extra-request'
-import { url, pathname, json, signal } from 'extra-request/lib/es2018/transformers'
+import { pathname, json } from 'extra-request/lib/es2018/transformers'
 import { ok, toJSON } from 'extra-response'
-import type { IMQManagerOptions } from './mq-manager'
-import { IMQManagerRequestOptions } from './types'
+import { IMQManagerRequestOptions, MQManagerBase } from './utils'
 
 interface IConfiguration {
   unique: boolean | null
@@ -18,15 +16,11 @@ interface IConfiguration {
   } | null
 }
 
-export class ConfigurationClient {
-  constructor(private options: IMQManagerOptions) {}
-
+export class ConfigurationClient extends MQManagerBase {
   async getNamespaces(options: IMQManagerRequestOptions = {}): Promise<string[]> {
     const req = get(
-      url(this.options.server)
+      ...this.getCommonTransformers(options)
     , pathname('/admin/mq-with-config')
-    , password(this.options.adminPassword)
-    , options.signal && signal(options.signal)
     )
 
     return await fetch(req)
@@ -39,10 +33,8 @@ export class ConfigurationClient {
   , options: IMQManagerRequestOptions = {}
   ): Promise<IConfiguration> {
     const req = get(
-      url(this.options.server)
+      ...this.getCommonTransformers(options)
     , pathname(`/admin/mq/${namespaces}/config`)
-    , password(this.options.adminPassword)
-    , options.signal && signal(options.signal)
     )
 
     return await fetch(req)
@@ -56,11 +48,9 @@ export class ConfigurationClient {
   , options: IMQManagerRequestOptions = {}
   ): Promise<void> {
     const req = put(
-      url(this.options.server)
+      ...this.getCommonTransformers(options)
     , pathname(`/admin/mq/${namespaces}/config/unique`)
-    , password(this.options.adminPassword)
     , json(val)
-    , options.signal && signal(options.signal)
     )
 
     await fetch(req).then(ok)
@@ -71,10 +61,8 @@ export class ConfigurationClient {
   , options: IMQManagerRequestOptions = {}
   ): Promise<void> {
     const req = del(
-      url(this.options.server)
+      ...this.getCommonTransformers(options)
     , pathname(`/admin/mq/${namespaces}/config/unique`)
-    , password(this.options.adminPassword)
-    , options.signal && signal(options.signal)
     )
 
     await fetch(req).then(ok)
@@ -86,11 +74,9 @@ export class ConfigurationClient {
   , options: IMQManagerRequestOptions = {}
   ): Promise<void> {
     const req = put(
-      url(this.options.server)
+      ...this.getCommonTransformers(options)
     , pathname(`/admin/mq/${namespaces}/config/drafting-timeout`)
-    , password(this.options.adminPassword)
     , json(val)
-    , options.signal && signal(options.signal)
     )
 
     await fetch(req).then(ok)
@@ -101,10 +87,8 @@ export class ConfigurationClient {
   , options: IMQManagerRequestOptions = {}
   ): Promise<void> {
     const req = del(
-      url(this.options.server)
+      ...this.getCommonTransformers(options)
     , pathname(`/admin/mq/${namespaces}/config/drafting-timeout`)
-    , password(this.options.adminPassword)
-    , options.signal && signal(options.signal)
     )
 
     await fetch(req).then(ok)
@@ -116,11 +100,9 @@ export class ConfigurationClient {
   , options: IMQManagerRequestOptions = {}
   ): Promise<void> {
     const req = put(
-      url(this.options.server)
+      ...this.getCommonTransformers(options)
     , pathname(`/admin/mq/${namespaces}/config/ordered-timeout`)
-    , password(this.options.adminPassword)
     , json(val)
-    , options.signal && signal(options.signal)
     )
 
     await fetch(req).then(ok)
@@ -131,10 +113,8 @@ export class ConfigurationClient {
   , options: IMQManagerRequestOptions = {}
   ): Promise<void> {
     const req = del(
-      url(this.options.server)
+      ...this.getCommonTransformers(options)
     , pathname(`/admin/mq/${namespaces}/config/ordered-timeout`)
-    , password(this.options.adminPassword)
-    , options.signal && signal(options.signal)
     )
 
     await fetch(req).then(ok)
@@ -146,11 +126,9 @@ export class ConfigurationClient {
   , options: IMQManagerRequestOptions = {}
   ): Promise<void> {
     const req = put(
-      url(this.options.server)
+      ...this.getCommonTransformers(options)
     , pathname(`/admin/mq/${namespaces}/config/active-timeout`)
-    , password(this.options.adminPassword)
     , json(val)
-    , options.signal && signal(options.signal)
     )
 
     await fetch(req).then(ok)
@@ -161,10 +139,8 @@ export class ConfigurationClient {
   , options: IMQManagerRequestOptions = {}
   ): Promise<void> {
     const req = del(
-      url(this.options.server)
+      ...this.getCommonTransformers(options)
     , pathname(`/admin/mq/${namespaces}/config/active-timeout`)
-    , password(this.options.adminPassword)
-    , options.signal && signal(options.signal)
     )
 
     await fetch(req).then(ok)
@@ -176,11 +152,9 @@ export class ConfigurationClient {
   , options: IMQManagerRequestOptions = {}
   ): Promise<void> {
     const req = put(
-      url(this.options.server)
+      ...this.getCommonTransformers(options)
     , pathname(`/admin/mq/${namespaces}/config/concurrency`)
-    , password(this.options.adminPassword)
     , json(val)
-    , options.signal && signal(options.signal)
     )
 
     await fetch(req).then(ok)
@@ -191,10 +165,8 @@ export class ConfigurationClient {
   , options: IMQManagerRequestOptions = {}
   ): Promise<void> {
     const req = del(
-      url(this.options.server)
+      ...this.getCommonTransformers(options)
     , pathname(`/admin/mq/${namespaces}/config/concurrency`)
-    , password(this.options.adminPassword)
-    , options.signal && signal(options.signal)
     )
 
     await fetch(req).then(ok)
@@ -209,11 +181,9 @@ export class ConfigurationClient {
   , options: IMQManagerRequestOptions = {}
   ): Promise<void> {
     const req = put(
-      url(this.options.server)
+      ...this.getCommonTransformers(options)
     , pathname(`/admin/mq/${namespaces}/config/throttle`)
-    , password(this.options.adminPassword)
     , json(val)
-    , options.signal && signal(options.signal)
     )
 
     await fetch(req).then(ok)
@@ -224,10 +194,8 @@ export class ConfigurationClient {
   , options: IMQManagerRequestOptions = {}
   ): Promise<void> {
     const req = del(
-      url(this.options.server)
+      ...this.getCommonTransformers(options)
     , pathname(`/admin/mq/${namespaces}/config/throttle`)
-    , password(this.options.adminPassword)
-    , options.signal && signal(options.signal)
     )
 
     await fetch(req).then(ok)

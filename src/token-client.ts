@@ -1,10 +1,8 @@
 import { fetch } from 'extra-fetch'
-import { password } from './utils'
 import { get, put, del } from 'extra-request'
-import { url, pathname, signal } from 'extra-request/lib/es2018/transformers'
+import { pathname } from 'extra-request/lib/es2018/transformers'
 import { ok, toJSON } from 'extra-response'
-import type { IMQManagerOptions } from './mq-manager'
-import { IMQManagerRequestOptions } from './types'
+import { IMQManagerRequestOptions, MQManagerBase } from './utils'
 
 interface ITokenInfo {
   token: string
@@ -13,15 +11,11 @@ interface ITokenInfo {
   clear: boolean
 }
 
-export class TokenClient {
-  constructor(private options: IMQManagerOptions) {}
-
+export class TokenClient extends MQManagerBase {
   async getNamespaces(options: IMQManagerRequestOptions = {}): Promise<string[]> {
     const req = get(
-      url(this.options.server)
+      ...this.getCommonTransformers(options)
     , pathname('/admin/mq-with-tokens')
-    , password(this.options.adminPassword)
-    , options.signal && signal(options.signal)
     )
 
     return await fetch(req)
@@ -34,10 +28,8 @@ export class TokenClient {
   , options: IMQManagerRequestOptions = {}
   ): Promise<ITokenInfo[]> {
     const req = get(
-      url(this.options.server)
+      ...this.getCommonTransformers(options)
     , pathname(`/admin/mq/${namespace}/tokens`)
-    , password(this.options.adminPassword)
-    , options.signal && signal(options.signal)
     )
 
     return await fetch(req)
@@ -51,10 +43,8 @@ export class TokenClient {
   , options: IMQManagerRequestOptions = {}
   ): Promise<void> {
     const req = put(
-      url(this.options.server)
+      ...this.getCommonTransformers(options)
     , pathname(`/admin/mq/${namespace}/tokens/${token}/produce`)
-    , password(this.options.adminPassword)
-    , options.signal && signal(options.signal)
     )
 
     await fetch(req).then(ok)
@@ -66,10 +56,8 @@ export class TokenClient {
   , options: IMQManagerRequestOptions = {}
   ): Promise<void> {
     const req = del(
-      url(this.options.server)
+      ...this.getCommonTransformers(options)
     , pathname(`/admin/mq/${namespace}/tokens/${token}/produce`)
-    , password(this.options.adminPassword)
-    , options.signal && signal(options.signal)
     )
 
     await fetch(req).then(ok)
@@ -81,10 +69,8 @@ export class TokenClient {
   , options: IMQManagerRequestOptions = {}
   ): Promise<void> {
     const req = put(
-      url(this.options.server)
+      ...this.getCommonTransformers(options)
     , pathname(`/admin/mq/${namespace}/tokens/${token}/consume`)
-    , password(this.options.adminPassword)
-    , options.signal && signal(options.signal)
     )
 
     await fetch(req).then(ok)
@@ -96,10 +82,8 @@ export class TokenClient {
   , options: IMQManagerRequestOptions = {}
   ): Promise<void> {
     const req = del(
-      url(this.options.server)
+      ...this.getCommonTransformers(options)
     , pathname(`/admin/mq/${namespace}/tokens/${token}/consume`)
-    , password(this.options.adminPassword)
-    , options.signal && signal(options.signal)
     )
 
     await fetch(req).then(ok)
@@ -111,10 +95,8 @@ export class TokenClient {
   , options: IMQManagerRequestOptions = {}
   ): Promise<void> {
     const req = put(
-      url(this.options.server)
+      ...this.getCommonTransformers(options)
     , pathname(`/admin/mq/${namespace}/tokens/${token}/clear`)
-    , password(this.options.adminPassword)
-    , options.signal && signal(options.signal)
     )
 
     await fetch(req).then(ok)
@@ -126,10 +108,8 @@ export class TokenClient {
   , options: IMQManagerRequestOptions = {}
   ): Promise<void> {
     const req = del(
-      url(this.options.server)
+      ...this.getCommonTransformers(options)
     , pathname(`/admin/mq/${namespace}/tokens/${token}/clear`)
-    , password(this.options.adminPassword)
-    , options.signal && signal(options.signal)
     )
 
     await fetch(req).then(ok)

@@ -1,21 +1,15 @@
 import { fetch } from 'extra-fetch'
 import { Json } from 'justypes'
-import { password } from './utils'
 import { get, put, del } from 'extra-request'
-import { url, pathname, json, signal } from 'extra-request/lib/es2018/transformers'
+import { pathname, json } from 'extra-request/lib/es2018/transformers'
 import { ok, toJSON } from 'extra-response'
-import type { IMQManagerOptions } from './mq-manager'
-import { IMQManagerRequestOptions } from './types'
+import { IMQManagerRequestOptions, MQManagerBase } from './utils'
 
-export class JsonSchemaClient {
-  constructor(private options: IMQManagerOptions) {}
-
+export class JsonSchemaClient extends MQManagerBase {
   async getNamespaces(options: IMQManagerRequestOptions = {}): Promise<string[]> {
     const req = get(
-      url(this.options.server)
+      ...this.getCommonTransformers(options)
     , pathname('/admin/mq-with-json-schema')
-    , password(this.options.adminPassword)
-    , options.signal && signal(options.signal)
     )
 
     return await fetch(req)
@@ -28,10 +22,8 @@ export class JsonSchemaClient {
   , options: IMQManagerRequestOptions = {}
   ): Promise<unknown> {
     const req = get(
-      url(this.options.server)
+      ...this.getCommonTransformers(options)
     , pathname(`/admin/mq/${namespaces}/json-schema`)
-    , password(this.options.adminPassword)
-    , options.signal && signal(options.signal)
     )
 
     return await fetch(req)
@@ -45,11 +37,9 @@ export class JsonSchemaClient {
   , options: IMQManagerRequestOptions = {}
   ): Promise<void> {
     const req = put(
-      url(this.options.server)
+      ...this.getCommonTransformers(options)
     , pathname(`/admin/mq/${namespaces}/json-schema`)
-    , password(this.options.adminPassword)
     , json(schema)
-    , options.signal && signal(options.signal)
     )
 
     await fetch(req).then(ok)
@@ -60,10 +50,8 @@ export class JsonSchemaClient {
   , options: IMQManagerRequestOptions = {}
   ): Promise<void> {
     const req = del(
-      url(this.options.server)
+      ...this.getCommonTransformers(options)
     , pathname(`/admin/mq/${namespaces}/json-schema`)
-    , password(this.options.adminPassword)
-    , options.signal && signal(options.signal)
     )
 
     await fetch(req).then(ok)
