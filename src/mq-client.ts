@@ -1,7 +1,7 @@
 import { fetch } from 'extra-fetch'
 import { post, put, patch, get, del, IHTTPOptionsTransformer } from 'extra-request'
 import { url, pathname, json, text, searchParams, signal, keepalive }
-  from 'extra-request/lib/es2018/transformers'
+  from 'extra-request/transformers/index.js'
 import { ok, toText, toJSON } from 'extra-response'
 export { NotFound, Conflict, HTTPClientError } from '@blackglory/http-status'
 import { raceAbortSignals, timeoutSignal } from 'extra-promise'
