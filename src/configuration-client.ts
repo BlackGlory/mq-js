@@ -17,6 +17,9 @@ interface IConfiguration {
 }
 
 export class ConfigurationClient extends MQManagerBase {
+  /**
+   * @throws {AbortError}
+   */
   async getNamespaces(options: IMQManagerRequestOptions = {}): Promise<string[]> {
     const req = get(
       ...this.getCommonTransformers(options)
@@ -28,6 +31,9 @@ export class ConfigurationClient extends MQManagerBase {
       .then(toJSON) as string[]
   }
 
+  /**
+   * @throws {AbortError}
+   */
   async get(
     namespaces: string
   , options: IMQManagerRequestOptions = {}
@@ -42,6 +48,9 @@ export class ConfigurationClient extends MQManagerBase {
       .then(toJSON) as IConfiguration
   }
 
+  /**
+   * @throws {AbortError}
+   */
   async setUnique(
     namespaces: string
   , val: boolean
@@ -56,6 +65,9 @@ export class ConfigurationClient extends MQManagerBase {
     await fetch(req).then(ok)
   }
 
+  /**
+   * @throws {AbortError}
+   */
   async removeUnique(
     namespaces: string
   , options: IMQManagerRequestOptions = {}
@@ -68,6 +80,9 @@ export class ConfigurationClient extends MQManagerBase {
     await fetch(req).then(ok)
   }
 
+  /**
+   * @throws {AbortError}
+   */
   async setDraftingTimeout(
     namespaces: string
   , val: number
@@ -82,6 +97,9 @@ export class ConfigurationClient extends MQManagerBase {
     await fetch(req).then(ok)
   }
 
+  /**
+   * @throws {AbortError}
+   */
   async removeDraftingTimeout(
     namespaces: string
   , options: IMQManagerRequestOptions = {}
@@ -94,6 +112,9 @@ export class ConfigurationClient extends MQManagerBase {
     await fetch(req).then(ok)
   }
 
+  /**
+   * @throws {AbortError}
+   */
   async setOrderedTimeout(
     namespaces: string
   , val: number
@@ -108,6 +129,9 @@ export class ConfigurationClient extends MQManagerBase {
     await fetch(req).then(ok)
   }
 
+  /**
+   * @throws {AbortError}
+   */
   async removeOrderedTimeout(
     namespaces: string
   , options: IMQManagerRequestOptions = {}
@@ -120,6 +144,9 @@ export class ConfigurationClient extends MQManagerBase {
     await fetch(req).then(ok)
   }
 
+  /**
+   * @throws {AbortError}
+   */
   async setActiveTimeout(
     namespaces: string
   , val: number
@@ -134,6 +161,9 @@ export class ConfigurationClient extends MQManagerBase {
     await fetch(req).then(ok)
   }
 
+  /**
+   * @throws {AbortError}
+   */
   async removeActiveTimeout(
     namespaces: string
   , options: IMQManagerRequestOptions = {}
@@ -146,6 +176,9 @@ export class ConfigurationClient extends MQManagerBase {
     await fetch(req).then(ok)
   }
 
+  /**
+   * @throws {AbortError}
+   */
   async setConcurrency(
     namespaces: string
   , val: number
@@ -160,6 +193,9 @@ export class ConfigurationClient extends MQManagerBase {
     await fetch(req).then(ok)
   }
 
+  /**
+   * @throws {AbortError}
+   */
   async removeConcurrency(
     namespaces: string
   , options: IMQManagerRequestOptions = {}
@@ -172,6 +208,9 @@ export class ConfigurationClient extends MQManagerBase {
     await fetch(req).then(ok)
   }
 
+  /**
+   * @throws {AbortError}
+   */
   async setThrottle(
     namespaces: string
   , val: {
@@ -189,6 +228,9 @@ export class ConfigurationClient extends MQManagerBase {
     await fetch(req).then(ok)
   }
 
+  /**
+   * @throws {AbortError}
+   */
   async removeThrottle(
     namespaces: string
   , options: IMQManagerRequestOptions = {}

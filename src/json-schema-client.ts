@@ -6,6 +6,9 @@ import { ok, toJSON } from 'extra-response'
 import { IMQManagerRequestOptions, MQManagerBase } from './utils'
 
 export class JsonSchemaClient extends MQManagerBase {
+  /**
+   * @throws {AbortError}
+   */
   async getNamespaces(options: IMQManagerRequestOptions = {}): Promise<string[]> {
     const req = get(
       ...this.getCommonTransformers(options)
@@ -17,6 +20,9 @@ export class JsonSchemaClient extends MQManagerBase {
       .then(toJSON) as string[]
   }
 
+  /**
+   * @throws {AbortError}
+   */
   async get(
     namespaces: string
   , options: IMQManagerRequestOptions = {}
@@ -31,6 +37,9 @@ export class JsonSchemaClient extends MQManagerBase {
       .then(toJSON)
   }
 
+  /**
+   * @throws {AbortError}
+   */
   async set(
     namespaces: string
   , schema: Json
@@ -45,6 +54,9 @@ export class JsonSchemaClient extends MQManagerBase {
     await fetch(req).then(ok)
   }
 
+  /**
+   * @throws {AbortError}
+   */
   async remove(
     namespaces: string
   , options: IMQManagerRequestOptions = {}

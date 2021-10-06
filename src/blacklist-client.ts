@@ -5,6 +5,9 @@ import { ok, toJSON } from 'extra-response'
 import { IMQManagerRequestOptions, MQManagerBase } from './utils'
 
 export class BlacklistClient extends MQManagerBase {
+  /**
+   * @throws {AbortError}
+   */
   async getNamespaces(options: IMQManagerRequestOptions = {}): Promise<string[]> {
     const req = get(
       ...this.getCommonTransformers(options)
@@ -16,6 +19,9 @@ export class BlacklistClient extends MQManagerBase {
       .then(toJSON) as string[]
   }
 
+  /**
+   * @throws {AbortError}
+   */
   async add(namespaces: string, options: IMQManagerRequestOptions = {}): Promise<void> {
     const req = put(
       ...this.getCommonTransformers(options)
@@ -25,6 +31,9 @@ export class BlacklistClient extends MQManagerBase {
     await fetch(req).then(ok)
   }
 
+  /**
+   * @throws {AbortError}
+   */
   async remove(namespaces: string, options: IMQManagerRequestOptions = {}): Promise<void> {
     const req = del(
       ...this.getCommonTransformers(options)

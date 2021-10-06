@@ -11,6 +11,9 @@ interface ITokenPolicy {
 }
 
 export class TokenPolicyClient extends MQManagerBase {
+  /**
+   * @throws {AbortError}
+   */
   async getNamespaces(options: IMQManagerRequestOptions = {}): Promise<string[]> {
     const req = get(
       ...this.getCommonTransformers(options)
@@ -22,6 +25,9 @@ export class TokenPolicyClient extends MQManagerBase {
       .then(toJSON) as string[]
   }
 
+  /**
+   * @throws {AbortError}
+   */
   async get(
     namespaces: string
   , options: IMQManagerRequestOptions = {}
@@ -36,6 +42,9 @@ export class TokenPolicyClient extends MQManagerBase {
       .then(toJSON) as ITokenPolicy
   }
 
+  /**
+   * @throws {AbortError}
+   */
   async setProduceTokenRequired(
     namespaces: string
   , val: boolean
@@ -50,6 +59,9 @@ export class TokenPolicyClient extends MQManagerBase {
     await fetch(req).then(ok)
   }
 
+  /**
+   * @throws {AbortError}
+   */
   async removeProduceTokenRequired(
     namespaces: string
   , options: IMQManagerRequestOptions = {}
@@ -62,6 +74,9 @@ export class TokenPolicyClient extends MQManagerBase {
     await fetch(req).then(ok)
   }
 
+  /**
+   * @throws {AbortError}
+   */
   async setConsumeTokenRequired(
     namespaces: string
   , val: boolean
@@ -76,6 +91,9 @@ export class TokenPolicyClient extends MQManagerBase {
     await fetch(req).then(ok)
   }
 
+  /**
+   * @throws {AbortError}
+   */
   async removeConsumeTokenRequired(
     namespaces: string
   , options: IMQManagerRequestOptions = {}
@@ -88,6 +106,9 @@ export class TokenPolicyClient extends MQManagerBase {
     await fetch(req).then(ok)
   }
 
+  /**
+   * @throws {AbortError}
+   */
   async setClearTokenRequired(
     namespaces: string
   , val: boolean
@@ -102,6 +123,9 @@ export class TokenPolicyClient extends MQManagerBase {
     await fetch(req).then(ok)
   }
 
+  /**
+   * @throws {AbortError}
+   */
   async removeClearTokenRequired(
     namespaces: string
   , options: IMQManagerRequestOptions = {}

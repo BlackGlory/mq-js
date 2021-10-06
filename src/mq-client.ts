@@ -61,6 +61,9 @@ export class MQClient {
     ]
   }
 
+  /**
+   * @throws {AbortError}
+   */
   async draft(
     namespace: string
   , priority: number | null = null
@@ -80,6 +83,7 @@ export class MQClient {
   /**
    * @throws {NotFound}
    * @throws {Conflict}
+   * @throws {AbortError}
    */
   async set(
     namespace: string
@@ -99,6 +103,7 @@ export class MQClient {
   /**
    * @throws {NotFound}
    * @throws {Conflict}
+   * @throws {AbortError}
    */
   async setJSON<T>(
     namespace: string
@@ -115,6 +120,9 @@ export class MQClient {
     await fetch(req).then(ok)
   }
 
+  /**
+   * @throws {AbortError}
+   */
   async order(
     namespace: string
   , options: IMQClientRequestOptions = {}
@@ -132,6 +140,7 @@ export class MQClient {
   /**
    * @throws {NotFound}
    * @throws {Conflict}
+   * @throws {AbortError}
    */
   async get(
     namespace: string
@@ -148,6 +157,7 @@ export class MQClient {
   /**
    * @throws {NotFound}
    * @throws {Conflict}
+   * @throws {AbortError}
    */
   async getJSON<T>(
     namespace: string
@@ -163,6 +173,7 @@ export class MQClient {
 
   /**
    * @throws {NotFound}
+   * @throws {AbortError}
    */
   async abandon(
     namespace: string
@@ -180,6 +191,7 @@ export class MQClient {
   /**
    * @throws {NotFound}
    * @throws {Conflict}
+   * @throws {AbortError}
    */
   async complete(
     namespace: string
@@ -197,6 +209,7 @@ export class MQClient {
   /**
    * @throws {NotFound}
    * @throws {Conflict}
+   * @throws {AbortError}
    */
   async fail(
     namespace: string
@@ -214,6 +227,7 @@ export class MQClient {
   /**
    * @throws {NotFound}
    * @throws {Conflict}
+   * @throws {AbortError}
    */
   async renew(
     namespace: string
@@ -228,6 +242,9 @@ export class MQClient {
     await fetch(req).then(ok)
   }
 
+  /**
+   * @throws {AbortError}
+   */
   async getAllFailedMessageIds(
     namespace: string
   , options: IMQClientRequestOptions = {}
@@ -242,6 +259,9 @@ export class MQClient {
       .then(toJSON) as string[]
   }
 
+  /**
+   * @throws {AbortError}
+   */
   async abandonAllFailedMessages(
     namespace: string
   , options: IMQClientRequestOptions = {}
@@ -254,6 +274,9 @@ export class MQClient {
     await fetch(req).then(ok)
   }
 
+  /**
+   * @throws {AbortError}
+   */
   async renewAllFailedMessages(
     namespace: string
   , options: IMQClientRequestOptions = {}
@@ -266,6 +289,9 @@ export class MQClient {
     await fetch(req).then(ok)
   }
 
+  /**
+   * @throws {AbortError}
+   */
   async clear(namespace: string, options: IMQClientRequestOptions = {}): Promise<void> {
     const req = del(
       ...this.getCommonTransformers(options)
@@ -275,6 +301,9 @@ export class MQClient {
     await fetch(req).then(ok)
   }
 
+  /**
+   * @throws {AbortError}
+   */
   async stats(
     namespace: string
   , options: IMQClientRequestOptionsWithoutToken = {}
@@ -289,6 +318,9 @@ export class MQClient {
       .then(toJSON) as IStats
   }
 
+  /**
+   * @throws {AbortError}
+   */
   async getAllNamespaces(
     options: IMQClientRequestOptionsWithoutToken = {}
   ): Promise<string[]> {
@@ -302,6 +334,9 @@ export class MQClient {
       .then(toJSON) as string[]
   }
 
+  /**
+   * @throws {AbortError}
+   */
   private async _get(
     namespace: string
   , id: string
