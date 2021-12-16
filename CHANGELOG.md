@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.10.0](https://github.com/BlackGlory/mq-js/compare/v0.9.8...v0.10.0) (2021-12-16)
+
+
+### ⚠ BREAKING CHANGES
+
+* - The minimum version is Node.js v16
+
+* upgrade dependencies ([e8ae695](https://github.com/BlackGlory/mq-js/commit/e8ae6959d482c936d65f2d79dd7a449b721f83b1))
+
 ### [0.9.8](https://github.com/BlackGlory/mq-js/compare/v0.9.7...v0.9.8) (2021-10-14)
 
 ### [0.9.7](https://github.com/BlackGlory/mq-js/compare/v0.9.6...v0.9.7) (2021-10-06)
