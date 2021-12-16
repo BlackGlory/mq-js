@@ -36,7 +36,7 @@ export const server = setupServer(
     return res(
       ctx.status(200)
     , ctx.set('X-MQ-Priority', '1')
-    , ctx.json(null)
+    , ctx.json({})
     )
   })
 

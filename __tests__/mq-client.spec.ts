@@ -2,7 +2,6 @@ import { server } from '@test/mq.mock'
 import { MQClient } from '@src/mq-client'
 import { TOKEN } from '@test/utils'
 import '@blackglory/jest-matchers'
-import 'jest-extended'
 
 beforeAll(() => server.listen({ onUnhandledRequest: 'error' }))
 beforeEach(() => server.resetHandlers())
@@ -81,7 +80,7 @@ describe('MQClient', () => {
     expect(result).toBePromise()
     expect(proResult).toEqual({
       priority: 1
-    , payload: 'null'
+    , payload: '{}'
     })
   })
 
@@ -101,7 +100,7 @@ describe('MQClient', () => {
     expect(result).toBePromise()
     expect(proResult).toEqual({
       priority: 1
-    , payload: null
+    , payload: {}
     })
   })
 
