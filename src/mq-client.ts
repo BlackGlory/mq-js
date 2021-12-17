@@ -4,7 +4,7 @@ import { url, pathname, json, text, searchParams, signal, keepalive }
   from 'extra-request/transformers/index.js'
 import { ok, toText, toJSON } from 'extra-response'
 export { NotFound, Conflict, HTTPClientError } from '@blackglory/http-status'
-import { raceAbortSignals, timeoutSignal } from 'extra-promise'
+import { raceAbortSignals, timeoutSignal } from 'extra-abort'
 import { Falsy } from 'justypes'
 
 interface IStats {
