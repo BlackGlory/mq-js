@@ -186,7 +186,7 @@ MQClient#stats(
   namespace: string
 , options?: IMQClientRequestOptionsWithoutToken
 ): Promise<{
-  id: string
+  namespace: string
   drafting: number
   waiting: number
   ordered: number

@@ -8,7 +8,7 @@ import { raceAbortSignals, timeoutSignal } from 'extra-abort'
 import { Falsy } from 'justypes'
 
 interface IStats {
-  id: string
+  namespace: string
   drafting: number
   waiting: number
   ordered: number
