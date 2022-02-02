@@ -30,12 +30,22 @@ export const server = setupServer(
     )
   })
 
-, rest.get('/mq/:mqId/messages/:messageId', (req, res, ctx) => {
+, rest.get('/mq/:mqId/messages/custom-priority', (req, res, ctx) => {
     if (badToken(req)) return res(ctx.status(401))
 
     return res(
       ctx.status(200)
     , ctx.set('X-MQ-Priority', '1')
+    , ctx.json({})
+    )
+  })
+
+, rest.get('/mq/:mqId/messages/default-priority', (req, res, ctx) => {
+    if (badToken(req)) return res(ctx.status(401))
+
+    return res(
+      ctx.status(200)
+    , ctx.set('X-MQ-Priority', 'null')
     , ctx.json({})
     )
   })

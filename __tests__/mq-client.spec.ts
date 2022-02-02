@@ -64,43 +64,77 @@ describe('MQClient', () => {
     expect(proResult).toBe('id')
   })
 
-  test(`
+  describe(`
     get(
       queueId: string
     , messageId: string
     ): Promise<{ priority: number | null; payload: string }>
-  `, async () => {
-    const client = createClient()
-    const queueId = 'queue-id'
-    const messageId = 'message-id'
+  `, () => {
+    test('custom priority', async () => {
+      const client = createClient()
+      const queueId = 'queue-id'
+      const messageId = 'custom-priority'
 
-    const result = client.get(queueId, messageId)
-    const proResult = await result
+      const result = client.get(queueId, messageId)
+      const proResult = await result
 
-    expect(result).toBePromise()
-    expect(proResult).toEqual({
-      priority: 1
-    , payload: '{}'
+      expect(result).toBePromise()
+      expect(proResult).toEqual({
+        priority: 1
+      , payload: '{}'
+      })
+    })
+
+    test('default priority', async () => {
+      const client = createClient()
+      const queueId = 'queue-id'
+      const messageId = 'default-priority'
+
+      const result = client.get(queueId, messageId)
+      const proResult = await result
+
+      expect(result).toBePromise()
+      expect(proResult).toEqual({
+        priority: null
+      , payload: '{}'
+      })
     })
   })
 
-  test(`
+  describe(`
     getJSON(
       queueId: string
     , messageId: string
     ): Promise<{ priority: number | null; payload: Json }>
-  `, async () => {
-    const client = createClient()
-    const queueId = 'queue-id'
-    const messageId = 'message-id'
+  `, () => {
+    test('custom priority', async () => {
+      const client = createClient()
+      const queueId = 'queue-id'
+      const messageId = 'custom-priority'
 
-    const result = client.getJSON(queueId, messageId)
-    const proResult = await result
+      const result = client.getJSON(queueId, messageId)
+      const proResult = await result
 
-    expect(result).toBePromise()
-    expect(proResult).toEqual({
-      priority: 1
-    , payload: {}
+      expect(result).toBePromise()
+      expect(proResult).toEqual({
+        priority: 1
+      , payload: {}
+      })
+    })
+
+    test('default priority', async () => {
+      const client = createClient()
+      const queueId = 'queue-id'
+      const messageId = 'default-priority'
+
+      const result = client.getJSON(queueId, messageId)
+      const proResult = await result
+
+      expect(result).toBePromise()
+      expect(proResult).toEqual({
+        priority: null
+      , payload: {}
+      })
     })
   })
 
