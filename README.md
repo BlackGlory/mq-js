@@ -16,6 +16,10 @@ yarn add @blackglory/mq-js
 new MQClient({
   server: string
 , token?: string
+, basicAuth?: {
+    username: string
+  , password: string
+  }
 , keepalive?: boolean
 , timeout?: number
 })

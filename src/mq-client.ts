@@ -1,6 +1,6 @@
 import { fetch } from 'extra-fetch'
 import { post, put, patch, get, del, IHTTPOptionsTransformer } from 'extra-request'
-import { url, pathname, json, text, searchParams, signal, keepalive }
+import { url, pathname, json, text, searchParams, signal, keepalive, basicAuth }
   from 'extra-request/transformers/index.js'
 import { ok, toText, toJSON } from 'extra-response'
 export { NotFound, Conflict, HTTPClientError } from '@blackglory/http-status'
@@ -20,6 +20,10 @@ interface IStats {
 export interface IMQClientOptions {
   server: string
   token?: string
+  basicAuth?: {
+    username: string
+    password: string
+  }
   keepalive?: boolean
   timeout?: number
 }
@@ -46,9 +50,11 @@ export class MQClient {
     const token = 'token' in options
                   ? (options.token ?? this.options.token)
                   : this.options.token
+    const auth = this.options.basicAuth
 
     return [
       url(this.options.server)
+    , auth && basicAuth(auth.username, auth.password)
     , token && searchParams({ token })
     , signal(raceAbortSignals([
         options.signal
