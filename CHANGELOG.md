@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.11.2](https://github.com/BlackGlory/mq-js/compare/v0.11.1...v0.11.2) (2022-02-05)
+
+
+### Features
+
+* add basic auth support ([a9163b0](https://github.com/BlackGlory/mq-js/commit/a9163b09b8b6e2a793d4f32721e8d36f5d60ca3a))
+
 ### [0.11.1](https://github.com/BlackGlory/mq-js/compare/v0.11.0...v0.11.1) (2022-02-01)
 
 
