@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.11.3](https://github.com/BlackGlory/mq-js/compare/v0.11.2...v0.11.3) (2022-02-10)
+
+
+### Features
+
+* add Accept-Version to MQClient ([08278e7](https://github.com/BlackGlory/mq-js/commit/08278e7cd1faf9faad288c6eb6b6a6f69df30a23))
+
 ### [0.11.2](https://github.com/BlackGlory/mq-js/compare/v0.11.1...v0.11.2) (2022-02-05)
 
 
