@@ -9,6 +9,8 @@ export interface IMQManagerRequestOptions {
   timeout?: number | false
 }
 
+export const expectedVersion = '0.4.6'
+
 export class MQManagerBase {
   constructor(private options: IMQManagerOptions) {}
 
@@ -26,7 +28,7 @@ export class MQManagerBase {
         )
       ]))
     , keepalive(options.keepalive ?? this.options.keepalive)
-    , header('Accept-Version', '0.4.6')
+    , header('Accept-Version', expectedVersion)
     ]
   }
 }
