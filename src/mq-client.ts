@@ -130,6 +130,7 @@ export class MQClient {
 
   /**
    * @throws {AbortError}
+   * @throws {NotFound}
    */
   async order(
     namespace: string
