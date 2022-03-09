@@ -200,10 +200,10 @@ MQClient#stats(
 }>
 ```
 
-#### getAllQueueIds
+#### getAllNamespaces
 
 ```ts
-MQClient#getAllQueueIds(
+MQClient#getAllNamespaces(
   options?: IMQClientRequestOptionsWithoutToken
 ): Promise<string[]>
 ```
