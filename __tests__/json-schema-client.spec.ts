@@ -26,7 +26,7 @@ describe('JsonSchemaClient', () => {
     const proResult = await result
 
     expect(result).toBePromise()
-    expect(proResult).toBeJson()
+    expect(proResult).toBeJsonable()
   })
 
   test('set(namespace: string, schema: Json): Promise<void>', async () => {
