@@ -32,7 +32,6 @@ describe('ConfigurationClient', () => {
     , orderedTimeout: null
     , activeTimeout: null
     , concurrency: null
-    , throttle: null
     })
   })
 
@@ -145,37 +144,6 @@ describe('ConfigurationClient', () => {
     const namespace = 'namespace'
 
     const result = client.removeConcurrency(namespace)
-    const proResult = await result
-
-    expect(result).toBePromise()
-    expect(proResult).toBeUndefined()
-  })
-
-  test(`
-    setThrottle(
-      namespace: string
-    , val: { duration: number; limit: number }
-    ): Promise<void>
-  `, async () => {
-    const client = createClient()
-    const namespace = 'namespace'
-    const val = {
-      duration: 100
-    , limit: 100
-    }
-
-    const result = client.setThrottle(namespace, val)
-    const proResult = await result
-
-    expect(result).toBePromise()
-    expect(proResult).toBeUndefined()
-  })
-
-  test('removeThrottle(namespace: string): Promise<void>', async () => {
-    const client = createClient()
-    const namespace = 'namespace'
-
-    const result = client.removeThrottle(namespace)
     const proResult = await result
 
     expect(result).toBePromise()

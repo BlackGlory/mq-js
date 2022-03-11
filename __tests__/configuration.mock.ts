@@ -23,7 +23,6 @@ export const server = setupServer(
       , orderedTimeout: null
       , activeTimeout: null
       , concurrency: null
-      , throttle: null
       })
     )
   })
@@ -88,19 +87,6 @@ export const server = setupServer(
   })
 
 , rest.delete('/admin/mq/:namespace/config/concurrency', (req, res, ctx) => {
-    if (badAuth(req)) return res(ctx.status(401))
-
-    return res(ctx.status(204))
-  })
-
-, rest.put('/admin/mq/:namespace/config/throttle', (req, res, ctx) => {
-    if (badAuth(req)) return res(ctx.status(401))
-    if (badJson(req)) return res(ctx.status(400))
-
-    return res(ctx.status(204))
-  })
-
-, rest.delete('/admin/mq/:namespace/config/throttle', (req, res, ctx) => {
     if (badAuth(req)) return res(ctx.status(401))
 
     return res(ctx.status(204))

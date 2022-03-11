@@ -10,10 +10,6 @@ interface IConfiguration {
   orderedTimeout: number | null
   activeTimeout: number | null
   concurrency: number | null
-  throttle: {
-    duration: number
-    limit: number
-  } | null
 }
 
 export class ConfigurationClient extends MQManagerBase {
@@ -203,41 +199,6 @@ export class ConfigurationClient extends MQManagerBase {
     const req = del(
       ...this.getCommonTransformers(options)
     , pathname(`/admin/mq/${namespaces}/config/concurrency`)
-    )
-
-    await fetch(req).then(ok)
-  }
-
-  /**
-   * @throws {AbortError}
-   */
-  async setThrottle(
-    namespaces: string
-  , val: {
-      duration: number
-      limit: number
-    }
-  , options: IMQManagerRequestOptions = {}
-  ): Promise<void> {
-    const req = put(
-      ...this.getCommonTransformers(options)
-    , pathname(`/admin/mq/${namespaces}/config/throttle`)
-    , json(val)
-    )
-
-    await fetch(req).then(ok)
-  }
-
-  /**
-   * @throws {AbortError}
-   */
-  async removeThrottle(
-    namespaces: string
-  , options: IMQManagerRequestOptions = {}
-  ): Promise<void> {
-    const req = del(
-      ...this.getCommonTransformers(options)
-    , pathname(`/admin/mq/${namespaces}/config/throttle`)
     )
 
     await fetch(req).then(ok)

@@ -1,7 +1,5 @@
 # mq-js
-
 ## Install
-
 ```sh
 npm install --save @blackglory/mq-js
 # or
@@ -9,9 +7,7 @@ yarn add @blackglory/mq-js
 ```
 
 ## API
-
 ### MQClient
-
 ```ts
 new MQClient({
   server: string
@@ -43,7 +39,6 @@ interface IMQClientRequestOptionsWithoutToken {
 ```
 
 #### draft
-
 ```ts
 MQClient#draft(
   namespace: string
@@ -53,7 +48,6 @@ MQClient#draft(
 ```
 
 #### set
-
 ```ts
 MQClient#set(
   namespace: string
@@ -64,7 +58,6 @@ MQClient#set(
 ```
 
 #### setJSON
-
 ```ts
 MQClient#setJSON(
   namespace: string
@@ -75,13 +68,11 @@ MQClient#setJSON(
 ```
 
 #### order
-
 ```ts
 MQClient#order(namespace: string, options?: IMQClientRequestOptions): Promise<string>
 ```
 
 #### get
-
 ```ts
 MQClient#get(
   namespace: string
@@ -94,7 +85,6 @@ MQClient#get(
 ```
 
 #### getJSON
-
 ```ts
 MQClient#getJSON(
   namespace: string
@@ -107,7 +97,6 @@ MQClient#getJSON(
 ```
 
 #### abandon
-
 ```ts
 MQClient#abandon(
   namespace: string
@@ -117,7 +106,6 @@ MQClient#abandon(
 ```
 
 #### complete
-
 ```ts
 MQClient#complete(
   namespace: string
@@ -127,7 +115,6 @@ MQClient#complete(
 ```
 
 #### fail
-
 ```ts
 MQClient#fail(
   namespace: string
@@ -137,7 +124,6 @@ MQClient#fail(
 ```
 
 #### renew
-
 ```ts
 MQClient#renew(
   namespace: string
@@ -147,7 +133,6 @@ MQClient#renew(
 ```
 
 #### getAllFailedMessageIds
-
 ```ts
 MQClient#getAllFailedMessageIds(
   namespace: string
@@ -156,7 +141,6 @@ MQClient#getAllFailedMessageIds(
 ```
 
 #### abandonAllFailedMessages
-
 ```ts
 MQClient#abandonAllFailedMessages(
   namespace: string
@@ -165,7 +149,6 @@ MQClient#abandonAllFailedMessages(
 ```
 
 #### renewAllFailedMessages
-
 ```ts
 MQClient#renewAllFailedMessages(
   namespace: string
@@ -174,7 +157,6 @@ MQClient#renewAllFailedMessages(
 ```
 
 #### clear
-
 ```ts
 MQClient#clear(
   namespace: string
@@ -184,7 +166,6 @@ MQClient#clear(
 ```
 
 #### stats
-
 ```ts
 MQClient#stats(
   namespace: string
@@ -201,7 +182,6 @@ MQClient#stats(
 ```
 
 #### getAllNamespaces
-
 ```ts
 MQClient#getAllNamespaces(
   options?: IMQClientRequestOptionsWithoutToken
@@ -209,7 +189,6 @@ MQClient#getAllNamespaces(
 ```
 
 ### MQManager
-
 ```ts
 new MQManager({
   server: string
@@ -228,9 +207,7 @@ interface IMQManagerRequestOptions {
 ```
 
 #### JsonSchema
-
 ##### getNamespaces
-
 ```ts
 MQManager#JsonSchema.getNamespaces(
   options?: IMQManagerRequestOptions
@@ -238,7 +215,6 @@ MQManager#JsonSchema.getNamespaces(
 ```
 
 ##### get
-
 ```ts
 MQManager#JsonSchema.get(
   namespace: string
@@ -247,7 +223,6 @@ MQManager#JsonSchema.get(
 ```
 
 ##### set
-
 ```ts
 MQManager#JsonSchema.set(
   namespace: string
@@ -257,7 +232,6 @@ MQManager#JsonSchema.set(
 ```
 
 ##### remove
-
 ```ts
 MQManager#JsonSchema.remove(
   namespace: string
@@ -266,9 +240,7 @@ MQManager#JsonSchema.remove(
 ```
 
 #### Configuration
-
 ##### getNamespaces
-
 ```ts
 MQManager#Configuration.getNamespaces(
   options?: IMQManagerRequestOptions
@@ -276,7 +248,6 @@ MQManager#Configuration.getNamespaces(
 ```
 
 ##### get
-
 ```ts
 MQManager#Configuration.get(
   namespace: string
@@ -287,15 +258,10 @@ MQManager#Configuration.get(
   orderedTimeout: number | null
   activeTimeout: number | null
   concurrency: number | null
-  throttle: {
-    duration: number
-    limit
-  } | null
 }>
 ```
 
 ##### setUnique
-
 ```ts
 MQManager#Configuration.setUnique(
   namespace: string
@@ -305,7 +271,6 @@ MQManager#Configuration.setUnique(
 ```
 
 ##### removeUnique
-
 ```ts
 MQManager#Configuration.removeUnique(
   namespace: string
@@ -314,7 +279,6 @@ MQManager#Configuration.removeUnique(
 ```
 
 ##### setDraftTimeout
-
 ```ts
 MQManager#Configuration.setDraftTimeout(
   namespace: string
@@ -324,7 +288,6 @@ MQManager#Configuration.setDraftTimeout(
 ```
 
 ##### removeDraftTimeout
-
 ```ts
 MQManager#Configuration.removeDraftTimeout(
   namespace: string
@@ -333,7 +296,6 @@ MQManager#Configuration.removeDraftTimeout(
 ```
 
 ##### setOrderedTimeout
-
 ```ts
 MQManager#Configuration.setOrderedTimeout(
   namespace: string
@@ -343,7 +305,6 @@ MQManager#Configuration.setOrderedTimeout(
 ```
 
 ##### removeOrderedTimeout
-
 ```ts
 MQManager#Configuration.removeOrderedTimeout(
   namespace: string
@@ -352,7 +313,6 @@ MQManager#Configuration.removeOrderedTimeout(
 ```
 
 ##### setActiveTimeout
-
 ```ts
 MQManager#Configuration.setActiveTimeout(
   namespace: string
@@ -362,7 +322,6 @@ MQManager#Configuration.setActiveTimeout(
 ```
 
 ##### removeActiveTimeout
-
 ```ts
 MQManager#Configuration.removeActiveTimeout(
   namespace: string
@@ -371,7 +330,6 @@ MQManager#Configuration.removeActiveTimeout(
 ```
 
 ##### setConcurrency
-
 ```ts
 MQManager#Configuration.setConcucrrency(
   namespace: string
@@ -381,7 +339,6 @@ MQManager#Configuration.setConcucrrency(
 ```
 
 ##### removeConcurrency
-
 ```ts
 MQManager#Configuration.removeConcurrency(
   namespace: string
@@ -389,38 +346,13 @@ MQManager#Configuration.removeConcurrency(
 ): Promise<void>
 ```
 
-##### setThrottle
-
-```ts
-MQManager#Configuration.setThrottle(
-  namespace: string
-, val: {
-    duration: number
-    limit: number
-  }
-, options?: IMQManagerRequestOptions
-): Promise<void>
-```
-
-##### removeThrottle
-
-```ts
-MQManager#Configuration.removeThrottle(
-  namespace: string
-, options?: IMQManagerRequestOptions
-): Promise<void>
-```
-
 #### Blacklist
-
 ##### getNamespaces
-
 ```ts
 MQManager#Blacklist.getNamespaces(options?: IMQManagerRequestOptions): Promise<string[]>
 ```
 
 ##### add
-
 ```ts
 MQManager#Blacklist.add(
   namespace: string
@@ -429,7 +361,6 @@ MQManager#Blacklist.add(
 ```
 
 ##### remove
-
 ```ts
 MQManager#Blacklist.remove(
   namespace: string
@@ -438,15 +369,12 @@ MQManager#Blacklist.remove(
 ```
 
 #### Whitelist
-
 ##### getNamespaces
-
 ```ts
 MQManager#Whitelist.getNamespaces(options?: IMQManagerRequestOptions): Promise<string[]>
 ```
 
 ##### add
-
 ```ts
 MQManager#Whitelist.add(
   namespace: string
@@ -455,7 +383,6 @@ MQManager#Whitelist.add(
 ```
 
 ##### remove
-
 ```ts
 MQManager#Whitelist.remove(
   namespace: string
@@ -464,9 +391,7 @@ MQManager#Whitelist.remove(
 ```
 
 #### TokenPolicy
-
 ##### getNamespaces
-
 ```ts
 MQManager#TokenPolicy.getNamespaces(
   options?: IMQManagerRequestOptions
@@ -474,7 +399,6 @@ MQManager#TokenPolicy.getNamespaces(
 ```
 
 ##### get
-
 ```ts
 MQManager#TokenPolicy.get(
   namespace: string
@@ -487,7 +411,6 @@ MQManager#TokenPolicy.get(
 ```
 
 ##### setProduceTokenRequired
-
 ```ts
 MQManager#TokenPolicy.setProduceTokenRequired(
   namespace: string
@@ -497,7 +420,6 @@ MQManager#TokenPolicy.setProduceTokenRequired(
 ```
 
 ##### removeProduceTokenRequired
-
 ```ts
 MQManager#TokenPolicy.removeProduceTokenRequired(
   namespace: string
@@ -506,8 +428,6 @@ MQManager#TokenPolicy.removeProduceTokenRequired(
 ```
 
 ##### setConsumeTokenRequired
-
-
 ```ts
 MQManager#TokenPolicy.setConsumeTokenRequired(
   namespace: string
@@ -517,7 +437,6 @@ MQManager#TokenPolicy.setConsumeTokenRequired(
 ```
 
 ##### removeConsumeTokenRequired
-
 ```ts
 MQManager#TokenPolicy.removeConsumeTokenRequired(
   namespace: string
@@ -526,7 +445,6 @@ MQManager#TokenPolicy.removeConsumeTokenRequired(
 ```
 
 ##### setClearTokenRequired
-
 ```ts
 MQManager#TokenPolicy.setClearTokenRequired(
   namespace: string
@@ -536,7 +454,6 @@ MQManager#TokenPolicy.setClearTokenRequired(
 ```
 
 ##### removeClearTokenRequired
-
 ```ts
 MQManager#TokenPolicy.removeClearTokenRequired(
   namespace: string
@@ -545,15 +462,12 @@ MQManager#TokenPolicy.removeClearTokenRequired(
 ```
 
 #### Token
-
 ##### getNamespaces
-
 ```ts
 MQManager#Token.getNamespaces(options?: IMQManagerRequestOptions): Promise<string[]>
 ```
 
 ##### getTokens
-
 ```ts
 MQManager#Token.getTokens(
   namespace: string
@@ -567,7 +481,6 @@ MQManager#Token.getTokens(
 ```
 
 ##### addProduceToken
-
 ```ts
 MQManager#Token.addProduceToken(
   namespace: string
@@ -577,7 +490,6 @@ MQManager#Token.addProduceToken(
 ```
 
 ##### removeProduceToken
-
 ```ts
 MQManager#Token.removeProduceToken(
   namespace: string
@@ -587,7 +499,6 @@ MQManager#Token.removeProduceToken(
 ```
 
 ##### addConsumeToken
-
 ```ts
 MQManager#Token.addConsumeToken(
   namespace: string
@@ -597,7 +508,6 @@ MQManager#Token.addConsumeToken(
 ```
 
 ##### removeConsumeToken
-
 ```ts
 MQManager#Token.removeConsumeToken(
   namespace: string
@@ -607,7 +517,6 @@ MQManager#Token.removeConsumeToken(
 ```
 
 ##### addClearToken
-
 ```ts
 MQManager#Token.addClearToken(
   namespace: string
@@ -617,7 +526,6 @@ MQManager#Token.addClearToken(
 ```
 
 ##### removeClearToken
-
 ```ts
 MQManager#Token.removeClearToken(
   namespace: string

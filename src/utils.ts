@@ -9,7 +9,7 @@ export interface IMQManagerRequestOptions {
   timeout?: number | false
 }
 
-export const expectedVersion = '0.4.11'
+export const expectedVersion = '0.5.0'
 
 export class MQManagerBase {
   constructor(private options: IMQManagerOptions) {}
