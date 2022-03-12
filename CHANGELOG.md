@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.13.1](https://github.com/BlackGlory/mq-js/compare/v0.13.0...v0.13.1) (2022-03-12)
+
+
+### Features
+
+* export IStats ([177a779](https://github.com/BlackGlory/mq-js/commit/177a779caa65722ccb5882b68641cb0da0068f13))
+
 ## [0.13.0](https://github.com/BlackGlory/mq-js/compare/v0.12.0...v0.13.0) (2022-03-11)
 
 
