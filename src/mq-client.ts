@@ -8,7 +8,7 @@ import { raceAbortSignals, timeoutSignal } from 'extra-abort'
 import { Falsy } from 'justypes'
 import { expectedVersion } from './utils'
 
-interface IStats {
+export interface IStats {
   namespace: string
   drafting: number
   waiting: number

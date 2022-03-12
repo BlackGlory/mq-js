@@ -167,10 +167,7 @@ MQClient#clear(
 
 #### stats
 ```ts
-MQClient#stats(
-  namespace: string
-, options?: IMQClientRequestOptionsWithoutToken
-): Promise<{
+interface IStats {
   namespace: string
   drafting: number
   waiting: number
@@ -178,7 +175,12 @@ MQClient#stats(
   active: number
   completed: number
   failed: number
-}>
+}
+
+MQClient#stats(
+  namespace: string
+, options?: IMQClientRequestOptionsWithoutToken
+): Promise<IStats>
 ```
 
 #### getAllNamespaces
