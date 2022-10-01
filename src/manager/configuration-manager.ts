@@ -2,7 +2,7 @@ import { fetch } from 'extra-fetch'
 import { get, put, del } from 'extra-request'
 import { pathname, json } from 'extra-request/transformers/index.js'
 import { ok, toJSON } from 'extra-response'
-import { IMQManagerRequestOptions, MQManagerBase } from './utils'
+import { IMQManagerRequestOptions, Base } from './base'
 
 interface IConfiguration {
   unique: boolean | null
@@ -12,7 +12,7 @@ interface IConfiguration {
   concurrency: number | null
 }
 
-export class ConfigurationClient extends MQManagerBase {
+export class ConfigurationManager extends Base {
   /**
    * @throws {AbortError}
    */

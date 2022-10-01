@@ -2,9 +2,9 @@ import { fetch } from 'extra-fetch'
 import { get, put, del } from 'extra-request'
 import { pathname } from 'extra-request/transformers/index.js'
 import { ok, toJSON } from 'extra-response'
-import { IMQManagerRequestOptions, MQManagerBase } from './utils'
+import { IMQManagerRequestOptions, Base } from './base'
 
-export class BlacklistClient extends MQManagerBase {
+export class BlacklistManager extends Base {
   /**
    * @throws {AbortError}
    */

@@ -1,5 +1,5 @@
-import { server } from '@test/token-policy.mock'
-import { TokenPolicyClient } from '@src/token-policy-client'
+import { server } from './token-policy-manager.mock'
+import { TokenPolicyManager } from '@manager/token-policy-manager'
 import { ADMIN_PASSWORD } from '@test/utils'
 import '@blackglory/jest-matchers'
 
@@ -7,9 +7,9 @@ beforeAll(() => server.listen({ onUnhandledRequest: 'error' }))
 beforeEach(() => server.resetHandlers())
 afterAll(() => server.close())
 
-describe('TokenPolicyClient', () => {
+describe('TokenPolicyManager', () => {
   test('getNamespaces(): Promise<string[]>', async () => {
-    const client = createClient()
+    const client = createManager()
 
     const result = client.getNamespaces()
     const proResult = await result
@@ -24,7 +24,7 @@ describe('TokenPolicyClient', () => {
       consumeTokenRequired: boolean | null
     }>
   `, async () => {
-    const client = createClient()
+    const client = createManager()
     const namespace = 'namespace'
 
     const result = client.get(namespace)
@@ -41,7 +41,7 @@ describe('TokenPolicyClient', () => {
   test(`
     setProduceTokenRequired(namespace: string, val: boolean): Promise<void>
   `, async () => {
-    const client = createClient()
+    const client = createManager()
     const namespace = 'namespace'
     const val = true
 
@@ -53,7 +53,7 @@ describe('TokenPolicyClient', () => {
   })
 
   test('removeProduceTokenRequired(namespace: string): Promise<void>', async () => {
-    const client = createClient()
+    const client = createManager()
     const namespace = 'namespace'
 
     const result = client.removeProduceTokenRequired(namespace)
@@ -66,7 +66,7 @@ describe('TokenPolicyClient', () => {
   test(`
     setConsumeTokenRequired(namespace: string, val: boolean): Promise<void>
   `, async () => {
-    const client = createClient()
+    const client = createManager()
     const namespace = 'namespace'
     const val = true
 
@@ -78,7 +78,7 @@ describe('TokenPolicyClient', () => {
   })
 
   test('removeConsumeTokenRequired(namespace: string): Promise<void>', async () => {
-    const client = createClient()
+    const client = createManager()
     const namespace = 'namespace'
 
     const result = client.removeConsumeTokenRequired(namespace)
@@ -91,7 +91,7 @@ describe('TokenPolicyClient', () => {
   test(`
     setClearTokenRequired(namespace: string, val: boolean): Promise<void>
   `, async () => {
-    const client = createClient()
+    const client = createManager()
     const namespace = 'namespace'
     const val = true
 
@@ -103,7 +103,7 @@ describe('TokenPolicyClient', () => {
   })
 
   test('removeClearTokenRequired(namespace: string): Promise<void>', async () => {
-    const client = createClient()
+    const client = createManager()
     const namespace = 'namespace'
 
     const result = client.removeClearTokenRequired(namespace)
@@ -114,8 +114,8 @@ describe('TokenPolicyClient', () => {
   })
 })
 
-function createClient() {
-  return new TokenPolicyClient({
+function createManager() {
+  return new TokenPolicyManager({
     server: 'http://localhost'
   , adminPassword: ADMIN_PASSWORD
   })

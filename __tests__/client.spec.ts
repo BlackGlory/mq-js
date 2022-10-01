@@ -1,5 +1,5 @@
-import { server } from '@test/mq.mock'
-import { MQClient } from '@src/mq-client'
+import { server } from '@test/client.mock'
+import { MQClient } from '@src/client'
 import { TOKEN } from '@test/utils'
 import '@blackglory/jest-matchers'
 

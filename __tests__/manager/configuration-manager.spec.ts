@@ -1,5 +1,5 @@
-import { server } from '@test/configuration.mock'
-import { ConfigurationClient } from '@src/configuration-client'
+import { server } from './configuration-manager.mock'
+import { ConfigurationManager } from '@manager/configuration-manager'
 import { ADMIN_PASSWORD } from '@test/utils'
 import '@blackglory/jest-matchers'
 
@@ -7,9 +7,9 @@ beforeAll(() => server.listen({ onUnhandledRequest: 'error' }))
 beforeEach(() => server.resetHandlers())
 afterAll(() => server.close())
 
-describe('ConfigurationClient', () => {
+describe('ConfigurationManager', () => {
   test('getNamespaces(): Promise<string[]>', async () => {
-    const client = createClient()
+    const client = createManager()
 
     const result = client.getNamespaces()
     const proResult = await result
@@ -19,7 +19,7 @@ describe('ConfigurationClient', () => {
   })
 
   test('get(namespace: string): Promise<Configuration>', async () => {
-    const client = createClient()
+    const client = createManager()
     const namespace = 'namespace'
 
     const result = client.get(namespace)
@@ -36,7 +36,7 @@ describe('ConfigurationClient', () => {
   })
 
   test('setUnique(namespace: string, val: boolean): Promise<void>', async () => {
-    const client = createClient()
+    const client = createManager()
     const namespace = 'namespace'
     const val = true
 
@@ -48,7 +48,7 @@ describe('ConfigurationClient', () => {
   })
 
   test('removeUnique(namespace: string): Promise<void>', async () => {
-    const client = createClient()
+    const client = createManager()
     const namespace = 'namespace'
 
     const result = client.removeUnique(namespace)
@@ -59,7 +59,7 @@ describe('ConfigurationClient', () => {
   })
 
   test('setDraftingTimeout(namespace: string, val: number): Promise<void>', async () => {
-    const client = createClient()
+    const client = createManager()
     const namespace = 'namespace'
     const val = 100
 
@@ -71,7 +71,7 @@ describe('ConfigurationClient', () => {
   })
 
   test('removeDraftingTimeout(namespace: string): Promise<void>', async () => {
-    const client = createClient()
+    const client = createManager()
     const namespace = 'namespace'
 
     const result = client.removeDraftingTimeout(namespace)
@@ -82,7 +82,7 @@ describe('ConfigurationClient', () => {
   })
 
   test('setOrderedTimeout(namespace: string, val: number): Promise<void>', async () => {
-    const client = createClient()
+    const client = createManager()
     const namespace = 'namespace'
     const val = 100
 
@@ -94,7 +94,7 @@ describe('ConfigurationClient', () => {
   })
 
   test('removeOrderedTimeout(namespace: string): Promise<void>', async () => {
-    const client = createClient()
+    const client = createManager()
     const namespace = 'namespace'
 
     const result = client.removeOrderedTimeout(namespace)
@@ -105,7 +105,7 @@ describe('ConfigurationClient', () => {
   })
 
   test('setActiveTimeout(namespace: string, val: number): Promise<void>', async () => {
-    const client = createClient()
+    const client = createManager()
     const namespace = 'namespace'
     const val = 100
 
@@ -117,7 +117,7 @@ describe('ConfigurationClient', () => {
   })
 
   test('removeActiveTimeout(namespace: string): Promise<void>', async () => {
-    const client = createClient()
+    const client = createManager()
     const namespace = 'namespace'
 
     const result = client.removeActiveTimeout(namespace)
@@ -128,7 +128,7 @@ describe('ConfigurationClient', () => {
   })
 
   test('setConcurrency(namespace: string, val: number): Promise<void>', async () => {
-    const client = createClient()
+    const client = createManager()
     const namespace = 'namespace'
     const val = 100
 
@@ -140,7 +140,7 @@ describe('ConfigurationClient', () => {
   })
 
   test('removeConcurrency(namespace: string): Promise<void>', async () => {
-    const client = createClient()
+    const client = createManager()
     const namespace = 'namespace'
 
     const result = client.removeConcurrency(namespace)
@@ -151,8 +151,8 @@ describe('ConfigurationClient', () => {
   })
 })
 
-function createClient() {
-  return new ConfigurationClient({
+function createManager() {
+  return new ConfigurationManager({
     server: 'http://localhost'
   , adminPassword: ADMIN_PASSWORD
   })

@@ -1,24 +1,23 @@
 import { fetch } from 'extra-fetch'
 import { get, put, del } from 'extra-request'
-import { pathname } from 'extra-request/transformers/index.js'
+import { pathname, json } from 'extra-request/transformers/index.js'
 import { ok, toJSON } from 'extra-response'
-import { IMQManagerRequestOptions, MQManagerBase } from './utils'
+import { IMQManagerRequestOptions, Base } from './base'
 
-interface ITokenInfo {
-  token: string
-  produce: boolean
-  consume: boolean
-  clear: boolean
+interface ITokenPolicy {
+  produceTokenRequired: boolean | null
+  consumeTokenRequired: boolean | null
+  clearTokenRequired: boolean | null
 }
 
-export class TokenClient extends MQManagerBase {
+export class TokenPolicyManager extends Base {
   /**
    * @throws {AbortError}
    */
   async getNamespaces(options: IMQManagerRequestOptions = {}): Promise<string[]> {
     const req = get(
       ...this.getCommonTransformers(options)
-    , pathname('/admin/mq-with-tokens')
+    , pathname('/admin/mq-with-token-policies')
     )
 
     return await fetch(req)
@@ -29,31 +28,32 @@ export class TokenClient extends MQManagerBase {
   /**
    * @throws {AbortError}
    */
-  async getTokens(
-    namespace: string
+  async get(
+    namespaces: string
   , options: IMQManagerRequestOptions = {}
-  ): Promise<ITokenInfo[]> {
+  ): Promise<ITokenPolicy> {
     const req = get(
       ...this.getCommonTransformers(options)
-    , pathname(`/admin/mq/${namespace}/tokens`)
+    , pathname(`/admin/mq/${namespaces}/token-policies`)
     )
 
     return await fetch(req)
       .then(ok)
-      .then(toJSON) as ITokenInfo[]
+      .then(toJSON) as ITokenPolicy
   }
 
   /**
    * @throws {AbortError}
    */
-  async addProduceToken(
-    namespace: string
-  , token: string
+  async setProduceTokenRequired(
+    namespaces: string
+  , val: boolean
   , options: IMQManagerRequestOptions = {}
   ): Promise<void> {
     const req = put(
       ...this.getCommonTransformers(options)
-    , pathname(`/admin/mq/${namespace}/tokens/${token}/produce`)
+    , pathname(`/admin/mq/${namespaces}/token-policies/produce-token-required`)
+    , json(val)
     )
 
     await fetch(req).then(ok)
@@ -62,14 +62,13 @@ export class TokenClient extends MQManagerBase {
   /**
    * @throws {AbortError}
    */
-  async removeProduceToken(
-    namespace: string
-  , token: string
+  async removeProduceTokenRequired(
+    namespaces: string
   , options: IMQManagerRequestOptions = {}
   ): Promise<void> {
     const req = del(
       ...this.getCommonTransformers(options)
-    , pathname(`/admin/mq/${namespace}/tokens/${token}/produce`)
+    , pathname(`/admin/mq/${namespaces}/token-policies/produce-token-required`)
     )
 
     await fetch(req).then(ok)
@@ -78,14 +77,15 @@ export class TokenClient extends MQManagerBase {
   /**
    * @throws {AbortError}
    */
-  async addConsumeToken(
-    namespace: string
-  , token: string
+  async setConsumeTokenRequired(
+    namespaces: string
+  , val: boolean
   , options: IMQManagerRequestOptions = {}
   ): Promise<void> {
     const req = put(
       ...this.getCommonTransformers(options)
-    , pathname(`/admin/mq/${namespace}/tokens/${token}/consume`)
+    , pathname(`/admin/mq/${namespaces}/token-policies/consume-token-required`)
+    , json(val)
     )
 
     await fetch(req).then(ok)
@@ -94,14 +94,13 @@ export class TokenClient extends MQManagerBase {
   /**
    * @throws {AbortError}
    */
-  async removeConsumeToken(
-    namespace: string
-  , token: string
+  async removeConsumeTokenRequired(
+    namespaces: string
   , options: IMQManagerRequestOptions = {}
   ): Promise<void> {
     const req = del(
       ...this.getCommonTransformers(options)
-    , pathname(`/admin/mq/${namespace}/tokens/${token}/consume`)
+    , pathname(`/admin/mq/${namespaces}/token-policies/consume-token-required`)
     )
 
     await fetch(req).then(ok)
@@ -110,14 +109,15 @@ export class TokenClient extends MQManagerBase {
   /**
    * @throws {AbortError}
    */
-  async addClearToken(
-    namespace: string
-  , token: string
+  async setClearTokenRequired(
+    namespaces: string
+  , val: boolean
   , options: IMQManagerRequestOptions = {}
   ): Promise<void> {
     const req = put(
       ...this.getCommonTransformers(options)
-    , pathname(`/admin/mq/${namespace}/tokens/${token}/clear`)
+    , pathname(`/admin/mq/${namespaces}/token-policies/clear-token-required`)
+    , json(val)
     )
 
     await fetch(req).then(ok)
@@ -126,14 +126,13 @@ export class TokenClient extends MQManagerBase {
   /**
    * @throws {AbortError}
    */
-  async removeClearToken(
-    namespace: string
-  , token: string
+  async removeClearTokenRequired(
+    namespaces: string
   , options: IMQManagerRequestOptions = {}
   ): Promise<void> {
     const req = del(
       ...this.getCommonTransformers(options)
-    , pathname(`/admin/mq/${namespace}/tokens/${token}/clear`)
+    , pathname(`/admin/mq/${namespaces}/token-policies/clear-token-required`)
     )
 
     await fetch(req).then(ok)

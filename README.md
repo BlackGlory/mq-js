@@ -137,6 +137,12 @@ class MQClient {
 
 ### MQManager
 ```ts
+interface IMQManagerRequestOptions {
+  signal?: AbortSignal
+  keepalive?: boolean
+  timeout?: number | false
+}
+
 interface IMQManagerOptions {
   server: string
   adminPassword: string
@@ -147,18 +153,18 @@ interface IMQManagerOptions {
 class MQManager {
   constructor(options: IMQManagerOptions)
 
-  JsonSchema: JsonSchemaClient
-  Blacklist: BlacklistClient
-  Whitelist: WhitelistClient
-  TokenPolicy: TokenPolicyClient
-  Token: TokenClient
-  Configuration: ConfigurationClient
+  JsonSchema: JsonSchemaManager
+  Blacklist: BlacklistManager
+  Whitelist: WhitelistManager
+  TokenPolicy: TokenPolicyManager
+  Token: TokenManager
+  Configuration: ConfigurationManager
 }
 ```
 
-#### JsonSchemaClient
+#### JsonSchemaManager
 ```ts
-class JsonSchemaClient {
+class JsonSchemaManager {
   getNamespaces(options: IMQManagerRequestOptions = {}): Promise<string[]>
   get(
     namespaces: string
@@ -176,25 +182,25 @@ class JsonSchemaClient {
 }
 ```
 
-#### BlacklistClient
+#### BlacklistManager
 ```ts
-class BlacklistClient {
+class BlacklistManager {
   getNamespaces(options: IMQManagerRequestOptions = {}): Promise<string[]>
   add(namespaces: string, options: IMQManagerRequestOptions = {}): Promise<void>
   remove(namespaces: string, options: IMQManagerRequestOptions = {}): Promise<void>
 }
 ```
 
-#### WhitelistClient
+#### WhitelistManager
 ```ts
-class WhitelistClient {
+class WhitelistManager {
   getNamespaces(options: IMQManagerRequestOptions = {}): Promise<string[]>
   add(namespaces: string, options: IMQManagerRequestOptions = {}): Promise<void>
   remove(namespaces: string, options: IMQManagerRequestOptions = {}): Promise<void>
 }
 ```
 
-#### TokenPolicyClient
+#### TokenPolicyManager
 ```ts
 interface ITokenPolicy {
   produceTokenRequired: boolean | null
@@ -202,7 +208,7 @@ interface ITokenPolicy {
   clearTokenRequired: boolean | null
 }
 
-class TokenPolicyClient {
+class TokenPolicyManager {
   getNamespaces(options: IMQManagerRequestOptions = {}): Promise<string[]>
   get(
     namespaces: string
@@ -238,7 +244,7 @@ class TokenPolicyClient {
 }
 ```
 
-#### TokenClient
+#### TokenManager
 ```ts
 interface ITokenInfo {
   token: string
@@ -247,7 +253,7 @@ interface ITokenInfo {
   clear: boolean
 }
 
-class TokenClient {
+class TokenManager {
   getNamespaces(options: IMQManagerRequestOptions = {}): Promise<string[]>
   getTokens(
     namespace: string
@@ -286,7 +292,7 @@ class TokenClient {
 }
 ```
 
-#### ConfigurationClient
+#### ConfigurationManager
 ```ts
 interface IConfiguration {
   unique: boolean | null
@@ -296,7 +302,7 @@ interface IConfiguration {
   concurrency: number | null
 }
 
-class ConfigurationClient {
+class ConfigurationManager {
   getNamespaces(options: IMQManagerRequestOptions = {}): Promise<string[]>
   get(
     namespaces: string
