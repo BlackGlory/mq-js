@@ -1,6 +1,6 @@
 import { fetch } from 'extra-fetch'
 import { get, put, del } from 'extra-request'
-import { pathname, json } from 'extra-request/transformers/index.js'
+import { appendPathname, json } from 'extra-request/transformers/index.js'
 import { ok, toJSON } from 'extra-response'
 import { IMQManagerRequestOptions, Base } from './base'
 
@@ -19,7 +19,7 @@ export class ConfigurationManager extends Base {
   async getNamespaces(options: IMQManagerRequestOptions = {}): Promise<string[]> {
     const req = get(
       ...this.getCommonTransformers(options)
-    , pathname('/admin/mq-with-config')
+    , appendPathname('/admin/mq-with-config')
     )
 
     return await fetch(req)
@@ -36,7 +36,7 @@ export class ConfigurationManager extends Base {
   ): Promise<IConfiguration> {
     const req = get(
       ...this.getCommonTransformers(options)
-    , pathname(`/admin/mq/${namespaces}/config`)
+    , appendPathname(`/admin/mq/${namespaces}/config`)
     )
 
     return await fetch(req)
@@ -54,7 +54,7 @@ export class ConfigurationManager extends Base {
   ): Promise<void> {
     const req = put(
       ...this.getCommonTransformers(options)
-    , pathname(`/admin/mq/${namespaces}/config/unique`)
+    , appendPathname(`/admin/mq/${namespaces}/config/unique`)
     , json(val)
     )
 
@@ -70,7 +70,7 @@ export class ConfigurationManager extends Base {
   ): Promise<void> {
     const req = del(
       ...this.getCommonTransformers(options)
-    , pathname(`/admin/mq/${namespaces}/config/unique`)
+    , appendPathname(`/admin/mq/${namespaces}/config/unique`)
     )
 
     await fetch(req).then(ok)
@@ -86,7 +86,7 @@ export class ConfigurationManager extends Base {
   ): Promise<void> {
     const req = put(
       ...this.getCommonTransformers(options)
-    , pathname(`/admin/mq/${namespaces}/config/drafting-timeout`)
+    , appendPathname(`/admin/mq/${namespaces}/config/drafting-timeout`)
     , json(val)
     )
 
@@ -102,7 +102,7 @@ export class ConfigurationManager extends Base {
   ): Promise<void> {
     const req = del(
       ...this.getCommonTransformers(options)
-    , pathname(`/admin/mq/${namespaces}/config/drafting-timeout`)
+    , appendPathname(`/admin/mq/${namespaces}/config/drafting-timeout`)
     )
 
     await fetch(req).then(ok)
@@ -118,7 +118,7 @@ export class ConfigurationManager extends Base {
   ): Promise<void> {
     const req = put(
       ...this.getCommonTransformers(options)
-    , pathname(`/admin/mq/${namespaces}/config/ordered-timeout`)
+    , appendPathname(`/admin/mq/${namespaces}/config/ordered-timeout`)
     , json(val)
     )
 
@@ -134,7 +134,7 @@ export class ConfigurationManager extends Base {
   ): Promise<void> {
     const req = del(
       ...this.getCommonTransformers(options)
-    , pathname(`/admin/mq/${namespaces}/config/ordered-timeout`)
+    , appendPathname(`/admin/mq/${namespaces}/config/ordered-timeout`)
     )
 
     await fetch(req).then(ok)
@@ -150,7 +150,7 @@ export class ConfigurationManager extends Base {
   ): Promise<void> {
     const req = put(
       ...this.getCommonTransformers(options)
-    , pathname(`/admin/mq/${namespaces}/config/active-timeout`)
+    , appendPathname(`/admin/mq/${namespaces}/config/active-timeout`)
     , json(val)
     )
 
@@ -166,7 +166,7 @@ export class ConfigurationManager extends Base {
   ): Promise<void> {
     const req = del(
       ...this.getCommonTransformers(options)
-    , pathname(`/admin/mq/${namespaces}/config/active-timeout`)
+    , appendPathname(`/admin/mq/${namespaces}/config/active-timeout`)
     )
 
     await fetch(req).then(ok)
@@ -182,7 +182,7 @@ export class ConfigurationManager extends Base {
   ): Promise<void> {
     const req = put(
       ...this.getCommonTransformers(options)
-    , pathname(`/admin/mq/${namespaces}/config/concurrency`)
+    , appendPathname(`/admin/mq/${namespaces}/config/concurrency`)
     , json(val)
     )
 
@@ -198,7 +198,7 @@ export class ConfigurationManager extends Base {
   ): Promise<void> {
     const req = del(
       ...this.getCommonTransformers(options)
-    , pathname(`/admin/mq/${namespaces}/config/concurrency`)
+    , appendPathname(`/admin/mq/${namespaces}/config/concurrency`)
     )
 
     await fetch(req).then(ok)

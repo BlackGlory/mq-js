@@ -1,6 +1,6 @@
 import { fetch } from 'extra-fetch'
 import { post, put, patch, get, del, IHTTPOptionsTransformer } from 'extra-request'
-import { url, pathname, json, text, searchParams, signal, keepalive, basicAuth, header } from 'extra-request/transformers/index.js'
+import { url, appendPathname, json, text, searchParams, signal, keepalive, basicAuth, header } from 'extra-request/transformers/index.js'
 import { ok, toText, toJSON } from 'extra-response'
 import { raceAbortSignals, timeoutSignal } from 'extra-abort'
 import { Falsy } from 'justypes'
@@ -77,7 +77,7 @@ export class MQClient {
   ): Promise<string> {
     const req = post(
       ...this.getCommonTransformers(options)
-    , pathname(`/mq/${namespace}/messages`)
+    , appendPathname(`/mq/${namespace}/messages`)
     , json({ priority })
     )
 
@@ -99,7 +99,7 @@ export class MQClient {
   ): Promise<void> {
     const req = put(
       ...this.getCommonTransformers(options)
-    , pathname(`/mq/${namespace}/messages/${id}`)
+    , appendPathname(`/mq/${namespace}/messages/${id}`)
     , text(payload)
     )
 
@@ -119,7 +119,7 @@ export class MQClient {
   ): Promise<void> {
     const req = put(
       ...this.getCommonTransformers(options)
-    , pathname(`/mq/${namespace}/messages/${id}`)
+    , appendPathname(`/mq/${namespace}/messages/${id}`)
     , json(payload)
     )
 
@@ -136,7 +136,7 @@ export class MQClient {
   ): Promise<string> {
     const req = get(
       ...this.getCommonTransformers(options)
-    , pathname(`/mq/${namespace}/messages`)
+    , appendPathname(`/mq/${namespace}/messages`)
     )
 
     return await fetch(req)
@@ -189,7 +189,7 @@ export class MQClient {
   ): Promise<void> {
     const req = del(
       ...this.getCommonTransformers(options)
-    , pathname(`/mq/${namespace}/messages/${id}`)
+    , appendPathname(`/mq/${namespace}/messages/${id}`)
     )
 
     await fetch(req).then(ok)
@@ -207,7 +207,7 @@ export class MQClient {
   ): Promise<void> {
     const req = patch(
       ...this.getCommonTransformers(options)
-    , pathname(`/mq/${namespace}/messages/${id}/complete`)
+    , appendPathname(`/mq/${namespace}/messages/${id}/complete`)
     )
 
     await fetch(req).then(ok)
@@ -225,7 +225,7 @@ export class MQClient {
   ): Promise<void> {
     const req = patch(
       ...this.getCommonTransformers(options)
-    , pathname(`/mq/${namespace}/messages/${id}/fail`)
+    , appendPathname(`/mq/${namespace}/messages/${id}/fail`)
     )
 
     await fetch(req).then(ok)
@@ -243,7 +243,7 @@ export class MQClient {
   ): Promise<void> {
     const req = patch(
       ...this.getCommonTransformers(options)
-    , pathname(`/mq/${namespace}/messages/${id}/renew`)
+    , appendPathname(`/mq/${namespace}/messages/${id}/renew`)
     )
 
     await fetch(req).then(ok)
@@ -258,7 +258,7 @@ export class MQClient {
   ): Promise<string[]> {
     const req = get(
       ...this.getCommonTransformers(options)
-    , pathname(`/mq/${namespace}/failed-messages`)
+    , appendPathname(`/mq/${namespace}/failed-messages`)
     )
 
     return await fetch(req)
@@ -275,7 +275,7 @@ export class MQClient {
   ): Promise<void> {
     const req = del(
       ...this.getCommonTransformers(options)
-    , pathname(`/mq/${namespace}/failed-messages`)
+    , appendPathname(`/mq/${namespace}/failed-messages`)
     )
 
     await fetch(req).then(ok)
@@ -290,7 +290,7 @@ export class MQClient {
   ): Promise<void> {
     const req = patch(
       ...this.getCommonTransformers(options)
-    , pathname(`/mq/${namespace}/failed-messages/renew`)
+    , appendPathname(`/mq/${namespace}/failed-messages/renew`)
     )
 
     await fetch(req).then(ok)
@@ -302,7 +302,7 @@ export class MQClient {
   async clear(namespace: string, options: IMQClientRequestOptions = {}): Promise<void> {
     const req = del(
       ...this.getCommonTransformers(options)
-    , pathname(`/mq/${namespace}`)
+    , appendPathname(`/mq/${namespace}`)
     )
 
     await fetch(req).then(ok)
@@ -317,7 +317,7 @@ export class MQClient {
   ): Promise<IStats> {
     const req = get(
       ...this.getCommonTransformers(options)
-    , pathname(`/mq/${namespace}/stats`)
+    , appendPathname(`/mq/${namespace}/stats`)
     )
 
     return await fetch(req)
@@ -333,7 +333,7 @@ export class MQClient {
   ): Promise<string[]> {
     const req = get(
       ...this.getCommonTransformers(options)
-    , pathname('/mq')
+    , appendPathname('/mq')
     )
 
     return await fetch(req)
@@ -351,7 +351,7 @@ export class MQClient {
   ): Promise<Response> {
     const req = get(
       ...this.getCommonTransformers(options)
-    , pathname(`/mq/${namespace}/messages/${id}`)
+    , appendPathname(`/mq/${namespace}/messages/${id}`)
     )
 
     return await fetch(req).then(ok)

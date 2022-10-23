@@ -1,7 +1,7 @@
 import { fetch } from 'extra-fetch'
 import { Json } from 'justypes'
 import { get, put, del } from 'extra-request'
-import { pathname, json } from 'extra-request/transformers/index.js'
+import { appendPathname, json } from 'extra-request/transformers/index.js'
 import { ok, toJSON } from 'extra-response'
 import { IMQManagerRequestOptions, Base } from './base'
 
@@ -12,7 +12,7 @@ export class JsonSchemaManager extends Base {
   async getNamespaces(options: IMQManagerRequestOptions = {}): Promise<string[]> {
     const req = get(
       ...this.getCommonTransformers(options)
-    , pathname('/admin/mq-with-json-schema')
+    , appendPathname('/admin/mq-with-json-schema')
     )
 
     return await fetch(req)
@@ -29,7 +29,7 @@ export class JsonSchemaManager extends Base {
   ): Promise<unknown> {
     const req = get(
       ...this.getCommonTransformers(options)
-    , pathname(`/admin/mq/${namespaces}/json-schema`)
+    , appendPathname(`/admin/mq/${namespaces}/json-schema`)
     )
 
     return await fetch(req)
@@ -47,7 +47,7 @@ export class JsonSchemaManager extends Base {
   ): Promise<void> {
     const req = put(
       ...this.getCommonTransformers(options)
-    , pathname(`/admin/mq/${namespaces}/json-schema`)
+    , appendPathname(`/admin/mq/${namespaces}/json-schema`)
     , json(schema)
     )
 
@@ -63,7 +63,7 @@ export class JsonSchemaManager extends Base {
   ): Promise<void> {
     const req = del(
       ...this.getCommonTransformers(options)
-    , pathname(`/admin/mq/${namespaces}/json-schema`)
+    , appendPathname(`/admin/mq/${namespaces}/json-schema`)
     )
 
     await fetch(req).then(ok)
