@@ -1,7 +1,6 @@
 import { server } from './token-policy-manager.mock'
 import { TokenPolicyManager } from '@manager/token-policy-manager'
 import { ADMIN_PASSWORD } from '@test/utils'
-import '@blackglory/jest-matchers'
 
 beforeAll(() => server.listen({ onUnhandledRequest: 'error' }))
 beforeEach(() => server.resetHandlers())
@@ -11,11 +10,9 @@ describe('TokenPolicyManager', () => {
   test('getNamespaces(): Promise<string[]>', async () => {
     const client = createManager()
 
-    const result = client.getNamespaces()
-    const proResult = await result
+    const result = await client.getNamespaces()
 
-    expect(result).toBePromise()
-    expect(proResult).toStrictEqual(['namespace'])
+    expect(result).toStrictEqual(['namespace'])
   })
 
   test(`
@@ -27,11 +24,9 @@ describe('TokenPolicyManager', () => {
     const client = createManager()
     const namespace = 'namespace'
 
-    const result = client.get(namespace)
-    const proResult = await result
+    const result = await client.get(namespace)
 
-    expect(result).toBePromise()
-    expect(proResult).toStrictEqual({
+    expect(result).toStrictEqual({
       produceTokenRequired: true
     , consumeTokenRequired: false
     , clearTokenRequired: null
@@ -45,22 +40,18 @@ describe('TokenPolicyManager', () => {
     const namespace = 'namespace'
     const val = true
 
-    const result = client.setProduceTokenRequired(namespace, val)
-    const proResult = await result
+    const result = await client.setProduceTokenRequired(namespace, val)
 
-    expect(result).toBePromise()
-    expect(proResult).toBeUndefined()
+    expect(result).toBeUndefined()
   })
 
   test('removeProduceTokenRequired(namespace: string): Promise<void>', async () => {
     const client = createManager()
     const namespace = 'namespace'
 
-    const result = client.removeProduceTokenRequired(namespace)
-    const proResult = await result
+    const result = await client.removeProduceTokenRequired(namespace)
 
-    expect(result).toBePromise()
-    expect(proResult).toBeUndefined()
+    expect(result).toBeUndefined()
   })
 
   test(`
@@ -70,22 +61,18 @@ describe('TokenPolicyManager', () => {
     const namespace = 'namespace'
     const val = true
 
-    const result = client.setConsumeTokenRequired(namespace, val)
-    const proResult = await result
+    const result = await client.setConsumeTokenRequired(namespace, val)
 
-    expect(result).toBePromise()
-    expect(proResult).toBeUndefined()
+    expect(result).toBeUndefined()
   })
 
   test('removeConsumeTokenRequired(namespace: string): Promise<void>', async () => {
     const client = createManager()
     const namespace = 'namespace'
 
-    const result = client.removeConsumeTokenRequired(namespace)
-    const proResult = await result
+    const result = await client.removeConsumeTokenRequired(namespace)
 
-    expect(result).toBePromise()
-    expect(proResult).toBeUndefined()
+    expect(result).toBeUndefined()
   })
 
   test(`
@@ -95,22 +82,18 @@ describe('TokenPolicyManager', () => {
     const namespace = 'namespace'
     const val = true
 
-    const result = client.setClearTokenRequired(namespace, val)
-    const proResult = await result
+    const result = await client.setClearTokenRequired(namespace, val)
 
-    expect(result).toBePromise()
-    expect(proResult).toBeUndefined()
+    expect(result).toBeUndefined()
   })
 
   test('removeClearTokenRequired(namespace: string): Promise<void>', async () => {
     const client = createManager()
     const namespace = 'namespace'
 
-    const result = client.removeClearTokenRequired(namespace)
-    const proResult = await result
+    const result = await client.removeClearTokenRequired(namespace)
 
-    expect(result).toBePromise()
-    expect(proResult).toBeUndefined()
+    expect(result).toBeUndefined()
   })
 })
 

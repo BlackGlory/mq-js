@@ -1,7 +1,6 @@
 import { server } from '@test/client.mock'
 import { MQClient } from '@src/client'
 import { TOKEN } from '@test/utils'
-import '@blackglory/jest-matchers'
 
 beforeAll(() => server.listen({ onUnhandledRequest: 'error' }))
 beforeEach(() => server.resetHandlers())
@@ -12,11 +11,9 @@ describe('MQClient', () => {
     const client = createClient()
     const queueId = 'queue-id'
 
-    const result = client.draft(queueId)
-    const proResult = await result
+    const result = await client.draft(queueId)
 
-    expect(result).toBePromise()
-    expect(proResult).toBe('id')
+    expect(result).toBe('id')
   })
 
   test(`
@@ -27,11 +24,9 @@ describe('MQClient', () => {
     const messageId = 'message-id'
     const payload = ''
 
-    const result = client.set(queueId, messageId, payload)
-    const proResult = await result
+    const result = await client.set(queueId, messageId, payload)
 
-    expect(result).toBePromise()
-    expect(proResult).toBeUndefined()
+    expect(result).toBeUndefined()
   })
 
   test(`
@@ -46,22 +41,18 @@ describe('MQClient', () => {
     const messageId = 'message-id'
     const payload = null
 
-    const result = client.setJSON(queueId, messageId, payload)
-    const proResult = await result
+    const result = await client.setJSON(queueId, messageId, payload)
 
-    expect(result).toBePromise()
-    expect(proResult).toBeUndefined()
+    expect(result).toBeUndefined()
   })
 
   test('order(queueId: string): Promise<string>', async () => {
     const client = createClient()
     const queueId = 'queue-id'
 
-    const result = client.order(queueId)
-    const proResult = await result
+    const result = await client.order(queueId)
 
-    expect(result).toBePromise()
-    expect(proResult).toBe('id')
+    expect(result).toBe('id')
   })
 
   describe(`
@@ -75,11 +66,9 @@ describe('MQClient', () => {
       const queueId = 'queue-id'
       const messageId = 'custom-priority'
 
-      const result = client.get(queueId, messageId)
-      const proResult = await result
+      const result = await client.get(queueId, messageId)
 
-      expect(result).toBePromise()
-      expect(proResult).toEqual({
+      expect(result).toEqual({
         priority: 1
       , payload: '{}'
       })
@@ -90,11 +79,9 @@ describe('MQClient', () => {
       const queueId = 'queue-id'
       const messageId = 'default-priority'
 
-      const result = client.get(queueId, messageId)
-      const proResult = await result
+      const result = await client.get(queueId, messageId)
 
-      expect(result).toBePromise()
-      expect(proResult).toEqual({
+      expect(result).toEqual({
         priority: null
       , payload: '{}'
       })
@@ -112,11 +99,9 @@ describe('MQClient', () => {
       const queueId = 'queue-id'
       const messageId = 'custom-priority'
 
-      const result = client.getJSON(queueId, messageId)
-      const proResult = await result
+      const result = await client.getJSON(queueId, messageId)
 
-      expect(result).toBePromise()
-      expect(proResult).toEqual({
+      expect(result).toEqual({
         priority: 1
       , payload: {}
       })
@@ -127,11 +112,9 @@ describe('MQClient', () => {
       const queueId = 'queue-id'
       const messageId = 'default-priority'
 
-      const result = client.getJSON(queueId, messageId)
-      const proResult = await result
+      const result = await client.getJSON(queueId, messageId)
 
-      expect(result).toBePromise()
-      expect(proResult).toEqual({
+      expect(result).toEqual({
         priority: null
       , payload: {}
       })
@@ -143,11 +126,9 @@ describe('MQClient', () => {
     const queueId = 'queue-id'
     const messageId = 'message-id'
 
-    const result = client.abandon(queueId, messageId)
-    const proResult = await result
+    const result = await client.abandon(queueId, messageId)
 
-    expect(result).toBePromise()
-    expect(proResult).toBeUndefined()
+    expect(result).toBeUndefined()
   })
 
   test('complete(queueId: string, messageId: string): Promise<void>', async () => {
@@ -155,11 +136,9 @@ describe('MQClient', () => {
     const queueId = 'queue-id'
     const messageId = 'message-id'
 
-    const result = client.complete(queueId, messageId)
-    const proResult = await result
+    const result = await client.complete(queueId, messageId)
 
-    expect(result).toBePromise()
-    expect(proResult).toBeUndefined()
+    expect(result).toBeUndefined()
   })
 
   test('fail(queueId: string, messageId: string): Promise<void>', async () => {
@@ -167,11 +146,9 @@ describe('MQClient', () => {
     const queueId = 'queue-id'
     const messageId = 'message-id'
 
-    const result = client.fail(queueId, messageId)
-    const proResult = await result
+    const result = await client.fail(queueId, messageId)
 
-    expect(result).toBePromise()
-    expect(proResult).toBeUndefined()
+    expect(result).toBeUndefined()
   })
 
   test('renew(queueId: stirng, messageId: string): Promise<void>', async () => {
@@ -179,66 +156,54 @@ describe('MQClient', () => {
     const queueId = 'queue-id'
     const messageId = 'message-id'
 
-    const result = client.renew(queueId, messageId)
-    const proResult = await result
+    const result = await client.renew(queueId, messageId)
 
-    expect(result).toBePromise()
-    expect(proResult).toBeUndefined()
+    expect(result).toBeUndefined()
   })
 
   test('getAllFailedMessageIds(queueId: string): Promise<string[]>', async () => {
     const client = createClient()
     const queueId = 'queue-id'
 
-    const result = client.getAllFailedMessageIds(queueId)
-    const proResult = await result
+    const result = await client.getAllFailedMessageIds(queueId)
 
-    expect(result).toBePromise()
-    expect(proResult).toStrictEqual(['namespace'])
+    expect(result).toStrictEqual(['namespace'])
   })
 
   test('abandonAllFailedMessages(queueId: string): Promise<void>', async () => {
     const client = createClient()
     const queueId = 'queue-id'
 
-    const result = client.abandonAllFailedMessages(queueId)
-    const proResult = await result
+    const result = await client.abandonAllFailedMessages(queueId)
 
-    expect(result).toBePromise()
-    expect(proResult).toBeUndefined()
+    expect(result).toBeUndefined()
   })
 
   test('renewAllFailedMessages(queueId: string): Promise<void>', async () => {
     const client = createClient()
     const queueId = 'queue-id'
 
-    const result = client.renewAllFailedMessages(queueId)
-    const proResult = await result
+    const result = await client.renewAllFailedMessages(queueId)
 
-    expect(result).toBePromise()
-    expect(proResult).toBeUndefined()
+    expect(result).toBeUndefined()
   })
 
   test('clear(queueId: string): Promise<void>', async () => {
     const client = createClient()
     const queueId = 'queue-id'
 
-    const result = client.clear(queueId)
-    const proResult = await result
+    const result = await client.clear(queueId)
 
-    expect(result).toBePromise()
-    expect(proResult).toBeUndefined()
+    expect(result).toBeUndefined()
   })
 
   test('stats(queueId: string): Promise<Stats>', async () => {
     const client = createClient()
     const queueId = 'queue-id'
 
-    const result = client.stats(queueId)
-    const proResult = await result
+    const result = await client.stats(queueId)
 
-    expect(result).toBePromise()
-    expect(proResult).toStrictEqual({
+    expect(result).toStrictEqual({
       namespace: queueId
     , drafting: 0
     , waiting: 0
@@ -252,11 +217,9 @@ describe('MQClient', () => {
   test('getAllQueueIds(): Promise<string[]>', async () => {
     const client = createClient()
 
-    const result = client.getAllNamespaces()
-    const proResult = await result
+    const result = await client.getAllNamespaces()
 
-    expect(result).toBePromise()
-    expect(proResult).toStrictEqual(['namespace'])
+    expect(result).toStrictEqual(['namespace'])
   })
 })
 

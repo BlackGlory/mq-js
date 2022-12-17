@@ -1,7 +1,6 @@
 import { server } from './configuration-manager.mock'
 import { ConfigurationManager } from '@manager/configuration-manager'
 import { ADMIN_PASSWORD } from '@test/utils'
-import '@blackglory/jest-matchers'
 
 beforeAll(() => server.listen({ onUnhandledRequest: 'error' }))
 beforeEach(() => server.resetHandlers())
@@ -11,22 +10,18 @@ describe('ConfigurationManager', () => {
   test('getNamespaces(): Promise<string[]>', async () => {
     const client = createManager()
 
-    const result = client.getNamespaces()
-    const proResult = await result
+    const result = await client.getNamespaces()
 
-    expect(result).toBePromise()
-    expect(proResult).toStrictEqual(['namespace'])
+    expect(result).toStrictEqual(['namespace'])
   })
 
   test('get(namespace: string): Promise<Configuration>', async () => {
     const client = createManager()
     const namespace = 'namespace'
 
-    const result = client.get(namespace)
-    const proResult = await result
+    const result = await client.get(namespace)
 
-    expect(result).toBePromise()
-    expect(proResult).toStrictEqual({
+    expect(result).toStrictEqual({
       unique: null
     , draftingTimeout: null
     , orderedTimeout: null
@@ -40,22 +35,18 @@ describe('ConfigurationManager', () => {
     const namespace = 'namespace'
     const val = true
 
-    const result = client.setUnique(namespace, val)
-    const proResult = await result
+    const result = await client.setUnique(namespace, val)
 
-    expect(result).toBePromise()
-    expect(proResult).toBeUndefined()
+    expect(result).toBeUndefined()
   })
 
   test('removeUnique(namespace: string): Promise<void>', async () => {
     const client = createManager()
     const namespace = 'namespace'
 
-    const result = client.removeUnique(namespace)
-    const proResult = await result
+    const result = await client.removeUnique(namespace)
 
-    expect(result).toBePromise()
-    expect(proResult).toBeUndefined()
+    expect(result).toBeUndefined()
   })
 
   test('setDraftingTimeout(namespace: string, val: number): Promise<void>', async () => {
@@ -63,22 +54,18 @@ describe('ConfigurationManager', () => {
     const namespace = 'namespace'
     const val = 100
 
-    const result = client.setDraftingTimeout(namespace, val)
-    const proResult = await result
+    const result = await client.setDraftingTimeout(namespace, val)
 
-    expect(result).toBePromise()
-    expect(proResult).toBeUndefined()
+    expect(result).toBeUndefined()
   })
 
   test('removeDraftingTimeout(namespace: string): Promise<void>', async () => {
     const client = createManager()
     const namespace = 'namespace'
 
-    const result = client.removeDraftingTimeout(namespace)
-    const proResult = await result
+    const result = await client.removeDraftingTimeout(namespace)
 
-    expect(result).toBePromise()
-    expect(proResult).toBeUndefined()
+    expect(result).toBeUndefined()
   })
 
   test('setOrderedTimeout(namespace: string, val: number): Promise<void>', async () => {
@@ -86,22 +73,18 @@ describe('ConfigurationManager', () => {
     const namespace = 'namespace'
     const val = 100
 
-    const result = client.setOrderedTimeout(namespace, val)
-    const proResult = await result
+    const result = await client.setOrderedTimeout(namespace, val)
 
-    expect(result).toBePromise()
-    expect(proResult).toBeUndefined()
+    expect(result).toBeUndefined()
   })
 
   test('removeOrderedTimeout(namespace: string): Promise<void>', async () => {
     const client = createManager()
     const namespace = 'namespace'
 
-    const result = client.removeOrderedTimeout(namespace)
-    const proResult = await result
+    const result = await client.removeOrderedTimeout(namespace)
 
-    expect(result).toBePromise()
-    expect(proResult).toBeUndefined()
+    expect(result).toBeUndefined()
   })
 
   test('setActiveTimeout(namespace: string, val: number): Promise<void>', async () => {
@@ -109,22 +92,18 @@ describe('ConfigurationManager', () => {
     const namespace = 'namespace'
     const val = 100
 
-    const result = client.setActiveTimeout(namespace, val)
-    const proResult = await result
+    const result = await client.setActiveTimeout(namespace, val)
 
-    expect(result).toBePromise()
-    expect(proResult).toBeUndefined()
+    expect(result).toBeUndefined()
   })
 
   test('removeActiveTimeout(namespace: string): Promise<void>', async () => {
     const client = createManager()
     const namespace = 'namespace'
 
-    const result = client.removeActiveTimeout(namespace)
-    const proResult = await result
+    const result = await client.removeActiveTimeout(namespace)
 
-    expect(result).toBePromise()
-    expect(proResult).toBeUndefined()
+    expect(result).toBeUndefined()
   })
 
   test('setConcurrency(namespace: string, val: number): Promise<void>', async () => {
@@ -132,22 +111,18 @@ describe('ConfigurationManager', () => {
     const namespace = 'namespace'
     const val = 100
 
-    const result = client.setConcurrency(namespace, val)
-    const proResult = await result
+    const result = await client.setConcurrency(namespace, val)
 
-    expect(result).toBePromise()
-    expect(proResult).toBeUndefined()
+    expect(result).toBeUndefined()
   })
 
   test('removeConcurrency(namespace: string): Promise<void>', async () => {
     const client = createManager()
     const namespace = 'namespace'
 
-    const result = client.removeConcurrency(namespace)
-    const proResult = await result
+    const result = await client.removeConcurrency(namespace)
 
-    expect(result).toBePromise()
-    expect(proResult).toBeUndefined()
+    expect(result).toBeUndefined()
   })
 })
 

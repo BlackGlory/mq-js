@@ -3,7 +3,7 @@ import { post, put, patch, get, del, IHTTPOptionsTransformer } from 'extra-reque
 import { url, appendPathname, json, text, searchParams, signal, keepalive, basicAuth, header } from 'extra-request/transformers/index.js'
 import { ok, toText, toJSON } from 'extra-response'
 import { raceAbortSignals, timeoutSignal } from 'extra-abort'
-import { Falsy } from 'justypes'
+import { Falsy } from '@blackglory/prelude'
 import { expectedVersion } from './utils'
 
 export interface IStats {
