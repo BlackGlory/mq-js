@@ -16,14 +16,14 @@
     "test": "jest --runInBand --no-cache --config jest.config.js",
     "test:debug": "node --inspect-brk node_modules/.bin/jest --runInBand",
     "test:coverage": "jest --coverage --config jest.config.js",
-    "prepublishOnly": "run-s clean build",
+    "prepublishOnly": "run-s prepare clean build",
     "clean": "rimraf lib",
-    "build": "tsc --project tsconfig.build.json --module commonjs --target es2018 --outDir lib/es2018",
+    "build": "tsc --project tsconfig.build.json --module commonjs --target es2018 --outDir lib",
     "release": "standard-version"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "run-s prepare lint test",
+      "pre-commit": "run-s prepare lint build test",
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   },
