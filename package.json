@@ -1,9 +1,11 @@
 {
   "name": "@blackglory/mq-js",
-  "version": "0.14.2",
+  "version": "0.14.3",
   "description": "",
   "keywords": [],
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "repository": "git@github.com:BlackGlory/mq-js.git",
