@@ -1,8 +1,8 @@
 import { fetch } from 'extra-fetch'
 import { get, put, del } from 'extra-request'
-import { appendPathname, json } from 'extra-request/transformers/index.js'
+import { appendPathname, json } from 'extra-request/transformers'
 import { ok, toJSON } from 'extra-response'
-import { IMQManagerRequestOptions, Base } from './base'
+import { IMQManagerRequestOptions, Base } from './base.js'
 
 interface IConfiguration {
   unique: boolean | null

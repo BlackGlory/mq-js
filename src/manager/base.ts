@@ -1,9 +1,9 @@
-import { IHTTPOptionsTransformer } from 'extra-request'
-import { url, signal, keepalive, bearerAuth, header } from 'extra-request/transformers/index.js'
+import { IRequestOptionsTransformer } from 'extra-request'
+import { url, signal, keepalive, bearerAuth, header } from 'extra-request/transformers'
 import { timeoutSignal, raceAbortSignals } from 'extra-abort'
-import { IMQManagerOptions } from './index'
+import { IMQManagerOptions } from './index.js'
 import { Falsy } from '@blackglory/prelude'
-import { expectedVersion } from '@src/utils'
+import { expectedVersion } from '@src/utils.js'
 
 export interface IMQManagerRequestOptions {
   signal?: AbortSignal
@@ -16,7 +16,7 @@ export class Base {
 
   protected getCommonTransformers(
     options: IMQManagerRequestOptions
-  ): Array<IHTTPOptionsTransformer | Falsy> {
+  ): Array<IRequestOptionsTransformer | Falsy> {
     return [
       url(this.options.server)
     , bearerAuth(this.options.adminPassword)

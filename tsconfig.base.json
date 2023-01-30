@@ -1,7 +1,9 @@
 {
   "compilerOptions": {
-    "target": "ES2019"
-  , "module": "CommonJS"
+    "target": "ES2018"
+  , "module": "NodeNext"
+  , "moduleResolution": "NodeNext"
+  , "esModuleInterop": true
   , "strict": true
   , "noUnusedLocals": true
   , "noUnusedParameters": false
@@ -10,7 +12,6 @@
       "@src/*": ["src/*"]
     , "@manager/*": ["src/manager/*"]
     , "@test/*": ["__tests__/*"]
-    , "extra-request/transformers/*": ["node_modules/extra-request/lib/es2018/transformers/*"]
     }
   , "plugins" : [
       {

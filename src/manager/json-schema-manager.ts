@@ -1,9 +1,9 @@
 import { fetch } from 'extra-fetch'
-import { Json } from '@blackglory/prelude'
+import { JSONValue } from '@blackglory/prelude'
 import { get, put, del } from 'extra-request'
-import { appendPathname, json } from 'extra-request/transformers/index.js'
+import { appendPathname, json } from 'extra-request/transformers'
 import { ok, toJSON } from 'extra-response'
-import { IMQManagerRequestOptions, Base } from './base'
+import { IMQManagerRequestOptions, Base } from './base.js'
 
 export class JsonSchemaManager extends Base {
   /**
@@ -42,7 +42,7 @@ export class JsonSchemaManager extends Base {
    */
   async set(
     namespaces: string
-  , schema: Json
+  , schema: JSONValue
   , options: IMQManagerRequestOptions = {}
   ): Promise<void> {
     const req = put(

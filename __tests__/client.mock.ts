@@ -1,6 +1,6 @@
 import { setupServer } from 'msw/node'
 import { rest } from 'msw'
-import { badJson, badToken } from '@test/utils'
+import { badJson, badToken } from '@test/utils.js'
 
 export const server = setupServer(
   rest.post('/mq/:mqId/messages', (req, res, ctx) => {

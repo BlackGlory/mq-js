@@ -1,10 +1,10 @@
 import { fetch } from 'extra-fetch'
-import { post, put, patch, get, del, IHTTPOptionsTransformer } from 'extra-request'
-import { url, appendPathname, json, text, searchParams, signal, keepalive, basicAuth, header } from 'extra-request/transformers/index.js'
+import { post, put, patch, get, del, IRequestOptionsTransformer } from 'extra-request'
+import { url, appendPathname, json, text, searchParams, signal, keepalive, basicAuth, header } from 'extra-request/transformers'
 import { ok, toText, toJSON } from 'extra-response'
 import { raceAbortSignals, timeoutSignal } from 'extra-abort'
 import { Falsy } from '@blackglory/prelude'
-import { expectedVersion } from './utils'
+import { expectedVersion } from './utils.js'
 
 export interface IStats {
   namespace: string
@@ -45,7 +45,7 @@ export class MQClient {
 
   private getCommonTransformers(
     options: IMQClientRequestOptions | IMQClientRequestOptionsWithoutToken
-  ): Array<IHTTPOptionsTransformer | Falsy> {
+  ): Array<IRequestOptionsTransformer | Falsy> {
     const token = 'token' in options
                   ? (options.token ?? this.options.token)
                   : this.options.token

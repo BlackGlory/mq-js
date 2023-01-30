@@ -1,6 +1,7 @@
-import { server } from './configuration-manager.mock'
-import { ConfigurationManager } from '@manager/configuration-manager'
-import { ADMIN_PASSWORD } from '@test/utils'
+import { server } from './configuration-manager.mock.js'
+import { ConfigurationManager } from '@manager/configuration-manager.js'
+import { ADMIN_PASSWORD } from '@test/utils.js'
+import '@test/polyfill.js'
 
 beforeAll(() => server.listen({ onUnhandledRequest: 'error' }))
 beforeEach(() => server.resetHandlers())
