@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.15.0](https://github.com/BlackGlory/mq-js/compare/v0.14.3...v0.15.0) (2023-01-30)
+
+
+### ⚠ BREAKING CHANGES
+
+* - CommonJS => ESM.
+- The minimal version of Node.js is 16.
+- It requires MQ^0.6.0.
+
+### Features
+
+* upgrade ([aed79b1](https://github.com/BlackGlory/mq-js/commit/aed79b14233f9bb6a8e922b675ef9de5229e2e43))
+
 ### [0.14.3](https://github.com/BlackGlory/mq-js/compare/v0.14.2...v0.14.3) (2023-01-30)
 
 
