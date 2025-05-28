@@ -26,9 +26,9 @@
     "build": "tsc --project tsconfig.build.json",
     "docker:test": "run-s docker:test:clean docker:test:build docker:test:run docker:test:clean",
     "docker:coverage": "run-s docker:test:clean docker:test:build docker:test:coverage docker:test:clean",
-    "docker:test:build": "docker-compose --project-name mq-js --file docker-compose.test.yml build",
-    "docker:test:run": "docker-compose --project-name mq-js --file docker-compose.test.yml run --rm test",
-    "docker:test:clean": "docker-compose --project-name mq-js --file docker-compose.test.yml down",
+    "docker:test:build": "docker compose --project-name mq-js --file docker-compose.test.yml build",
+    "docker:test:run": "docker compose --project-name mq-js --file docker-compose.test.yml run --no-TTY --rm test",
+    "docker:test:clean": "docker compose --project-name mq-js --file docker-compose.test.yml down",
     "release": "standard-version"
   },
   "husky": {
