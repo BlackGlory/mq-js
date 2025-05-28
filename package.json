@@ -10,6 +10,9 @@
   "type": "module",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
+  "browser": {
+    "./lib/utils/rpc-client.js": "./lib/utils/rpc-client.browser.js"
+  },
   "repository": "git@github.com:BlackGlory/mq-js.git",
   "author": "BlackGlory <woshenmedoubuzhidao@blackglory.me>",
   "license": "MIT",
