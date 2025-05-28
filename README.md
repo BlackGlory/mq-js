@@ -9,349 +9,175 @@ yarn add @blackglory/mq-js
 ## API
 ### MQClient
 ```ts
-interface IStats {
-  namespace: string
+interface IMQClientOptions {
+  server: string
+  timeout?: number
+  retryIntervalForReconnection?: number
+}
+
+interface IQueueConfig extends JSONObject {
+  unique: boolean
+  draftingTimeout: number
+  orderedTimeout: number
+  activeTimeout: number
+  concurrency: number | null
+  behaviorWhenCompleted: AdditionalBehavior
+  behaviorWhenAbandoned: AdditionalBehavior
+}
+
+interface IMessage {
+  slots: Record<string, JSONValue>
+  priority: number | null
+  state: MessageState
+}
+
+interface IQueueStats {
   drafting: number
   waiting: number
   ordered: number
   active: number
-  completed: number
   failed: number
+  completed: number
+  abandoned: number
 }
 
-interface IMQClientOptions {
-  server: string
-  token?: string
-  basicAuth?: {
-    username: string
-    password: string
-  }
-  keepalive?: boolean
-  timeout?: number
+enum MessageState {
+  Drafting
+, Waiting
+, Ordered
+, Active
+, Failed
+, Completed
+, Abandoned
 }
 
-interface IMQClientRequestOptions {
-  signal?: AbortSignal
-  token?: string
-  keepalive?: boolean
-  timeout?: number | false
+enum AdditionalBehavior {
+  None
+, RemoveMessage
+, RemoveAllSlots
 }
 
-interface IMQClientRequestOptionsWithoutToken {
-  signal?: AbortSignal
-  keepalive?: boolean
-  timeout?: number | false
-}
+class QueueNotFound extends CustomError {}
+class MessageNotFound extends CustomError {}
+class SlotNotFound extends CustomError {}
+class DuplicateMessage extends CustomError {}
+class BadMessageState extends CustomError {}
 
 class MQClient {
-  constructor(options: IMQClientOptions)
+  static create(options: IMQClientOptions): Promise<MQClient>
 
-  draft(
-    namespace: string
-  , priority: number | null = null
-  , options: IMQClientRequestOptions = {}
+  close(): Promise<void>
+
+  getAllQueueIds(signal?: AbortSignal): Promise<string[]>
+
+  getQueue(queueId: string, signal?: AbortSignal): Promise<IQueueConfig | null>
+
+  setQueue(queueId: string, config: IQueueConfig, signal?: AbortSignal): Promise<void>
+
+  removeQueue(queueId: string, signal?: AbortSignal): Promise<void>
+
+  getQueueStats(queueId: string, signal?: AbortSignal): Promise<IQueueStats | null>
+
+  resetQueue(queueId: string, signal?: AbortSignal): Promise<void>
+
+  /**
+   * @throws {QueueNotFound}
+   */
+  draftMessage(
+    queueId: string
+  , priority: number | null
+  , slotNames: NonEmptyArray<string>
+  , signal?: AbortSignal
   ): Promise<string>
 
-  set(
-    namespace: string
-  , id: string
-  , payload: string
-  , options: IMQClientRequestOptions = {}
+  /**
+   * @throws {QueueNotFound}
+   * @throws {MessageNotFound}
+   * @throws {SlotNotFound}
+   * @throws {BadMessageState}
+   * @throws {DuplicateMessage}
+   */
+  setMessageSlot(
+    queueId: string
+  , messageId: string
+  , slotName: string
+  , value: JSONValue
+  , signal?: AbortSignal
   ): Promise<void>
 
-  setJSON<T>(
-    namespace: string
-  , id: string
-  , payload: T
-  , options: IMQClientRequestOptions = {}
-  ): Promise<void>
+  /**
+   * @throws {QueueNotFound}
+   * @throws {AbortError}
+   */
+  orderMessage(queueId: string, signal?: AbortSignal): Promise<string>
 
-  order(
-    namespace: string
-  , options: IMQClientRequestOptions = {}
-  ): Promise<string>
+  /**
+   * @throws {QueueNotFound}
+   */
+  getMessage(
+    queueId: string
+  , messageId: string
+  , signal?: AbortSignal
+  ): Promise<IMessage | null>
 
-  get(
-    namespace: string
-  , id: string
-  , options?: IMQClientRequestOptions
-  ): Promise<{ priority: number | null, payload: string }>
+  /**
+   * @throws {QueueNotFound}
+   * @throws {MessageNotFound}
+   * @throws {BadMessageState}
+   */
+  completeMessage(queueId: string, messageId: string, signal?: AbortSignal): Promise<void>
 
-  getJSON<T>(
-    namespace: string
-  , id: string
-  , options?: IMQClientRequestOptions
-  ): Promise<{ priority: number | null, payload: T }>
+  /**
+   * @throws {QueueNotFound}
+   * @throws {MessageNotFound}
+   * @throws {BadMessageState}
+   */
+  failMessage(queueId: string, messageId: string, signal?: AbortSignal): Promise<void>
 
-  abandon(
-    namespace: string
-  , id: string
-  , options: IMQClientRequestOptions = {}
-  ): Promise<void>
+  /**
+   * @throws {QueueNotFound}
+   * @throws {MessageNotFound}
+   * @throws {BadMessageState}
+   */
+  renewMessage(queueId: string, messageId: string, signal?: AbortSignal): Promise<void>
 
-  complete(
-    namespace: string
-  , id: string
-  , options: IMQClientRequestOptions = {}
-  ): Promise<void>
+  /**
+   * @throws {QueueNotFound}
+   * @throws {MessageNotFound}
+   */
+  abandonMessage(queueId: string, messageId: string, signal?: AbortSignal): Promise<void>
 
-  fail(
-    namespace: string
-  , id: string
-  , options: IMQClientRequestOptions = {}
-  ): Promise<void>
+  /**
+   * @throws {QueueNotFound}
+   */
+  removeMessage(queueId: string, messageId: string, signal?: AbortSignal): Promise<void>
 
-  renew(
-    namespace: string
-  , id: string
-  , options: IMQClientRequestOptions = {}
-  ): Promise<void>
+  /**
+   * @throws {QueueNotFound}
+   */
+  abandonAllFailedMessages(queueId: string, signal?: AbortSignal): Promise<void>
 
-  getAllFailedMessageIds(
-    namespace: string
-  , options: IMQClientRequestOptions = {}
+  /**
+   * @throws {QueueNotFound}
+   */
+  renewAllFailedMessages(queueId: string, signal?: AbortSignal): Promise<void>
+
+  /**
+   * @throws {QueueNotFound}
+   */
+  getMessageIdsByState(
+    queueId: string
+  , state: MessageState
+  , signal?: AbortSignal
   ): Promise<string[]>
 
-  abandonAllFailedMessages(
-    namespace: string
-  , options: IMQClientRequestOptions = {}
-  ): Promise<void>
-
-  renewAllFailedMessages(
-    namespace: string
-  , options: IMQClientRequestOptions = {}
-  ): Promise<void>
-
-  clear(namespace: string, options: IMQClientRequestOptions = {}): Promise<void>
-
-  stats(
-    namespace: string
-  , options: IMQClientRequestOptionsWithoutToken = {}
-  ): Promise<IStats>
-
-  getAllNamespaces(
-    options: IMQClientRequestOptionsWithoutToken = {}
-  ): Promise<string[]>
-}
-```
-
-### MQManager
-```ts
-interface IMQManagerRequestOptions {
-  signal?: AbortSignal
-  keepalive?: boolean
-  timeout?: number | false
-}
-
-interface IMQManagerOptions {
-  server: string
-  adminPassword: string
-  keepalive?: boolean
-  timeout?: number
-}
-
-class MQManager {
-  constructor(options: IMQManagerOptions)
-
-  JsonSchema: JsonSchemaManager
-  Blacklist: BlacklistManager
-  Whitelist: WhitelistManager
-  TokenPolicy: TokenPolicyManager
-  Token: TokenManager
-  Configuration: ConfigurationManager
-}
-```
-
-#### JsonSchemaManager
-```ts
-class JsonSchemaManager {
-  getNamespaces(options: IMQManagerRequestOptions = {}): Promise<string[]>
-  get(
-    namespaces: string
-  , options: IMQManagerRequestOptions = {}
-  ): Promise<unknown>
-  set(
-    namespaces: string
-  , schema: Json
-  , options: IMQManagerRequestOptions = {}
-  ): Promise<void>
-  remove(
-    namespaces: string
-  , options: IMQManagerRequestOptions = {}
-  ): Promise<void>
-}
-```
-
-#### BlacklistManager
-```ts
-class BlacklistManager {
-  getNamespaces(options: IMQManagerRequestOptions = {}): Promise<string[]>
-  add(namespaces: string, options: IMQManagerRequestOptions = {}): Promise<void>
-  remove(namespaces: string, options: IMQManagerRequestOptions = {}): Promise<void>
-}
-```
-
-#### WhitelistManager
-```ts
-class WhitelistManager {
-  getNamespaces(options: IMQManagerRequestOptions = {}): Promise<string[]>
-  add(namespaces: string, options: IMQManagerRequestOptions = {}): Promise<void>
-  remove(namespaces: string, options: IMQManagerRequestOptions = {}): Promise<void>
-}
-```
-
-#### TokenPolicyManager
-```ts
-interface ITokenPolicy {
-  produceTokenRequired: boolean | null
-  consumeTokenRequired: boolean | null
-  clearTokenRequired: boolean | null
-}
-
-class TokenPolicyManager {
-  getNamespaces(options: IMQManagerRequestOptions = {}): Promise<string[]>
-  get(
-    namespaces: string
-  , options: IMQManagerRequestOptions = {}
-  ): Promise<ITokenPolicy>
-  setProduceTokenRequired(
-    namespaces: string
-  , val: boolean
-  , options: IMQManagerRequestOptions = {}
-  ): Promise<void>
-  removeProduceTokenRequired(
-    namespaces: string
-  , options: IMQManagerRequestOptions = {}
-  ): Promise<void>
-  setConsumeTokenRequired(
-    namespaces: string
-  , val: boolean
-  , options: IMQManagerRequestOptions = {}
-  ): Promise<void>
-  removeConsumeTokenRequired(
-    namespaces: string
-  , options: IMQManagerRequestOptions = {}
-  ): Promise<void>
-  setClearTokenRequired(
-    namespaces: string
-  , val: boolean
-  , options: IMQManagerRequestOptions = {}
-  ): Promise<void>
-  removeClearTokenRequired(
-    namespaces: string
-  , options: IMQManagerRequestOptions = {}
-  ): Promise<void>
-}
-```
-
-#### TokenManager
-```ts
-interface ITokenInfo {
-  token: string
-  produce: boolean
-  consume: boolean
-  clear: boolean
-}
-
-class TokenManager {
-  getNamespaces(options: IMQManagerRequestOptions = {}): Promise<string[]>
-  getTokens(
-    namespace: string
-  , options: IMQManagerRequestOptions = {}
-  ): Promise<ITokenInfo[]>
-  addProduceToken(
-    namespace: string
-  , token: string
-  , options: IMQManagerRequestOptions = {}
-  ): Promise<void>
-  removeProduceToken(
-    namespace: string
-  , token: string
-  , options: IMQManagerRequestOptions = {}
-  ): Promise<void>
-  addConsumeToken(
-    namespace: string
-  , token: string
-  , options: IMQManagerRequestOptions = {}
-  ): Promise<void>
-  removeConsumeToken(
-    namespace: string
-  , token: string
-  , options: IMQManagerRequestOptions = {}
-  ): Promise<void>
-  addClearToken(
-    namespace: string
-  , token: string
-  , options: IMQManagerRequestOptions = {}
-  ): Promise<void>
-  removeClearToken(
-    namespace: string
-  , token: string
-  , options: IMQManagerRequestOptions = {}
-  ): Promise<void>
-}
-```
-
-#### ConfigurationManager
-```ts
-interface IConfiguration {
-  unique: boolean | null
-  draftingTimeout: number | null
-  orderedTimeout: number | null
-  activeTimeout: number | null
-  concurrency: number | null
-}
-
-class ConfigurationManager {
-  getNamespaces(options: IMQManagerRequestOptions = {}): Promise<string[]>
-  get(
-    namespaces: string
-  , options: IMQManagerRequestOptions = {}
-  ): Promise<IConfiguration>
-  setUnique(
-    namespaces: string
-  , val: boolean
-  , options: IMQManagerRequestOptions = {}
-  ): Promise<void>
-  removeUnique(
-    namespaces: string
-  , options: IMQManagerRequestOptions = {}
-  ): Promise<void>
-  setDraftingTimeout(
-    namespaces: string
-  , val: number
-  , options: IMQManagerRequestOptions = {}
-  ): Promise<void>
-  removeDraftingTimeout(
-    namespaces: string
-  , options: IMQManagerRequestOptions = {}
-  ): Promise<void>
-  setOrderedTimeout(
-    namespaces: string
-  , val: number
-  , options: IMQManagerRequestOptions = {}
-  ): Promise<void>
-  removeOrderedTimeout(
-    namespaces: string
-  , options: IMQManagerRequestOptions = {}
-  ): Promise<void>
-  setActiveTimeout(
-    namespaces: string
-  , val: number
-  , options: IMQManagerRequestOptions = {}
-  ): Promise<void>
-  removeActiveTimeout(
-    namespaces: string
-  , options: IMQManagerRequestOptions = {}
-  ): Promise<void>
-  setConcurrency(
-    namespaces: string
-  , val: number
-  , options: IMQManagerRequestOptions = {}
-  ): Promise<void>
-  removeConcurrency(
-    namespaces: string
-  , options: IMQManagerRequestOptions = {}
+  /**
+   * @throws {QueueNotFound}
+   */
+  clearMessagesByState(
+    queueId: string
+  , state: MessageState
+  , signal?: AbortSignal
   ): Promise<void>
 }
 ```
