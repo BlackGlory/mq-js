@@ -28,6 +28,7 @@ export class MQClient {
     const { client, close } = await createRPCClient(
       options.server
     , options.retryIntervalForReconnection
+    , options.timeout
     )
     return new MQClient(client, close, options.timeout)
   }
