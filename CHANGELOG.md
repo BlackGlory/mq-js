@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.16.2](https://github.com/BlackGlory/mq-js/compare/v0.16.1...v0.16.2) (2025-07-22)
+
+
+### Features
+
+* make the timeout apply to connect and reconnect ([0db617b](https://github.com/BlackGlory/mq-js/commit/0db617b88848e09e7fd81a5e1baaaf4715924f13))
+
 ### [0.16.1](https://github.com/BlackGlory/mq-js/compare/v0.16.0...v0.16.1) (2025-05-28)
 
 
