@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.17.0](https://github.com/BlackGlory/mq-js/compare/v0.16.2...v0.17.0) (2025-12-31)
+
+
+### ⚠ BREAKING CHANGES
+
+* **draft-message:** The module requires MQ@^0.7.3
+
+### Features
+
+* **draft-message:** add support for the new argument `messageId` ([6830e9e](https://github.com/BlackGlory/mq-js/commit/6830e9e60e3b6fc66cd546239cb0e99954f5032e))
+
 ### [0.16.2](https://github.com/BlackGlory/mq-js/compare/v0.16.1...v0.16.2) (2025-07-22)
 
 
