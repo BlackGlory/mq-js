@@ -1,7 +1,7 @@
 import { CustomError } from '@blackglory/errors'
 import { JSONObject, JSONValue, NonEmptyArray } from 'justypes'
 
-export const expectedVersion = '^0.7.0'
+export const expectedVersion = '^0.7.3'
 
 /**
  * 区分`oredred`和`active`是因为取出消息id的和处理消息的可能是两个不同的实体,
@@ -115,11 +115,20 @@ export interface IAPI {
    * `null`为特殊值, 表示无优先级, 代表优先级最低.
    * 如果需要设置优先级, 推荐做法是将`0`视作默认优先级, 在此基础上调整优先级.
    * @throws {QueueNotFound}
+   * @throws {DuplicateMessageId}
    */
-  draftMessage(
-    queueId: string
-  , priority: number | null
-  , slotNames: NonEmptyArray<string>
+  draftMessage(...args:
+  | [
+      queueId: string
+    , priority: number | null
+    , slotNames: NonEmptyArray<string>
+    , messageId: string
+    ]
+  | [
+      queueId: string
+    , priority: number | null
+    , slotNames: NonEmptyArray<string>
+    ]
   ): string
 
   /**
@@ -223,4 +232,5 @@ export class QueueNotFound extends CustomError {}
 export class MessageNotFound extends CustomError {}
 export class SlotNotFound extends CustomError {}
 export class DuplicateMessage extends CustomError {}
+export class DuplicateMessageId extends CustomError {}
 export class BadMessageState extends CustomError {}

@@ -2,7 +2,7 @@ import { createRPCClient } from '@utils/rpc-client.js'
 import { ClientProxy } from 'delight-rpc'
 import { IAPI, IMessage, IQueueConfig, IQueueStats, MessageState } from './contract.js'
 import { raceAbortSignals, timeoutSignal } from 'extra-abort'
-import { isntUndefined, JSONValue, NonEmptyArray } from '@blackglory/prelude'
+import { isntUndefined, isString, JSONValue, NonEmptyArray } from '@blackglory/prelude'
 
 export {
   IMessage
@@ -14,6 +14,7 @@ export {
 , MessageNotFound
 , SlotNotFound
 , DuplicateMessage
+, DuplicateMessageId
 , BadMessageState
 } from './contract.js'
 
@@ -85,19 +86,59 @@ export class MQClient {
    * `null`为特殊值, 表示无优先级, 代表优先级最低.
    * 如果需要设置优先级, 推荐做法是将`0`视作默认优先级, 在此基础上调整优先级.
    * @throws {QueueNotFound}
+   * @throws {DuplicateMessageId}
    */
   async draftMessage(
     queueId: string
   , priority: number | null
   , slotNames: NonEmptyArray<string>
   , signal?: AbortSignal
+  ): Promise<string>
+  async draftMessage(
+    queueId: string
+  , priority: number | null
+  , slotNames: NonEmptyArray<string>
+  , messageId?: string
+  , signal?: AbortSignal
+  ): Promise<string>
+  async draftMessage(...args:
+  | [
+      queueId: string
+    , priority: number | null
+    , slotNames: NonEmptyArray<string>
+    , signal?: AbortSignal
+    ]
+  | [
+      queueId: string
+    , priority: number | null
+    , slotNames: NonEmptyArray<string>
+    , messageId?: string
+    , signal?: AbortSignal
+    ]
   ): Promise<string> {
-    return await this.client.draftMessage(
-      queueId
-    , priority
-    , slotNames
-    , this.withTimeout(signal)
-    )
+    const [queueId, priority, slotNames, messageIdOrSignal, signalOrUndefined] = args
+
+    if (isString(messageIdOrSignal)) {
+      const messageId = messageIdOrSignal
+      const signal = signalOrUndefined
+
+      return await this.client.draftMessage(
+        queueId
+      , priority
+      , slotNames
+      , messageId
+      , this.withTimeout(signal)
+      )
+    } else {
+      const signal = messageIdOrSignal ?? signalOrUndefined
+
+      return await this.client.draftMessage(
+        queueId
+      , priority
+      , slotNames
+      , this.withTimeout(signal)
+      )
+    }
   }
 
   /**

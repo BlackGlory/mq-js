@@ -61,6 +61,7 @@ class QueueNotFound extends CustomError {}
 class MessageNotFound extends CustomError {}
 class SlotNotFound extends CustomError {}
 class DuplicateMessage extends CustomError {}
+class DuplicateMessageId extends CustomError {}
 class BadMessageState extends CustomError {}
 
 class MQClient {
@@ -82,7 +83,15 @@ class MQClient {
 
   /**
    * @throws {QueueNotFound}
+   * @throws {DuplicateMessageId}
    */
+  draftMessage(
+    queueId: string
+  , priority: number | null
+  , slotNames: NonEmptyArray<string>
+  , messageId: string
+  , signal?: AbortSignal
+  ): Promise<string>
   draftMessage(
     queueId: string
   , priority: number | null
