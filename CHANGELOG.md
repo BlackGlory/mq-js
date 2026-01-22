@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.18.0](https://github.com/BlackGlory/mq-js/compare/v0.17.0...v0.18.0) (2026-01-22)
+
+
+### ⚠ BREAKING CHANGES
+
+* The module requires MQ@^0.7.4
+
+### Features
+
+* add `MQClient#peekMessage` ([0c8c569](https://github.com/BlackGlory/mq-js/commit/0c8c569498904662a381e3b12db09f01deadd6e8))
+
 ## [0.17.0](https://github.com/BlackGlory/mq-js/compare/v0.16.2...v0.17.0) (2025-12-31)
 
 
