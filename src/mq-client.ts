@@ -192,6 +192,19 @@ export class MQClient {
   }
 
   /**
+   * 无副作用地获取一个消息.
+   * 
+   * @throws {QueueNotFound}
+   */
+  async peekMessage(
+    queueId: string
+  , messageId: string
+  , signal?: AbortSignal
+  ): Promise<IMessage | null> {
+    return await this.client.peekMessage(queueId, messageId, this.withTimeout(signal))
+  }
+
+  /**
    * 将一个处于`active`状态的消息转为`completed`状态.
    * 
    * @throws {QueueNotFound}

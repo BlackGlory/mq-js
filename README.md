@@ -131,6 +131,15 @@ class MQClient {
 
   /**
    * @throws {QueueNotFound}
+   */
+  peekMessage(
+    queueId: string
+  , messageId: string
+  , signal?: AbortSignal
+  ): Promise<IMessage | null>
+
+  /**
+   * @throws {QueueNotFound}
    * @throws {MessageNotFound}
    * @throws {BadMessageState}
    */

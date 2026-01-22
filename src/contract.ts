@@ -1,7 +1,7 @@
 import { CustomError } from '@blackglory/errors'
 import { JSONObject, JSONValue, NonEmptyArray } from 'justypes'
 
-export const expectedVersion = '^0.7.3'
+export const expectedVersion = '^0.7.4'
 
 /**
  * 区分`oredred`和`active`是因为取出消息id的和处理消息的可能是两个不同的实体,
@@ -163,6 +163,13 @@ export interface IAPI {
    * @throws {QueueNotFound}
    */
   getMessage(queueId: string, messageId: string): IMessage | null
+
+  /**
+   * 无副作用地获取一个消息.
+   * 
+   * @throws {QueueNotFound}
+   */
+  peekMessage(queueid: string, messageId: string): IMessage | null
 
   /**
    * 将一个处于`active`状态的消息转为`completed`状态.

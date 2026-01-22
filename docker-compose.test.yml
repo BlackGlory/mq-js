@@ -11,4 +11,4 @@ services:
     command: test
 
   mq:
-    image: 'blackglory/mq:0.7.3'
+    image: 'blackglory/mq:0.7.4'
