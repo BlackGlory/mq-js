@@ -89,7 +89,7 @@ class MQClient {
     queueId: string
   , priority: number | null
   , slotNames: NonEmptyArray<string>
-  , messageId: string
+  , messageId?: string
   , signal?: AbortSignal
   ): Promise<string>
   draftMessage(
