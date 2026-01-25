@@ -92,13 +92,13 @@ export class MQClient {
     queueId: string
   , priority: number | null
   , slotNames: NonEmptyArray<string>
+  , messageId?: string
   , signal?: AbortSignal
   ): Promise<string>
   async draftMessage(
     queueId: string
   , priority: number | null
   , slotNames: NonEmptyArray<string>
-  , messageId?: string
   , signal?: AbortSignal
   ): Promise<string>
   async draftMessage(...args:
@@ -106,13 +106,13 @@ export class MQClient {
       queueId: string
     , priority: number | null
     , slotNames: NonEmptyArray<string>
+    , messageId?: string
     , signal?: AbortSignal
     ]
   | [
       queueId: string
     , priority: number | null
     , slotNames: NonEmptyArray<string>
-    , messageId?: string
     , signal?: AbortSignal
     ]
   ): Promise<string> {
