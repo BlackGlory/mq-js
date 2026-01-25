@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.18.2](https://github.com/BlackGlory/mq-js/compare/v0.18.1...v0.18.2) (2026-01-25)
+
+
+### Features
+
+* **draft-message:** change the order of function overloads ([ee95e41](https://github.com/BlackGlory/mq-js/commit/ee95e41e56f8d21f08c4aa368f11250ea220a6f8))
+
 ### [0.18.1](https://github.com/BlackGlory/mq-js/compare/v0.18.0...v0.18.1) (2026-01-25)
 
 ## [0.18.0](https://github.com/BlackGlory/mq-js/compare/v0.17.0...v0.18.0) (2026-01-22)
