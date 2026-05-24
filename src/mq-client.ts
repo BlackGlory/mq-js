@@ -1,8 +1,8 @@
 import { createRPCClient } from '@utils/rpc-client.js'
 import { ClientProxy } from 'delight-rpc'
 import { IAPI, IMessage, IQueueConfig, IQueueStats, MessageState } from './contract.js'
-import { raceAbortSignals, timeoutSignal } from 'extra-abort'
-import { isntUndefined, isString, JSONValue, NonEmptyArray } from '@blackglory/prelude'
+import { raceAbortSignals, timeoutSignal, isAbortSignal } from 'extra-abort'
+import { isString, JSONValue, NonEmptyArray } from '@blackglory/prelude'
 
 export {
   IMessage
@@ -22,6 +22,11 @@ export interface IMQClientOptions {
   server: string
   timeout?: number
   retryIntervalForReconnection?: number
+}
+
+export interface IMQClientRequestOptions {
+  signal?: AbortSignal
+  timeout?: number | false
 }
 
 export class MQClient {
@@ -44,12 +49,22 @@ export class MQClient {
     await this.closeClients()
   }
 
-  async getAllQueueIds(signal?: AbortSignal): Promise<string[]> {
-    return await this.client.getAllQueueIds(this.withTimeout(signal))
+  async getAllQueueIds(
+    signalOrOptions?: AbortSignal | IMQClientRequestOptions
+  ): Promise<string[]> {
+    return await this.client.getAllQueueIds(
+      this.createSignal(signalOrOptions)
+    )
   }
 
-  async getQueue(queueId: string, signal?: AbortSignal): Promise<IQueueConfig | null> {
-    return await this.client.getQueue(queueId, this.withTimeout(signal))
+  async getQueue(
+    queueId: string
+  , signalOrOptions?: AbortSignal | IMQClientRequestOptions
+  ): Promise<IQueueConfig | null> {
+    return await this.client.getQueue(
+      queueId
+    , this.createSignal(signalOrOptions)
+    )
   }
 
   /**
@@ -58,16 +73,36 @@ export class MQClient {
    * - 已经处于`completed`状态的消息不受`behaviorWhenCompleted`的改变影响.
    * - 已经处于`abandoned`状态的消息不受`behaviorWhenAbandoned`的改变影响.
    */
-  async setQueue(queueId: string, config: IQueueConfig, signal?: AbortSignal): Promise<void> {
-    await this.client.setQueue(queueId, config, this.withTimeout(signal))
+  async setQueue(
+    queueId: string
+  , config: IQueueConfig
+  , signalOrOptions?: AbortSignal | IMQClientRequestOptions
+  ): Promise<void> {
+    await this.client.setQueue(
+      queueId
+    , config
+    , this.createSignal(signalOrOptions)
+    )
   }
 
-  async removeQueue(queueId: string, signal?: AbortSignal): Promise<void> {
-    await this.client.removeQueue(queueId, this.withTimeout(signal))
+  async removeQueue(
+    queueId: string
+  , signalOrOptions?: AbortSignal | IMQClientRequestOptions
+  ): Promise<void> {
+    await this.client.removeQueue(
+      queueId
+    , this.createSignal(signalOrOptions)
+    )
   }
 
-  async getQueueStats(queueId: string, signal?: AbortSignal): Promise<IQueueStats | null> {
-    return await this.client.getQueueStats(queueId, this.withTimeout(signal))
+  async getQueueStats(
+    queueId: string
+  , signalOrOptions?: AbortSignal | IMQClientRequestOptions
+  ): Promise<IQueueStats | null> {
+    return await this.client.getQueueStats(
+      queueId
+    , this.createSignal(signalOrOptions)
+    )
   }
 
   /**
@@ -75,8 +110,14 @@ export class MQClient {
    * - 清空队列中的消息.
    * - 重置统计数据.
    */
-  async resetQueue(queueId: string, signal?: AbortSignal): Promise<void> {
-    await this.client.resetQueue(queueId, this.withTimeout(signal))
+  async resetQueue(
+    queueId: string
+  , signalOrOptions?: AbortSignal | IMQClientRequestOptions
+  ): Promise<void> {
+    await this.client.resetQueue(
+      queueId
+    , this.createSignal(signalOrOptions)
+    )
   }
 
   /**
@@ -93,13 +134,13 @@ export class MQClient {
   , priority: number | null
   , slotNames: NonEmptyArray<string>
   , messageId?: string
-  , signal?: AbortSignal
+  , signalOrOptions?: AbortSignal | IMQClientRequestOptions
   ): Promise<string>
   async draftMessage(
     queueId: string
   , priority: number | null
   , slotNames: NonEmptyArray<string>
-  , signal?: AbortSignal
+  , signalOrOptions?: AbortSignal | IMQClientRequestOptions
   ): Promise<string>
   async draftMessage(...args:
   | [
@@ -107,36 +148,42 @@ export class MQClient {
     , priority: number | null
     , slotNames: NonEmptyArray<string>
     , messageId?: string
-    , signal?: AbortSignal
+    , signalOrOptions?: AbortSignal | IMQClientRequestOptions
     ]
   | [
       queueId: string
     , priority: number | null
     , slotNames: NonEmptyArray<string>
-    , signal?: AbortSignal
+    , signalOrOptions?: AbortSignal | IMQClientRequestOptions
     ]
   ): Promise<string> {
-    const [queueId, priority, slotNames, messageIdOrSignal, signalOrUndefined] = args
+    const [
+      queueId
+    , priority
+    , slotNames
+    , messageIdOrSignalOrOptions
+    , signalOrOptionsOrUndefined
+    ] = args
 
-    if (isString(messageIdOrSignal)) {
-      const messageId = messageIdOrSignal
-      const signal = signalOrUndefined
+    if (isString(messageIdOrSignalOrOptions)) {
+      const messageId = messageIdOrSignalOrOptions
+      const signalOrOptions = signalOrOptionsOrUndefined
 
       return await this.client.draftMessage(
         queueId
       , priority
       , slotNames
       , messageId
-      , this.withTimeout(signal)
+      , this.createSignal(signalOrOptions)
       )
     } else {
-      const signal = messageIdOrSignal ?? signalOrUndefined
+      const signalOrOptions = messageIdOrSignalOrOptions ?? signalOrOptionsOrUndefined
 
       return await this.client.draftMessage(
         queueId
       , priority
       , slotNames
-      , this.withTimeout(signal)
+      , this.createSignal(signalOrOptions)
       )
     }
   }
@@ -155,14 +202,14 @@ export class MQClient {
   , messageId: string
   , slotName: string
   , value: JSONValue
-  , signal?: AbortSignal
+  , signalOrOptions?: AbortSignal | IMQClientRequestOptions
   ): Promise<void> {
     await this.client.setMessageSlot(
       queueId
     , messageId
     , slotName
     , value
-    , this.withTimeout(signal)
+    , this.createSignal(signalOrOptions)
     )
   }
 
@@ -173,8 +220,14 @@ export class MQClient {
    * @throws {QueueNotFound}
    * @throws {AbortError}
    */
-  async orderMessage(queueId: string, signal?: AbortSignal): Promise<string> {
-    return await this.client.orderMessage(queueId, this.withTimeout(signal))
+  async orderMessage(
+    queueId: string
+  , signalOrOptions?: AbortSignal | IMQClientRequestOptions
+  ): Promise<string> {
+    return await this.client.orderMessage(
+      queueId
+    , this.createSignal(signalOrOptions)
+    )
   }
 
   /**
@@ -186,9 +239,13 @@ export class MQClient {
   async getMessage(
     queueId: string
   , messageId: string
-  , signal?: AbortSignal
+  , signalOrOptions?: AbortSignal | IMQClientRequestOptions
   ): Promise<IMessage | null> {
-    return await this.client.getMessage(queueId, messageId, this.withTimeout(signal))
+    return await this.client.getMessage(
+      queueId
+    , messageId
+    , this.createSignal(signalOrOptions)
+    )
   }
 
   /**
@@ -199,9 +256,13 @@ export class MQClient {
   async peekMessage(
     queueId: string
   , messageId: string
-  , signal?: AbortSignal
+  , signalOrOptions?: AbortSignal | IMQClientRequestOptions
   ): Promise<IMessage | null> {
-    return await this.client.peekMessage(queueId, messageId, this.withTimeout(signal))
+    return await this.client.peekMessage(
+      queueId
+    , messageId
+    , this.createSignal(signalOrOptions)
+    )
   }
 
   /**
@@ -214,9 +275,13 @@ export class MQClient {
   async completeMessage(
     queueId: string
   , messageId: string
-  , signal?: AbortSignal
+  , signalOrOptions?: AbortSignal | IMQClientRequestOptions
   ): Promise<void> {
-    await this.client.completeMessage(queueId, messageId, this.withTimeout(signal))
+    await this.client.completeMessage(
+      queueId
+    , messageId
+    , this.createSignal(signalOrOptions)
+    )
   }
 
   /**
@@ -226,8 +291,16 @@ export class MQClient {
    * @throws {MessageNotFound}
    * @throws {BadMessageState}
    */
-  async failMessage(queueId: string, messageId: string, signal?: AbortSignal): Promise<void> {
-    await this.client.failMessage(queueId, messageId, this.withTimeout(signal))
+  async failMessage(
+    queueId: string
+  , messageId: string
+  , signalOrOptions?: AbortSignal | IMQClientRequestOptions
+  ): Promise<void> {
+    await this.client.failMessage(
+      queueId
+    , messageId
+    , this.createSignal(signalOrOptions)
+    )
   }
 
   /**
@@ -237,8 +310,16 @@ export class MQClient {
    * @throws {MessageNotFound}
    * @throws {BadMessageState}
    */
-  async renewMessage(queueId: string, messageId: string, signal?: AbortSignal): Promise<void> {
-    await this.client.renewMessage(queueId, messageId, this.withTimeout(signal))
+  async renewMessage(
+    queueId: string
+  , messageId: string
+  , signalOrOptions?: AbortSignal | IMQClientRequestOptions
+  ): Promise<void> {
+    await this.client.renewMessage(
+      queueId
+    , messageId
+    , this.createSignal(signalOrOptions)
+    )
   }
 
   /**
@@ -250,9 +331,13 @@ export class MQClient {
   async abandonMessage(
     queueId: string
   , messageId: string
-  , signal?: AbortSignal
+  , signalOrOptions?: AbortSignal | IMQClientRequestOptions
   ): Promise<void> {
-    await this.client.abandonMessage(queueId, messageId, this.withTimeout(signal))
+    await this.client.abandonMessage(
+      queueId
+    , messageId
+    , this.createSignal(signalOrOptions)
+    )
   }
 
   /**
@@ -261,23 +346,39 @@ export class MQClient {
   async removeMessage(
     queueId: string
   , messageId: string
-  , signal?: AbortSignal
+  , signalOrOptions?: AbortSignal | IMQClientRequestOptions
   ): Promise<void> {
-    await this.client.removeMessage(queueId, messageId, this.withTimeout(signal))
+    await this.client.removeMessage(
+      queueId
+    , messageId
+    , this.createSignal(signalOrOptions)
+    )
   }
 
   /**
    * @throws {QueueNotFound}
    */
-  async abandonAllFailedMessages(queueId: string, signal?: AbortSignal): Promise<void> {
-    await this.client.abandonAllFailedMessages(queueId, this.withTimeout(signal))
+  async abandonAllFailedMessages(
+    queueId: string
+  , signalOrOptions?: AbortSignal | IMQClientRequestOptions
+  ): Promise<void> {
+    await this.client.abandonAllFailedMessages(
+      queueId
+    , this.createSignal(signalOrOptions)
+    )
   }
 
   /**
    * @throws {QueueNotFound}
    */
-  async renewAllFailedMessages(queueId: string, signal?: AbortSignal): Promise<void> {
-    await this.client.renewAllFailedMessages(queueId, this.withTimeout(signal))
+  async renewAllFailedMessages(
+    queueId: string
+  , signalOrOptions?: AbortSignal | IMQClientRequestOptions
+  ): Promise<void> {
+    await this.client.renewAllFailedMessages(
+      queueId
+    , this.createSignal(signalOrOptions)
+    )
   }
 
   /**
@@ -286,9 +387,13 @@ export class MQClient {
   async getMessageIdsByState(
     queueId: string
   , state: MessageState
-  , signal?: AbortSignal
+  , signalOrOptions?: AbortSignal | IMQClientRequestOptions
   ): Promise<string[]> {
-    return await this.client.getMessageIdsByState(queueId, state, this.withTimeout(signal))
+    return await this.client.getMessageIdsByState(
+      queueId
+    , state
+    , this.createSignal(signalOrOptions)
+    )
   }
 
   /**
@@ -300,15 +405,28 @@ export class MQClient {
   async clearMessagesByState(
     queueId: string
   , state: MessageState
-  , signal?: AbortSignal
+  , signalOrOptions?: AbortSignal | IMQClientRequestOptions
   ): Promise<void> {
-    await this.client.clearMessagesByState(queueId, state, this.withTimeout(signal))
+    await this.client.clearMessagesByState(
+      queueId
+    , state
+    , this.createSignal(signalOrOptions)
+    )
   }
 
-  private withTimeout(signal?: AbortSignal): AbortSignal {
+  private createSignal(
+    signalOrOptions: AbortSignal | IMQClientRequestOptions = {}
+  ): AbortSignal {
+    const options: IMQClientRequestOptions = isAbortSignal(signalOrOptions)
+                                           ? { signal: signalOrOptions }
+                                           : signalOrOptions
+
     return raceAbortSignals([
-      isntUndefined(this.timeout) && timeoutSignal(this.timeout)
-    , signal
+      options.signal
+    , options.timeout !== false && (
+        (options.timeout && timeoutSignal(options.timeout)) ??
+        (this.timeout && timeoutSignal(this.timeout))
+      )
     ])
   }
 }

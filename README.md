@@ -15,6 +15,11 @@ interface IMQClientOptions {
   retryIntervalForReconnection?: number
 }
 
+interface IMQClientRequestOptions {
+  signal?: AbortSignal
+  timeout?: number | false
+}
+
 interface IQueueConfig extends JSONObject {
   unique: boolean
   draftingTimeout: number
@@ -69,17 +74,35 @@ class MQClient {
 
   close(): Promise<void>
 
-  getAllQueueIds(signal?: AbortSignal): Promise<string[]>
+  getAllQueueIds(
+    signalOrOptions?: AbortSignal | IMQClientRequestOptions
+  ): Promise<string[]>
 
-  getQueue(queueId: string, signal?: AbortSignal): Promise<IQueueConfig | null>
+  getQueue(
+    queueId: string
+  , signalOrOptions?: AbortSignal | IMQClientRequestOptions
+  ): Promise<IQueueConfig | null>
 
-  setQueue(queueId: string, config: IQueueConfig, signal?: AbortSignal): Promise<void>
+  setQueue(
+    queueId: string
+  , config: IQueueConfig
+  , signalOrOptions?: AbortSignal | IMQClientRequestOptions
+  ): Promise<void>
 
-  removeQueue(queueId: string, signal?: AbortSignal): Promise<void>
+  removeQueue(
+    queueId: string
+  , signalOrOptions?: AbortSignal | IMQClientRequestOptions
+  ): Promise<void>
 
-  getQueueStats(queueId: string, signal?: AbortSignal): Promise<IQueueStats | null>
+  getQueueStats(
+    queueId: string
+  , signalOrOptions?: AbortSignal | IMQClientRequestOptions
+  ): Promise<IQueueStats | null>
 
-  resetQueue(queueId: string, signal?: AbortSignal): Promise<void>
+  resetQueue(
+    queueId: string
+  , signalOrOptions?: AbortSignal | IMQClientRequestOptions
+  ): Promise<void>
 
   /**
    * @throws {QueueNotFound}
@@ -90,13 +113,13 @@ class MQClient {
   , priority: number | null
   , slotNames: NonEmptyArray<string>
   , messageId?: string
-  , signal?: AbortSignal
+  , signalOrOptions?: AbortSignal | IMQClientRequestOptions
   ): Promise<string>
   draftMessage(
     queueId: string
   , priority: number | null
   , slotNames: NonEmptyArray<string>
-  , signal?: AbortSignal
+  , signalOrOptions?: AbortSignal | IMQClientRequestOptions
   ): Promise<string>
 
   /**
@@ -111,14 +134,17 @@ class MQClient {
   , messageId: string
   , slotName: string
   , value: JSONValue
-  , signal?: AbortSignal
+  , signalOrOptions?: AbortSignal | IMQClientRequestOptions
   ): Promise<void>
 
   /**
    * @throws {QueueNotFound}
    * @throws {AbortError}
    */
-  orderMessage(queueId: string, signal?: AbortSignal): Promise<string>
+  orderMessage(
+    queueId: string
+  , signalOrOptions?: AbortSignal | IMQClientRequestOptions
+  ): Promise<string>
 
   /**
    * @throws {QueueNotFound}
@@ -126,7 +152,7 @@ class MQClient {
   getMessage(
     queueId: string
   , messageId: string
-  , signal?: AbortSignal
+  , signalOrOptions?: AbortSignal | IMQClientRequestOptions
   ): Promise<IMessage | null>
 
   /**
@@ -135,7 +161,7 @@ class MQClient {
   peekMessage(
     queueId: string
   , messageId: string
-  , signal?: AbortSignal
+  , signalOrOptions?: AbortSignal | IMQClientRequestOptions
   ): Promise<IMessage | null>
 
   /**
@@ -143,42 +169,68 @@ class MQClient {
    * @throws {MessageNotFound}
    * @throws {BadMessageState}
    */
-  completeMessage(queueId: string, messageId: string, signal?: AbortSignal): Promise<void>
+  completeMessage(
+    queueId: string
+  , messageId: string
+  , signalOrOptions?: AbortSignal | IMQClientRequestOptions
+  ): Promise<void>
 
   /**
    * @throws {QueueNotFound}
    * @throws {MessageNotFound}
    * @throws {BadMessageState}
    */
-  failMessage(queueId: string, messageId: string, signal?: AbortSignal): Promise<void>
+  failMessage(
+    queueId: string
+  , messageId: string
+  , signalOrOptions?: AbortSignal | IMQClientRequestOptions
+  ): Promise<void>
 
   /**
    * @throws {QueueNotFound}
    * @throws {MessageNotFound}
    * @throws {BadMessageState}
    */
-  renewMessage(queueId: string, messageId: string, signal?: AbortSignal): Promise<void>
+  renewMessage(
+    queueId: string
+  , messageId: string
+  , signalOrOptions?: AbortSignal | IMQClientRequestOptions
+  ): Promise<void>
 
   /**
    * @throws {QueueNotFound}
    * @throws {MessageNotFound}
    */
-  abandonMessage(queueId: string, messageId: string, signal?: AbortSignal): Promise<void>
+  abandonMessage(
+    queueId: string
+  , messageId: string
+  , signalOrOptions?: AbortSignal | IMQClientRequestOptions
+  ): Promise<void>
 
   /**
    * @throws {QueueNotFound}
    */
-  removeMessage(queueId: string, messageId: string, signal?: AbortSignal): Promise<void>
+  removeMessage(
+    queueId: string
+  , messageId: string
+  , signalOrOptions?: AbortSignal | IMQClientRequestOptions
+  ): Promise<void>
 
   /**
    * @throws {QueueNotFound}
    */
-  abandonAllFailedMessages(queueId: string, signal?: AbortSignal): Promise<void>
+  abandonAllFailedMessages(
+    queueId: string
+  , signalOrOptions?: AbortSignal | IMQClientRequestOptions
+  ): Promise<void>
 
   /**
    * @throws {QueueNotFound}
    */
-  renewAllFailedMessages(queueId: string, signal?: AbortSignal): Promise<void>
+  renewAllFailedMessages(
+    queueId: string
+  , signalOrOptions?: AbortSignal | IMQClientRequestOptions
+  ): Promise<void>
 
   /**
    * @throws {QueueNotFound}
@@ -186,7 +238,7 @@ class MQClient {
   getMessageIdsByState(
     queueId: string
   , state: MessageState
-  , signal?: AbortSignal
+  , signalOrOptions?: AbortSignal | IMQClientRequestOptions
   ): Promise<string[]>
 
   /**
@@ -195,7 +247,7 @@ class MQClient {
   clearMessagesByState(
     queueId: string
   , state: MessageState
-  , signal?: AbortSignal
+  , signalOrOptions?: AbortSignal | IMQClientRequestOptions
   ): Promise<void>
 }
 ```
