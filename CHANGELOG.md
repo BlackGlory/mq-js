@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.18.3](https://github.com/BlackGlory/mq-js/compare/v0.18.2...v0.18.3) (2026-05-24)
+
+
+### Features
+
+* add support for `IMQClientRequestOptions` ([ad9c5b1](https://github.com/BlackGlory/mq-js/commit/ad9c5b1c8405037193453f772aa6afc881f1d748))
+
 ### [0.18.2](https://github.com/BlackGlory/mq-js/compare/v0.18.1...v0.18.2) (2026-01-25)
 
 
