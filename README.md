@@ -11,6 +11,11 @@ yarn add @blackglory/mq-js
 ```ts
 interface IMQClientOptions {
   server: string
+
+  basicAuth?: {
+    username: string
+    password: string
+  }
   timeout?: number
   retryIntervalForReconnection?: number
 }

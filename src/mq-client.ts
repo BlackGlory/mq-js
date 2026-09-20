@@ -1,6 +1,6 @@
 import { createRPCClient } from '@utils/rpc-client.js'
 import { ClientProxy } from 'delight-rpc'
-import { IAPI, IMessage, IQueueConfig, IQueueStats, MessageState } from './contract.js'
+import { expectedVersion, IAPI, IMessage, IQueueConfig, IQueueStats, MessageState } from './contract.js'
 import { raceAbortSignals, timeoutSignal, isAbortSignal } from 'extra-abort'
 import { isString, JSONValue, NonEmptyArray } from '@blackglory/prelude'
 
@@ -20,6 +20,11 @@ export {
 
 export interface IMQClientOptions {
   server: string
+
+  basicAuth?: {
+    username: string
+    password: string
+  }
   timeout?: number
   retryIntervalForReconnection?: number
 }
@@ -31,11 +36,14 @@ export interface IMQClientRequestOptions {
 
 export class MQClient {
   static async create(options: IMQClientOptions): Promise<MQClient> {
-    const { client, close } = await createRPCClient(
-      options.server
-    , options.retryIntervalForReconnection
-    , options.timeout
-    )
+    const { client, close } = await createRPCClient<IAPI>({
+      url: options.server
+    , retryIntervalForReconnection: options.retryIntervalForReconnection
+    , timeoutForConnection: options.timeout
+    , basicAuth: options.basicAuth
+    , expectedVersion
+    })
+
     return new MQClient(client, close, options.timeout)
   }
 
