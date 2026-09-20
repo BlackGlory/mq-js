@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.18.5](https://github.com/BlackGlory/mq-js/compare/v0.18.4...v0.18.5) (2026-09-20)
+
+
+### Features
+
+* add `IMQClientOptions.basicAuth` ([49fdec4](https://github.com/BlackGlory/mq-js/commit/49fdec4278adcfb9fae1c366d2410ef0d5a74855))
+
 ### [0.18.4](https://github.com/BlackGlory/mq-js/compare/v0.18.3...v0.18.4) (2026-05-24)
 
 ### [0.18.3](https://github.com/BlackGlory/mq-js/compare/v0.18.2...v0.18.3) (2026-05-24)
